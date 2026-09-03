@@ -4,9 +4,9 @@ A plugin backend should feel like WordPress before it starts looking like
 another product.
 
 WordPress Backend UI is an Agent Skill for designing, implementing and auditing
-plugin-owned `wp-admin` interfaces against WordPress 7.0. It gives an agent a
-clear contract for surface ownership, vertical flow, spacing, responsive
-behavior, accessibility, interface states and internationalization.
+plugin-owned `wp-admin` interfaces against WordPress 7.0 and 7.1. It gives an
+agent a clear contract for surface ownership, vertical flow, spacing,
+responsive behavior, accessibility, interface states and internationalization.
 
 The Skill does not add another UI framework. It tells the agent when WordPress
 APIs, Core Components, default CSS or provided design tokens already own the
@@ -15,9 +15,9 @@ decision, and when a small local CSS exception is actually justified.
 ## Why this Skill?
 
 WordPress does not have one complete, stable backend design system for every
-plugin surface. Classic admin CSS, Core Components and the newer bundled WPDS
-path coexist, but they do not have the same runtime, support status or spacing
-owner.
+plugin surface. Classic admin CSS, Core Components, Core's 7.1 token stylesheet
+and bundled experimental components coexist, but they do not have the same
+runtime, support status or spacing owner.
 
 Without those boundaries, agents tend to mix systems. A Classic form gets a
 second spacing scale, React is mistaken for WPDS, custom tokens start looking
@@ -76,6 +76,9 @@ validation.
   nothing.
 - **WordPress before custom CSS.** APIs, semantic markup, Core classes,
   components, default CSS and provided tokens come before a local rule.
+- **No forced Classic migration.** A working PHP page keeps its native elements
+  and default CSS. WordPress 7.1 tokens are optional tools for missing plugin
+  layout relationships, not a reason to rebuild the page in React.
 - **One owner for vertical flow.** The direct parent controls the space between
   its children. Components keep responsibility for their internal padding.
 - **A consistent spacing contract.** Semantic relationships map to a documented
@@ -130,13 +133,16 @@ missing dependency.
 
 ## Status
 
-Current release: **v1.0.0**.
+Current release: **v1.0.1**.
 
 The contract, installable Skill and production fixture were validated against a
 WordPress 7.0 Single Site and a WordPress 7.0.4 Network Admin installation.
 Responsive behavior, RTL and PHP and JavaScript translations were exercised in
 the local XAMPP fixtures. The repository also contains frozen routing, spacing,
-CSS ownership, UI state and internationalization cases.
+CSS ownership, UI state and internationalization cases. WordPress 7.1 Core
+source and the local 7.1 installation were inspected for `wp-theme` style
+registration, required tokens and the public `ThemeProvider` export. That
+source inspection is not a rendered 7.1 UI test.
 
 ## Sources
 

@@ -21,6 +21,19 @@ Classify the surface before the runtime. Do not infer either from the other.
 For an excluded surface, route to its host and stop. Do not apply a
 plugin-owned page shell, a generic spacing matrix, or global admin CSS.
 
+## WordPress version and capabilities
+
+| Target | Core token stylesheet | Public provider | Routing consequence |
+| --- | --- | --- | --- |
+| 7.0 pinned baseline | No Core `wp-theme` style handle in the verified baseline | Not exported by pinned `@wordpress/theme` 0.7.1 | Preserve Classic/Core defaults. The explicitly opted-in bundled experimental path below remains version-specific. |
+| 7.1 | Core registers `wp-theme` with semantic tokens for plugin UIs | Public `ThemeProvider` from `@wordpress/theme` through the Core script handle | PHP may consume Core tokens without React. React may use the public provider when needed. Neither requires experimental-component opt-in. |
+
+Check the actual supported installation and minimum supported version. Style
+and script registries are separate even though both use `wp-theme`. Registration
+does not prove enqueue, successful loading, token availability, or rendering.
+Read [version-compatibility.md](version-compatibility.md) for examples and checks.
+Do not infer future 7.x contracts or package versions from either row.
+
 ## Runtime owners
 
 ### PHP/Core
@@ -28,7 +41,12 @@ plugin-owned page shell, a generic spacing matrix, or global admin CSS.
 - Use WordPress APIs, semantic admin markup, Core classes, and Core default CSS.
 - Core owns `.wrap`, the page title, `.wp-header-end`, native Notices,
   `.form-table`, controls, and `p.submit` where those structures are used.
-- Do not add WPDS or a second spacing owner over the same subtree.
+- Preserve existing Classic pages. No mandatory token conversion, React rewrite,
+  or replacement of native elements follows from a WordPress upgrade.
+- Do not add experimental WPDS components or a second spacing owner over the
+  same subtree. Core `wp-theme` tokens are allowed for a demonstrated missing
+  relationship or domain state inside a plugin-owned region, not for restyling
+  native controls. The runtime remains `php-core`.
 
 ### React/Core Components
 
@@ -47,6 +65,9 @@ plugin-owned page shell, a generic spacing matrix, or global admin CSS.
   `@wordpress/theme` private APIs from plugin code.
 - Consume semantic tokens only when the selected exported stylesheet supplies
   them. The supported baseline uses default density.
+- These package pins describe 7.0, not all WordPress 7 releases. On 7.1 use
+  Core's token stylesheet instead of a second copy, and independently verify
+  compatibility of any opted-in bundled component package.
 
 ### Hybrid
 
@@ -66,6 +87,10 @@ Use `allow`, `deny`, or `unknown`. `unknown` behaves as `deny` for introducing a
 new experimental API. Availability alone is not opt-in. A pre-existing
 experimental subtree remains its owner unless the task has a functional reason
 to change it. Stable `Flex` remains available for all three values.
+
+Core's 7.1 token stylesheet and public `ThemeProvider` are not bundled
+experimental components. `deny` does not prohibit their supported use. A
+provider is optional and must never force a PHP page into React.
 
 Use `deny` when the request selects a non-experimental PHP/Core route or a
 Core-only hybrid route. Use `allow` only for an explicit bundled experimental
@@ -160,6 +185,13 @@ identifiers: `assume-react-is-wpds`, `custom-css-before-core`,
 `recommend-without-clarification`, and `unlock-private-theme-provider`.
 Their prose explanation may follow outside the structured object.
 
+`inject-wpds-into-classic` prohibits introducing a bundled experimental component
+runtime merely to restyle Classic UI. It does not prohibit a Core `wp-theme`
+stylesheet dependency. `define-wpds-tokens` prohibits plugin-authored token
+assignments or imitations, not supported public provider props.
+`unlock-private-theme-provider` prohibits private APIs on every version, not
+the public 7.1 export. Keep these identifiers stable with these precise meanings.
+
 An unknown React runtime must include `assume-react-is-wpds`,
 `define-wpds-tokens`, and `recommend-without-clarification`. An excluded host
 surface must include `own-host-surface`; when the host facts needed for a
@@ -191,6 +223,11 @@ Return:
 When structured output was requested, use the canonical values above for all
 six fields and for each prohibited-recommendation identifier.
 
+For a version-sensitive recommendation, also record supported/observed versions,
+token stylesheet owner, required token names, and loading/fallback evidence.
+These facts supplement the six stable fields, they do not change a PHP route
+to `bundled-wpds` just because Core tokens are available.
+
 If surface, runtime, token-style, or ownership evidence is missing, return
 `needs-clarification`, name the missing fact, and emit no downstream spacing or
 component recommendation.
@@ -198,8 +235,9 @@ component recommendation.
 ## Fact labels
 
 - **Core:** documented API, established admin convention, or explicitly named
-  observed WordPress 7.0 implementation.
-- **WPDS:** documented or observed pinned experimental package behavior.
+  observed implementation with its WordPress version named.
+- **WPDS:** documented or observed token/component behavior with its provider
+  and version named. This label does not by itself mean experimental.
 - **WCAG:** normative accessibility requirement.
 - **Skill-Norm:** an openly identified rule that closes an unspecified gap.
 

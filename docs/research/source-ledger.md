@@ -1,4 +1,4 @@
-# Source Ledger: WordPress 7.0 Backend Skill
+# Source Ledger: WordPress 7.0 and 7.1 Backend Skill
 
 Status: 2026-09-03
 
@@ -9,9 +9,10 @@ pinned CSS file is an **observed implementation**, but not automatically a
 public extension API. The fixed labels in the Skill are:
 
 - **Core:** documented WordPress API, established admin convention, or observed
-  WordPress 7.0 implementation.
-- **WPDS:** documented or observed contract of the experimental Gutenberg
-  packages at the pinned `wp/7.0` state.
+  implementation with its WordPress version named.
+- **WPDS:** documented or observed token or component contract with its provider
+  and WordPress/package version named. This label is not an experimental-status
+  claim by itself.
 - **WCAG:** normative accessibility requirement.
 - **Skill-Norm:** a disclosed project rule that closes a gap not officially
   specified.
@@ -23,6 +24,25 @@ public extension API. The fixed labels in the Skill are:
 | [`WordPress/wordpress-develop`](https://github.com/WordPress/wordpress-develop/commit/90a615f1834824d2583a43bfc698d9c710e5c094) | `7.0` | `90a615f1834824d2583a43bfc698d9c710e5c094` | WordPress 7.0 Development Source | 2026-09-03 | Core / observed implementation | Before a Skill release, a new WordPress 7.x target, or branch drift |
 | [`WordPress/gutenberg`](https://github.com/WordPress/gutenberg/commit/28c0dedc4eaf001a24237a1fbba4b0887698b000) | `wp/7.0` | `28c0dedc4eaf001a24237a1fbba4b0887698b000` | `@wordpress/ui` 0.7.1; `@wordpress/theme` 0.7.1; `@wordpress/admin-ui` 1.8.1; `@wordpress/components` 32.2.1 | 2026-09-03 | WPDS/Components / documented and observed package contract | Before a Skill release, package upgrade, or new WordPress 7.x target |
 | [`WordPress/WordPress` tag 7.0](https://github.com/WordPress/WordPress/tree/b16cd68ea199838d8f9daf0ff7e3f35042ba0ad0) | `7.0` | `b16cd68ea199838d8f9daf0ff7e3f35042ba0ad0` | WordPress 7.0 runtime of the native single-site fixture | 2026-09-03 | Core / test runtime | Before fixture setup and when the runtime target changes |
+| [`WordPress/WordPress` tag 7.1](https://github.com/WordPress/WordPress/tree/b998fef9238af183f9523b3df71618e6e57498b6) | `7.1` | `b998fef9238af183f9523b3df71618e6e57498b6` | Stable WordPress 7.1 runtime and Core token registration | 2026-09-03 | Core / public capability plus observed implementation | Before release or target change |
+| [`@wordpress/theme` 1.0.0 publication](https://github.com/WordPress/gutenberg/commit/7fe6fa42d4cf9cdd084223e3150f796567914f87) | `1.0.0` | `7fe6fa42d4cf9cdd084223e3150f796567914f87` | WordPress 7.1 theme package contract | 2026-09-03 | WPDS / public export plus observed implementation | Before release or package/target change |
+
+The 7.0 rows remain the frozen fixture and bundled-package contract. They are
+not generalized to all WordPress 7 releases.
+
+## WordPress 7.1 Core theming
+
+| Source | Version/ref | Retrieved | Fact class | Claim used | Revalidation |
+| --- | --- | --- | --- | --- | --- |
+| [Design system theming in WordPress 7.1](https://make.wordpress.org/core/2026/07/31/design-system-theming-in-wordpress-7-1/) | WordPress 7.1 Dev Note | 2026-09-03 | Core / official release guidance | Core registers `wp-theme` as a style for plugin admin UIs; direct semantic-token use is allowed for plugin-specific CSS; the separate script provides public `ThemeProvider` | On Core guidance or target change |
+| [`script-loader.php`](https://github.com/WordPress/WordPress/blob/b998fef9238af183f9523b3df71618e6e57498b6/wp-includes/script-loader.php) | WordPress 7.1 stable tag / pinned SHA | 2026-09-03 | Core / observed implementation | `wp-theme` design-token style registration and `wp-components` style dependency | On Core source change |
+| [`@wordpress/theme` runtime entry](https://github.com/WordPress/gutenberg/blob/7fe6fa42d4cf9cdd084223e3150f796567914f87/packages/theme/src/index.ts) and [README](https://github.com/WordPress/gutenberg/blob/7fe6fa42d4cf9cdd084223e3150f796567914f87/packages/theme/README.md) | 1.0.0 / pinned SHA | 2026-09-03 | WPDS / public export | `ThemeProvider` is public in 7.1; documented props and wrapper limits are pinned; private APIs remain forbidden | On package or Core target change |
+| [Current package reference](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-theme/) | Living official documentation | 2026-09-03 | WPDS / official current guidance | Inside WordPress, use Core's stylesheet rather than bundling a second token copy; stylesheet and provider have separate roles | Before applying current props to a pinned release |
+
+The inspected local WordPress 7.1 source agrees on the style registration,
+semantic token declarations and public JavaScript export. That inspection does
+not prove actual enqueue, computed CSS, accessibility or responsive rendering
+on a customer plugin page.
 
 ## Core admin implementation
 
@@ -86,7 +106,8 @@ public extension API. The fixed labels in the Skill are:
 
 Before implementation and every release, recheck at minimum branch/tag
 resolution, package versions, experimental status, token names and values,
-notice behavior, i18n APIs, and the WordPress 7.0 fixture. When a supporting
+notice behavior, i18n APIs, the WordPress 7.0 fixture, and the applicable 7.1
+Core capability. When a supporting
 source changes, update the fact class first and then the derived Skill-Norm;
 observed Core selectors are never promoted to public APIs without separate
 documentation.

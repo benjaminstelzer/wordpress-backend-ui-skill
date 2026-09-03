@@ -3,6 +3,9 @@
 Status: design derivation; the shipped canonical contract is
 `wordpress-backend-ui/references/routing.md`
 
+This derivation predates the 7.1 addendum. Current version-sensitive rules are
+in [version-compatibility.md](../../wordpress-backend-ui/references/version-compatibility.md).
+
 This document records the design derivation for surface/runtime routing and
 optional composition. The installed Skill reference is the sole canonical
 owner for the structured vocabulary, policy rules and prohibited identifiers;

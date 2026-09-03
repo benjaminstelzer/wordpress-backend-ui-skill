@@ -20,7 +20,13 @@ The `40px` relationship is exceptional, not a default between ordinary blocks.
 
 ## WPDS token facts at Gutenberg `wp/7.0`
 
-These values apply only to the pinned bundled WPDS runtime.
+The density matrix below describes the pinned 7.0 bundled package. The default
+gap and padding values also match the inspected 7.1 Core stylesheet. Do not
+infer availability of alternate densities or provider props from this matrix.
+
+The 7.1 Core stylesheet ships one density. `@wordpress/theme` 1.0.0 exposes no
+public density switch. Compact and comfortable values below remain historical
+7.0 bundled-package facts, not available 7.1 modes.
 
 ### Gap
 
@@ -71,6 +77,14 @@ component may use a Skill-Norm gap only after Core markup, classes, and default
 CSS have been checked. Never apply a gap stack over `.wrap`, `.form-table`, or
 `p.submit`.
 
+Existing Classic layout does not need token migration. When an actual new
+relationship lacks a Core owner, 7.1 may express its gap through Core's loaded
+`--wpds-dimension-gap-*` tokens in narrowly scoped plugin CSS. A stylesheet is
+not a React runtime. Prefer this supplied semantic token over a new local
+spacing variable. Do not apply it over native rhythm that already works.
+See [version-compatibility.md](version-compatibility.md) for an explicit 7.0
+fallback and registration, loading, and token-name checks.
+
 ### Core Components
 
 Specialized components own their internals. For a new generic vertical group:
@@ -92,7 +106,7 @@ Use `FlexItem` for intrinsic content. Use `FlexBlock` only for content intended
 to grow into remaining space. Preserve an existing `__experimentalVStack`
 subtree unless a functional requirement justifies changing it.
 
-### Bundled WPDS
+### Bundled WPDS at the 7.0 pin
 
 Bundle the public `@wordpress/ui` API and the exported
 `@wordpress/theme/design-tokens.css`, then select the semantic token. At this
@@ -102,6 +116,20 @@ direction nor a default gap, so set `direction="column"` and the semantic gap
 explicitly for vertical flow. The stylesheet supplies the default-density
 tokens. Never define, override, or imitate the `--wpds-*` namespace. Primitive
 tokens are implementation details.
+
+### Core tokens and public theming in 7.1
+
+Within WordPress, depend on the existing `wp-theme` style handle. Do not bundle
+a second token stylesheet. A public `ThemeProvider` is optional for scoped React
+theming and does not replace the stylesheet. PHP does not need the provider.
+Keep the actual token-owning document in view for portals, popups, and iframes.
+
+Supported semantic foreground/background/stroke tokens may express a genuine
+plugin-specific domain state when no Core component already owns it. Preserve
+native controls, tables, Notices, focus treatment, and existing layout. Verify
+contrast, non-color cues, interaction states, and token resolution. Do not
+invent a palette or override `--wpds-*` in plugin CSS. Using official tokens
+does not automatically prove accessibility or authorize broader restyling.
 
 ## CSS ownership ladder
 

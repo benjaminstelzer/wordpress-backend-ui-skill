@@ -323,20 +323,41 @@ def validate(root: Path) -> list[str]:
     fixture_php = (fixture_root / "wordpress-backend-skill-fixture.php").read_text(encoding="utf-8")
     fixture_js = (fixture_root / "src" / "index.js").read_text(encoding="utf-8")
     examples = (skill_root / "references" / "examples.md").read_text(encoding="utf-8")
+    version_compatibility = (
+        skill_root / "references" / "version-compatibility.md"
+    ).read_text(encoding="utf-8")
 
     require(
         "import { ThemeProvider }" not in fixture_js and "<ThemeProvider" not in fixture_js,
-        "fixture: private ThemeProvider usage",
+        "fixture: provider import is unsupported by the pinned 7.0 package",
         errors,
     )
     require(
         "import { ThemeProvider }" not in examples and "<ThemeProvider" not in examples,
-        "examples: private ThemeProvider usage",
+        "examples: keep the 7.1 public provider example in the versioned reference",
         errors,
     )
     require(
         "build/design-tokens.css" in examples,
         "examples: missing emitted token stylesheet",
+        errors,
+    )
+    for contract in (
+        r"preg_match( '/^7\.1(?:\.\d+)?$/', $wp_version )",
+        "wp_style_is( 'wp-theme', 'registered' )",
+        "array( 'wp-theme' )",
+        "var(--wpds-dimension-gap-lg)",
+        "import { ThemeProvider } from '@wordpress/theme';",
+        "No mandatory tokens, React, or component conversion",
+    ):
+        require(
+            contract in version_compatibility,
+            f"version compatibility: missing {contract}",
+            errors,
+        )
+    require(
+        "var(--wpds-dimension-gap-lg, 16px)" not in version_compatibility,
+        "version compatibility: hand-written token fallback in the source example",
         errors,
     )
     require("privateApis" not in fixture_js, "fixture: private theme API", errors)

@@ -6,7 +6,7 @@ network-dependent state changes.
 
 ## Build
 
-Use Node 24 and the lockfile:
+Use Node 24, Python, a PHP CLI available as `php`, and the lockfile:
 
 ```text
 npm ci
@@ -16,6 +16,18 @@ npm run check:contracts
 
 `check:contracts` intentionally validates generated fixture assets, so run the
 build first in a fresh clone.
+
+The versioned documentation test executes its PHP enqueue example with stubs.
+It is not a WordPress runtime or rendering test. For read-only comparison of
+existing stable 7.0.x and 7.1.x Core source directories, run:
+
+```text
+npm run check:local-wordpress -- "PATH_TO_WORDPRESS_7_0" "PATH_TO_WORDPRESS_7_1"
+```
+
+This checks Core registration, token declarations, and the public export. The
+7.1 React provider example is source-checked only, not build- or render-tested.
+The fixture's frozen dependency graph remains the separate 7.0 baseline.
 
 The build must produce `fixture/plugin/build/index.js`, `index.asset.php`,
 `design-tokens.css`, `style-index.css`, and `style-index-rtl.css`. The build

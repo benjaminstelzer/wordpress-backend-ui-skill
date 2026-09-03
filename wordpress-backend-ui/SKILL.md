@@ -13,10 +13,11 @@ requires it.
 
 ## Classify before designing
 
-Read [routing.md](references/routing.md) first. Classify two independent axes:
+Read [routing.md](references/routing.md) first. Classify three independent axes:
 
 1. the admin surface and whether version 1 supports it;
-2. the runtime and component owner for each DOM region.
+2. the runtime and component owner for each DOM region;
+3. the supported WordPress versions and the available public token/provider APIs.
 
 React does not imply WPDS. A page can be Classic, Core Components, bundled
 experimental WPDS, or hybrid. For hybrid pages, classify portals and overlays
@@ -38,8 +39,16 @@ For each region, stop at the first layer that can express the requirement:
 
 Never rebuild a WordPress button, control, Notice, table, shell, color system,
 focus treatment, radius, or shadow merely to change its appearance. Never
-define, override, or imitate `--wpds-*`. Do not load experimental WPDS merely
-to restyle a Classic or Core-Components page.
+author CSS that defines, overrides, or imitates `--wpds-*`. A supported public
+`ThemeProvider` may generate scoped overrides through its documented API.
+Do not load experimental components merely to restyle a Classic or
+Core-Components page. WordPress 7.1's Core `wp-theme` stylesheet is a separate,
+public capability, also usable for missing layout relationships on PHP pages.
+
+Preserve existing Classic pages. Neither WordPress 7.1 nor token availability
+requires a migration to React, WPDS components, or token-based styling. Keep
+working native markup, controls, tables, and default spacing. Introduce a token
+only for an actual requirement the existing owner cannot express.
 
 ## Load only the relevant contract
 
@@ -59,6 +68,8 @@ to restyle a Classic or Core-Components page.
 - Before asserting that a rule is official, updating the WordPress target, or
   changing a token/package contract, read [sources.md](references/sources.md)
   and revalidate its trigger.
+- For `wp-theme`, public `ThemeProvider`, or older-version fallback, read
+  [version-compatibility.md](references/version-compatibility.md).
 
 ## Preserve the vertical-flow invariant
 
@@ -95,6 +106,8 @@ For a design, implementation, or audit, make the decision traceable:
 
 - surface, support status, runtime, shell, spacing owner, and experimental
   policy;
+- supported and observed WordPress versions, token stylesheet owner, required
+  token names, enqueue evidence, and fallback when relevant;
 - WordPress APIs, components, classes, defaults, and provided tokens reused;
 - semantic relationship and its spacing expression;
 - page archetype, responsive transformations, relevant states, and recovery;

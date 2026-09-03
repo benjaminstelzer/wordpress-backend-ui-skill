@@ -1,5 +1,25 @@
 # Changelog
 
+## 1.0.1 - 2026-09-03
+
+### Changed
+
+- Separated WordPress 7.0 package restrictions from WordPress 7.1's public
+  Core token stylesheet and `ThemeProvider` APIs.
+- Allowed Core tokens for genuine missing layout relationships and domain
+  states on PHP pages without requiring React or experimental components.
+- Explicitly preserved existing Classic elements and default CSS, with no
+  mandatory token or component migration.
+- Added versioned loading and fallback checks plus a source-checked
+  public-provider example.
+
+### Validation
+
+- Frozen contracts, the eight-case PHP enqueue example, local 7.0/7.1 Core
+  source checks, Skill validation, and the Scoville Plan profile passed.
+- The 7.1 provider example is source-checked only. A separate 7.1 plugin build
+  and rendered UI validation are not claimed.
+
 ## 1.0.0 - 2026-09-03
 
 ### Added

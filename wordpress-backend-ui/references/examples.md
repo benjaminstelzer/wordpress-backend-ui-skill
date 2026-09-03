@@ -37,6 +37,11 @@ Do not add a page gutter, form-row grid, custom button, or stack gap over
 `.form-table`. A plugin-owned subcomponent may add a local flow only after Core
 ownership has been checked.
 
+This remains valid on 7.1 without any token or React migration. For a genuine
+missing PHP layout relationship, the
+[versioned examples](version-compatibility.md) show optional Core tokens, the
+older-version fallback, and the public React provider separately.
+
 ## React with Core Components
 
 **Surface:** plugin workflow. **Support:** supported. **Runtime:** Core
@@ -127,12 +132,16 @@ grow.
 }
 ```
 
-## Bundled experimental WPDS
+## Bundled experimental WPDS at the 7.0 pin
 
 **Surface:** plugin dashboard. **Support:** supported. **Runtime:** bundled
 WPDS. **Shell:** Core plus plugin root. **Spacing:** public `Stack`. **Token
 owner:** bundled `@wordpress/theme/design-tokens.css`. **Experimental policy:**
 allow through explicit project opt-in.
+
+This legacy pinned example is not the 7.1 enqueue recipe. Inside WordPress 7.1
+use Core `wp-theme`, never this duplicate token copy. Do not change an existing
+Classic page to this experimental runtime merely to obtain spacing tokens.
 
 ```jsx
 import { Stack } from '@wordpress/ui';
@@ -192,23 +201,27 @@ The PHP shell owns title placement and page-level Notices. The React root owns
 only its descendants. A field error belongs inside the React field region. Do
 not wrap the entire `.wrap` in another spacing system.
 
-## Documented CSS exception
+## Documented CSS exception without Core tokens
 
 Use custom CSS only after the ladder is exhausted. This PHP workflow region
 needs a responsive card grid. Core has no owning layout primitive for this
 plugin region, and Core Components `Flex` is not available in the PHP runtime.
+This is an explicit older-version fallback, not the default for a 7.1 region
+with supported Core tokens. Test it on each older supported baseline.
 
 ```css
 .plugin-slug-summary-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(min(100%, 18rem), 1fr));
-    gap: var(--plugin-slug-summary-gap, 16px);
+    gap: 16px;
 }
 ```
 
 Record `16px` as the Skill-Norm relationship for related summary groups, not a
 WordPress token. Keep the selector inside the plugin root. Verify 782/783px,
 320px reflow, 400% zoom, RTL, long translations, focus, and empty content.
+For a 7.1 token branch, use the versioned example instead of combining both
+rules.
 
 ## i18n registration for React
 

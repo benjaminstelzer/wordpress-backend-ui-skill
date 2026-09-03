@@ -1,9 +1,9 @@
-# WordPress 7.0 source contract
+# WordPress 7.0 and 7.1 source contracts
 
 Revalidate a source when its trigger applies. Keep documented APIs, observed
 implementation, and Skill-Norms distinct.
 
-## Pinned repository state
+## Pinned WordPress 7.0 repository state
 
 | Owner | Ref and resolved commit | Target packages | Revalidate |
 | --- | --- | --- | --- |
@@ -12,6 +12,37 @@ implementation, and Skill-Norms distinct.
 | `WordPress/WordPress` | tag `7.0` at `b16cd68ea199838d8f9daf0ff7e3f35042ba0ad0` | WordPress 7.0 runtime | Before fixture setup or target change |
 
 Retrieved and last revalidated: 2026-09-03.
+
+## WordPress 7.1 theming contract
+
+Revalidated 2026-09-03. The 7.0 package restrictions above remain scoped to
+their pins, not to all WordPress 7 releases.
+
+- `WordPress/WordPress` tag `7.1` resolved to
+  `b998fef9238af183f9523b3df71618e6e57498b6`. Its
+  [script-loader.php](https://github.com/WordPress/WordPress/blob/b998fef9238af183f9523b3df71618e6e57498b6/wp-includes/script-loader.php)
+  registers the `wp-theme` style handle with the Core design-token stylesheet.
+- `@wordpress/theme` 1.0.0 was published at Gutenberg commit
+  `7fe6fa42d4cf9cdd084223e3150f796567914f87`. Its
+  [theme runtime entry](https://github.com/WordPress/gutenberg/blob/7fe6fa42d4cf9cdd084223e3150f796567914f87/packages/theme/src/index.ts)
+  publicly exports `ThemeProvider`. Its pinned README and implementation own
+  the 7.1 prop and wrapper contract.
+- The [7.1 Dev Note](https://make.wordpress.org/core/2026/07/31/design-system-theming-in-wordpress-7-1/)
+  documents plugin use of the Core stylesheet, direct semantic tokens for
+  plugin-specific CSS, and the separate public JavaScript provider.
+- The [package reference](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-theme/)
+  documents stylesheet ownership, scoped theming, and the distinction between
+  inside-WordPress and standalone applications. It is a moving reference, not
+  proof that every currently documented prop exists in every 7.x release.
+
+The stable 7.1 tag and inspected local 7.1 Core agree on style registration, semantic gap and
+padding tokens, and the public JavaScript export. This is source evidence,
+not proof of enqueue or visual correctness on a customer page. The retained
+7.0 fixture and its frozen package graph are not a 7.1 rendered test.
+
+See [version-compatibility.md](version-compatibility.md) for the executable
+enqueue example and verification boundary. Recheck the actual supported Core
+release, built exports, token names, and document whenever the target changes.
 
 ## Primary owners by fact
 

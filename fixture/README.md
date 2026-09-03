@@ -4,6 +4,10 @@ This fixture is test infrastructure, not a plugin template. It exercises the
 four runtime owners and eight UI states required by PLAN-0001 without timers or
 network-dependent state changes.
 
+This fixture deliberately includes a full PO-based translation-delivery test.
+Its catalogs, generated translations, and runtime assertions are fixture
+requirements, not mandatory output from ordinary i18n-readiness tasks.
+
 ## Build
 
 Use Node 24, Python, a PHP CLI available as `php`, and the lockfile:

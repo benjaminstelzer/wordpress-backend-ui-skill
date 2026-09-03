@@ -90,7 +90,9 @@ validation.
   and permission states keep their meaning, focus behavior and available next
   step.
 - **Internationalization as part of the layout.** PHP, JavaScript, accessible
-  text, dates, numbers, long translations and RTL belong to the UI contract.
+  text, dates, numbers, text expansion and RTL belong to the UI contract.
+  The requirement is readiness for later translations, not a mandatory PO
+  workflow or completed translations.
 
 The complete contract is in [`SKILL.md`](wordpress-backend-ui/SKILL.md).
 
@@ -115,8 +117,10 @@ RTL checks.
 
 Responsive behavior starts with the task, not a breakpoint. Forms reflow,
 actions wrap, data views contain their overflow, and text remains usable at 320
-CSS pixels and 400 percent zoom. Translation is tested as runtime behavior in
-both PHP and JavaScript, because an extractable string is not automatically a
+CSS pixels and 400 percent zoom. The Skill requires extractable strings and
+the loading structure needed for later translations. Catalog generation and
+translation delivery stay optional. When delivery is part of the task, test
+actual loading too, because an extractable string is not automatically a
 loaded translation.
 
 ## Optional Scoville UI composition
@@ -133,7 +137,7 @@ missing dependency.
 
 ## Status
 
-Current release: **v1.0.1**.
+Current release: **v1.0.2**.
 
 The contract, installable Skill and production fixture were validated against a
 WordPress 7.0 Single Site and a WordPress 7.0.4 Network Admin installation.

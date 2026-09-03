@@ -91,6 +91,13 @@ plural and context APIs, translator comments, and context-aware escaping. Bind
 registered JavaScript handles with `wp_set_script_translations()`. Treat German
 text expansion, RTL, and locale-formatted values as normal responsive inputs.
 
+Require i18n-readiness, not a translation-production workflow. Source strings,
+domains, placeholders, dependencies, and loading hooks must allow translations
+to be added later. Creating or maintaining POT, PO, MO, or Jed JSON files and
+proving loaded translations are required only when translation delivery is in
+scope. Missing catalogs alone are not a readiness defect. Layout checks may use
+synthetic expanded text and RTL without creating translations.
+
 ## Accessibility and proof
 
 Use WCAG 2.2 AA as the default floor. Preserve labels, names, roles, values,
@@ -111,7 +118,8 @@ For a design, implementation, or audit, make the decision traceable:
 - WordPress APIs, components, classes, defaults, and provided tokens reused;
 - semantic relationship and its spacing expression;
 - page archetype, responsive transformations, relevant states, and recovery;
-- PHP/JavaScript i18n path and localized-layout checks;
+- PHP/JavaScript i18n-readiness and expansion/RTL checks, with translation
+  artifacts and loading proof only when translation delivery is in scope;
 - any CSS exception with checked owners, demonstrated gap, smallest scope, and
   reflow, RTL, zoom, focus, content, and state checks;
 - rendered, source-only, and unverified evidence kept separate.

@@ -238,14 +238,16 @@ wp_register_script(
 
 wp_set_script_translations(
     'plugin-slug-app',
-    'plugin-slug',
-    plugin_dir_path( __FILE__ ) . 'languages'
+    'plugin-slug'
 );
 
 wp_enqueue_script( 'plugin-slug-app' );
 ```
 
 Use the dependency and version data generated for the built entry; do not copy
-an incomplete dependency list by hand. The registered build path, PO
-references, Jed JSON filename, handle, and text domain must agree. Prove a
-translated PHP and React string at runtime.
+an incomplete dependency list by hand. Binding the registered handle and domain
+prepares standard translation loading without requiring catalogs to exist.
+Use a third, custom-path argument only when the selected delivery mechanism
+needs it. If producing translations is in scope, verify the chosen artifacts
+against the registered build path and prove actual loading. A readiness-only
+task does not create PO files or require translated PHP and React strings.

@@ -1,6 +1,13 @@
 # Internationalization contract
 
-Status: frozen for implementation
+Status: frozen translation-delivery fixture contract
+
+This document specifies the repository fixture's chosen full translation
+workflow. The current plugin contract is
+[internationalization.md](../../wordpress-backend-ui/references/internationalization.md).
+It requires i18n-readiness only by default. This fixture's POT/PO/MO/JSON chain
+and translated browser assertions are not mandatory for readiness-only plugin
+tasks.
 
 Internationalization is a string, runtime, and layout invariant. It applies to
 visible text, accessible names, screen-reader text, alternative text, notices,

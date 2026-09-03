@@ -4,6 +4,25 @@ Use one literal text domain equal to the lowercase hyphenated plugin slug. Apply
 the contract to visible text, ARIA labels, screen-reader text, alternative text,
 notices, errors, empty states, dates, and numbers.
 
+## Required readiness, optional translation delivery
+
+The default requirement is i18n-readiness. A plugin must allow catalogs and
+translations to be generated and loaded later without rewriting its UI strings
+or registration structure. It may ship only its source-language strings.
+
+Do not create or maintain POT, PO, MO, Jed JSON, translations, or a `languages/`
+directory just to satisfy this Skill. Do not introduce WP-CLI, a translator,
+locale downloads, or a PO workflow unless the task requires translation
+delivery or the project has explicitly selected that workflow. Preserve an
+existing translation workflow when it is in scope, including externally
+managed catalogs or WordPress language packs.
+
+Readiness requires extractable source strings, correct domains and i18n APIs,
+safe formatting and escaping, appropriate script dependencies and loading
+hooks, locale-aware values, and layouts that tolerate expansion and RTL.
+Artifact generation and proof of an actually loaded translation belong to the
+separate translation-delivery scope below.
+
 ## PHP
 
 - Use WordPress gettext functions with the literal domain.
@@ -43,7 +62,23 @@ const message = sprintf(
 );
 ```
 
-## Load translations
+## Prepare loading without requiring catalogs
+
+For a JavaScript UI, register its real script handle and dependencies, then
+bind that handle to the literal domain with `wp_set_script_translations()`
+before enqueueing. This registration can exist before translation files do.
+Do not add a JavaScript build to a PHP-only page for this purpose.
+
+Without a custom catalog location, use the standard loading path:
+
+```php
+wp_set_script_translations( 'plugin-slug-app', 'plugin-slug' );
+```
+
+No placeholder PO file or empty language directory is required. Add an explicit
+custom path only when the project's selected delivery mechanism needs one.
+
+## Optional custom translation loading
 
 Register a custom language path at `init` when the plugin bundles translations:
 
@@ -84,7 +119,11 @@ The build-generated dependency list is authoritative. This prevents missing
 runtime handles such as `react` or `react-jsx-runtime` when the build emits
 them.
 
-## Reproducible artifact chain
+## Optional PO-based delivery example
+
+Use this chain only when producing bundled translations is part of the task
+and the project chooses a PO-based workflow. It is not a readiness checklist
+or the only supported way to deliver translations.
 
 1. After the JavaScript build, `wp i18n make-pot` extracts PHP and the
    registered build JavaScript to POT. Exclude `src` so the PO cannot acquire a
@@ -99,10 +138,11 @@ them.
 7. Assert one genuinely translated PHP string and one translated React string
    in a browser.
 
-The acceptance fixture keeps POT and PO as authored artifacts and commits its
+This repository's translation-delivery acceptance fixture keeps POT and PO as authored artifacts and commits its
 generated MO and path-hashed Jed JSON so a clean checkout contains the exact
-runtime proof inputs. Regenerate all four after translatable source or build
-path changes.
+runtime proof inputs. Regenerate its artifacts after translatable source or
+build-path changes. These fixture requirements do not apply to a readiness-only
+plugin task.
 
 POT extraction, a PO file, or hard-coded translated text does not prove runtime
 loading.
@@ -118,12 +158,30 @@ loading.
 
 ## Layout
 
-Test doubled strings, long German labels, one RTL locale, and locale-dependent
-dates and numbers. Use logical properties, allow controls and actions to wrap,
-and preserve information, function, and source order. Fix presentation instead
-of shortening or fragmenting translatable copy.
+Test doubled strings, long labels, RTL direction, and locale-dependent dates
+and numbers. Synthetic expanded labels and a controlled RTL test are enough
+for readiness. They do not require production translations or PO files, and
+they are not proof of translation loading. Use logical properties, allow
+controls and actions to wrap, and preserve information, function, and source
+order. Fix presentation instead of shortening or fragmenting translatable copy.
+
+## Acceptance by scope
+
+| Situation | Result |
+| --- | --- |
+| Correct i18n APIs, extractable strings and loading hooks, no catalogs, readiness-only task | Accept readiness after source and layout checks. Do not require PO generation or a translated browser string. |
+| Catalogs exist, but visible or assistive source strings bypass i18n APIs | Reject readiness. Catalog presence does not fix source defects. |
+| Translation delivery is requested but the claimed translations do not load | Reject the delivery claim. Extractable strings alone do not prove delivery. |
+| Project uses external catalogs or language packs | Preserve that mechanism. Do not force a local PO workflow. |
+
+Review source extractability and registration for readiness. If uncertainty
+requires an extraction check, a disposable output may supply evidence without
+introducing a maintained catalog workflow. Report readiness, translation
+delivery, and actual loading evidence separately.
 
 Reject variable domains, concatenated grammar, missing placeholder comments,
-unescaped output, untranslated accessible text, wrong handle order, `src/`
-references for a registered `build/` script, and translation artifacts claimed
-as runtime proof without browser assertions.
+unescaped output, accessible source text outside i18n APIs, and wrong handle
+order. When a PO-based delivery workflow is selected, also reject mismatched
+source/build references. Reject any claim of loaded translations without
+runtime proof. Do not reject readiness merely because translation files or
+translations have not been produced.

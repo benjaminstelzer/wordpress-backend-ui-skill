@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.0.2 - 2026-09-03
+
+### Changed
+
+- Require i18n-readiness without forcing catalog generation, completed
+  translations, or a PO-based workflow. Translation-delivery checks apply only
+  when that delivery is in scope.
+- Preserve the existing full translation fixture while separating its artifact
+  requirements from ordinary plugin readiness.
+
+### Validation
+
+- Frozen contracts, eight PHP enqueue cases, the Skill validator, and the
+  project-profile validator passed.
+- Reviewed readiness-only, missing-i18n, translation-delivery, and external
+  catalog cases in the revised guidance. No new build, translated-browser, or
+  fresh-agent execution is claimed for this instruction-only correction.
+
 ## 1.0.1 - 2026-09-03
 
 ### Changed
@@ -17,6 +35,8 @@
 
 - Frozen contracts, the eight-case PHP enqueue example, local 7.0/7.1 Core
   source checks, Skill validation, and the Scoville Plan profile passed.
+- The retained 7.0 fixture built under Node 24 using an existing dependency
+  installation. This is not a fresh-install reproducibility result.
 - The 7.1 provider example is source-checked only. A separate 7.1 plugin build
   and rendered UI validation are not claimed.
 

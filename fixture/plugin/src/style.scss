@@ -1,0 +1,38 @@
+// Skill-Norm exception: PHP/Core has no component API for the relationship
+// between the completed Settings API form and the plugin-owned React region.
+.wbui-fixture-page-flow {
+	display: flex;
+	flex-direction: column;
+	gap: 32px;
+}
+
+// The exact gap parents own these heading-to-copy relationships.
+.wbui-fixture-heading-flow,
+.wbui-fixture-wpds-stack {
+	.wbui-fixture-flow-heading,
+	.wbui-fixture-flow-copy {
+		margin-block: 0;
+	}
+}
+
+// WCAG's two-dimensional-content exception is kept local to the data region.
+.wbui-fixture-data-scroll {
+	max-inline-size: 100%;
+	overflow-x: auto;
+
+	&:focus-visible {
+		outline: 2px solid currentcolor;
+		outline-offset: 2px;
+	}
+}
+
+.wbui-fixture-data-table {
+	min-inline-size: 42rem;
+}
+
+// Evidence-backed exception: Core Components renders TextControl help at
+// #757575 on the #f0f0f0 admin canvas (4.04:1). Scope the correction to the
+// plugin-owned help content; #50575e measures above 6.5:1 on this canvas.
+.wbui-fixture-help-text {
+	color: #50575e;
+}

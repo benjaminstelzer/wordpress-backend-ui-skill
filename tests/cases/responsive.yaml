@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "frozen_on": "2026-09-03",
+  "contract": "docs/specs/responsive-and-archetypes.md",
+  "global_assertions": {
+    "document_overflow": "document.documentElement.scrollWidth <= window.innerWidth",
+    "reading_order": "DOM, keyboard, and screen-reader order remain logical",
+    "rtl": "logical properties and no left/right layout assumption",
+    "text_stress": ["doubled strings", "long German labels", "RTL locale", "locale-formatted values"],
+    "focus": ["visible", "not obscured", "logical order"],
+    "pointer_target": "24x24 CSS px or WCAG exception",
+    "core_mobile_control_height": "40px for typical text inputs and selects"
+  },
+  "cases": [
+    {"id":"settings-783","archetype":"focused-settings","viewport_css_px":783,"expected":{"shell":"Core-owned","layout":"single main source-order column","form":"Core desktop form-table unless intrinsic content wraps earlier","actions":"visible and wrapping","document_overflow":false}},
+    {"id":"settings-782","archetype":"focused-settings","viewport_css_px":782,"expected":{"shell":"Core-owned mobile admin","layout":"single column","form":"labels and controls stacked by Core","actions":"stack or wrap","document_overflow":false}},
+    {"id":"settings-600","archetype":"focused-settings","viewport_css_px":600,"expected":{"layout":"single column","form":"full-width typical controls","actions":"stack or wrap","document_overflow":false}},
+    {"id":"settings-390","archetype":"focused-settings","viewport_css_px":390,"expected":{"layout":"single column","form":"long labels and errors remain visible","actions":"no horizontal scroll","document_overflow":false}},
+    {"id":"settings-320","archetype":"focused-settings","viewport_css_px":320,"expected":{"layout":"single column","reflow":"no information or function loss","actions":"no horizontal scroll","document_overflow":false}},
+    {"id":"workflow-783","archetype":"workflow-dashboard","viewport_css_px":783,"expected":{"shell":"Core or explicit WPDS owner","layout":"intrinsic owner-provided grid or flex","columns":"content-aware and wrapping","document_overflow":false}},
+    {"id":"workflow-782","archetype":"workflow-dashboard","viewport_css_px":782,"expected":{"layout":"one column by default","cards":"parent owns gap","order":"source order retained","document_overflow":false}},
+    {"id":"workflow-600","archetype":"workflow-dashboard","viewport_css_px":600,"expected":{"layout":"one column unless a small group proves usability","actions":"primary visible, secondary wraps","document_overflow":false}},
+    {"id":"workflow-390","archetype":"workflow-dashboard","viewport_css_px":390,"expected":{"layout":"one column","states":"notices and recovery fit without clipping","document_overflow":false}},
+    {"id":"workflow-320","archetype":"workflow-dashboard","viewport_css_px":320,"expected":{"layout":"one column","reflow":"no information or function loss","document_overflow":false}},
+    {"id":"data-view-783","archetype":"data-view","viewport_css_px":783,"expected":{"layout":"available admin width","toolbar":"wraps as needed","table_overflow":"local only when two-dimensional content requires it","document_overflow":false}},
+    {"id":"data-view-782","archetype":"data-view","viewport_css_px":782,"expected":{"layout":"available admin width","toolbar":"multi-row wrap","table_overflow":"labeled local container","document_overflow":false}},
+    {"id":"data-view-600","archetype":"data-view","viewport_css_px":600,"expected":{"layout":"compact list or local data scroll","toolbar":"labels and names preserved","document_overflow":false}},
+    {"id":"data-view-390","archetype":"data-view","viewport_css_px":390,"expected":{"layout":"deliberate compact list or local data scroll","focus":"local container focus visible","document_overflow":false}},
+    {"id":"data-view-320","archetype":"data-view","viewport_css_px":320,"expected":{"layout":"deliberate compact list or local data scroll","reflow":"all non-tabular information and function retained","document_overflow":false}},
+    {"id":"zoom-equivalent-320","archetype":"all","viewport_css_px":1280,"zoom_percent":400,"equivalent_css_width":320,"expected":{"reflow":"same invariant as 320 CSS px","document_overflow":false,"focus":"not obscured"}},
+    {"id":"rtl-content-stress","archetype":"all","viewport_css_px":390,"locale_direction":"rtl","content_multiplier":2,"expected":{"properties":"logical","order":"semantic source order","clipping":false,"document_overflow":false}}
+  ]
+}

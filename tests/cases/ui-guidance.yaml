@@ -1,0 +1,117 @@
+{
+  "schema_version": 1,
+  "frozen_on": "2026-09-03",
+  "contract": "docs/specs/ui-guidance-and-states.md",
+  "cases": [
+    {
+      "id": "single-settings-page",
+      "surface": "plugin-settings-tool",
+      "navigation": "submenu under Settings",
+      "primary_action": "Save the current settings after the affected fields",
+      "notice_owner": "Core page notice after wp-header-end",
+      "inline_owner": "field or field group",
+      "states": ["initial", "success", "error", "disabled", "permission"],
+      "recovery": "retain safe entered values and identify the field or available next action",
+      "accessibility_invariants": ["one h1", "persistent labels", "error association", "status announcement", "logical focus order", "visible focus"]
+    },
+    {
+      "id": "single-tool-page",
+      "surface": "plugin-settings-tool",
+      "navigation": "submenu under Tools",
+      "primary_action": "Run the named tool after prerequisites and consequences",
+      "notice_owner": "Core page notice after wp-header-end",
+      "inline_owner": "input or prerequisite group",
+      "states": ["initial", "loading", "success", "error", "permission"],
+      "recovery": "preserve inputs when safe and offer retry only when supported",
+      "accessibility_invariants": ["named progress", "duplicate submission prevented", "focus preserved", "result announced"]
+    },
+    {
+      "id": "multi-page-workflow",
+      "surface": "plugin-workflow-dashboard",
+      "navigation": "top-level only for a distinct frequently used multi-page area, with local current item",
+      "primary_action": "one next workflow action for the current step",
+      "notice_owner": "page or workflow Notice according to consequence",
+      "inline_owner": "current step component",
+      "states": ["initial", "loading", "partial", "success", "error", "permission"],
+      "recovery": "safe back or cancel path plus state-preserving retry when supported",
+      "accessibility_invariants": ["current location exposed", "source order retained", "step status announced", "focus not obscured"]
+    },
+    {
+      "id": "data-view",
+      "surface": "plugin-data-view",
+      "navigation": "existing product area and visible current view",
+      "primary_action": "one page-level creation action or one contextual bulk action, not both as equal primaries",
+      "notice_owner": "page-level Notice for query/action failures",
+      "inline_owner": "filter, row, or bulk-action region that caused the state",
+      "states": ["loading", "empty", "success", "error", "disabled", "permission"],
+      "recovery": "clear invalid filters, retry supported query, or return to an available view",
+      "accessibility_invariants": ["table or list semantics", "named filters", "result count status", "keyboard-operable local overflow"]
+    },
+    {
+      "id": "classic-field-error",
+      "surface": "plugin-settings-tool",
+      "navigation": "unchanged Core context",
+      "primary_action": "unchanged form submission",
+      "notice_owner": "optional error summary after wp-header-end",
+      "inline_owner": "Core-styled .inline message adjacent to the field, never .below-h2",
+      "states": ["error"],
+      "recovery": "name the problem, preserve the value when safe, and identify the correction",
+      "accessibility_invariants": ["textual error", "aria-describedby or equivalent association", "color not sole cue"]
+    },
+    {
+      "id": "react-low-priority-success",
+      "surface": "plugin-workflow-dashboard",
+      "navigation": "unchanged",
+      "primary_action": "the action that caused the saved state",
+      "notice_owner": "Snackbar only because the saved result remains visible elsewhere",
+      "inline_owner": "owning React region",
+      "states": ["success"],
+      "recovery": "none required for a non-destructive saved confirmation unless undo exists",
+      "accessibility_invariants": ["status announced", "focus not moved", "message not the only record of success"]
+    },
+    {
+      "id": "react-actionable-error",
+      "surface": "plugin-workflow-dashboard",
+      "navigation": "unchanged",
+      "primary_action": "retry only when the behavior supports a safe retry",
+      "notice_owner": "persistent WordPress Notice, not Snackbar",
+      "inline_owner": "owning React task region",
+      "states": ["error"],
+      "recovery": "state the user-relevant problem and an available next action",
+      "accessibility_invariants": ["error announced", "Notice remains reachable", "entered state preserved when safe"]
+    },
+    {
+      "id": "empty-first-run",
+      "surface": "plugin-data-view",
+      "navigation": "current view remains visible",
+      "primary_action": "one valid creation or connection action when available",
+      "notice_owner": "empty region, not a success or error Notice",
+      "inline_owner": "data region",
+      "states": ["empty"],
+      "recovery": "explain what is absent and how to create or connect the first item",
+      "accessibility_invariants": ["real heading", "action accessible name", "no empty table shell as sole message"]
+    },
+    {
+      "id": "permission-denied",
+      "surface": "plugin-network-admin",
+      "navigation": "preserve safe Network Admin return path",
+      "primary_action": "none when no permitted action exists",
+      "notice_owner": "page-level Core Notice or equivalent permission state",
+      "inline_owner": "restricted region when only part of the page is unavailable",
+      "states": ["permission", "disabled"],
+      "recovery": "provide a safe return and no sensitive implementation detail",
+      "accessibility_invariants": ["reason available in text", "impossible action not misleading", "focus moves to meaningful content only if needed"]
+    },
+    {
+      "id": "destructive-action",
+      "surface": "plugin-workflow-dashboard",
+      "navigation": "retain current context until the action is confirmed",
+      "primary_action": "name the affected object and destructive result",
+      "notice_owner": "persistent result Notice after completion",
+      "inline_owner": "confirmation dialog or action region",
+      "states": ["initial", "loading", "success", "error", "disabled"],
+      "recovery": "confirm when not easily reversible, otherwise offer genuine undo",
+      "accessibility_invariants": ["dialog name", "focus containment and return", "keyboard cancel", "consequence in text"]
+    }
+  ]
+}

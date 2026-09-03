@@ -1,0 +1,4 @@
+interface:
+  display_name: "WordPress Backend UI"
+  short_description: "Consistent WordPress plugin admin interfaces"
+  default_prompt: "Use $wordpress-backend-ui to design or audit this WordPress plugin admin interface."

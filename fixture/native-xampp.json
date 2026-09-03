@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "runtime": {
+    "php": "8.5.5",
+    "wp_cli": "2.12.0",
+    "apache": "2.4.66",
+    "mariadb": "11.4.10"
+  },
+  "binaries": {
+    "php": "apps/php/php.exe",
+    "wp_cli": "tmp/wp-cli.phar",
+    "apache": "apps/apache/bin/httpd.exe",
+    "mariadb": "apps/mysql/bin/mariadb.exe"
+  },
+  "plugin_slug": "wordpress-backend-skill-fixture",
+  "plugin_source": "fixture/plugin",
+  "required_build_artifacts": [
+    "fixture/plugin/build/index.js",
+    "fixture/plugin/build/index.asset.php",
+    "fixture/plugin/build/design-tokens.css",
+    "fixture/plugin/build/style-index.css",
+    "fixture/plugin/build/style-index-rtl.css"
+  ],
+  "sites": [
+    {
+      "name": "single",
+      "relative_path": "www/wordpress-backend-skill-test",
+      "wordpress": "7.0",
+      "mode": "single",
+      "plugin_activation": "active",
+      "locale": "de_DE"
+    },
+    {
+      "name": "network",
+      "relative_path": "www/wordpress-backend-skill-test-multisite",
+      "wordpress": "7.0.4",
+      "mode": "multisite",
+      "plugin_activation": "network-active",
+      "locale": "de_DE"
+    }
+  ]
+}

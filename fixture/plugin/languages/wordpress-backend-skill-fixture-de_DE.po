@@ -1,0 +1,183 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: WordPress Backend Skill Fixture 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"Last-Translator: \n"
+"Language-Team: German\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"POT-Creation-Date: 2026-09-03 00:00+0000\n"
+"PO-Revision-Date: 2026-09-03 00:00+0000\n"
+"Language: de_DE\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Domain: wordpress-backend-skill-fixture\n"
+
+#. Plugin Name of the plugin
+#: wordpress-backend-skill-fixture.php
+msgid "WordPress Backend Skill Fixture"
+msgstr "WordPress-Backend-Skill-Testoberfläche"
+
+#. Description of the plugin
+#: wordpress-backend-skill-fixture.php
+msgid "Rendered acceptance fixture for the WordPress Backend UI Agent Skill."
+msgstr "Gerenderte Abnahmetestoberfläche für den WordPress Backend UI Agent Skill."
+
+#: wordpress-backend-skill-fixture.php:82
+msgid "Connection"
+msgstr "Verbindung"
+
+#: wordpress-backend-skill-fixture.php:84
+msgid "Configure the endpoint used by this test fixture."
+msgstr "Den vollständigen Endpunkt konfigurieren, den diese Testoberfläche verwendet."
+
+#: wordpress-backend-skill-fixture.php:91
+msgid "Endpoint URL"
+msgstr "URL des vollständigen Endpunkts"
+
+#: wordpress-backend-skill-fixture.php:104
+msgid "Enter the complete HTTPS endpoint."
+msgstr "Die vollständige HTTPS-Adresse des Endpunkts eingeben."
+
+#: wordpress-backend-skill-fixture.php:121
+#: wordpress-backend-skill-fixture.php:122
+#: wordpress-backend-skill-fixture.php:135
+#: wordpress-backend-skill-fixture.php:136
+msgid "Backend UI Fixture"
+msgstr "Backend-UI-Testoberfläche"
+
+#: wordpress-backend-skill-fixture.php:228
+msgid "You are not allowed to view this fixture."
+msgstr "Keine Berechtigung zum Anzeigen dieser Testoberfläche."
+
+#: wordpress-backend-skill-fixture.php:235
+msgid "The fixture completed successfully."
+msgstr "Die Testoberfläche wurde erfolgreich abgeschlossen."
+
+#: wordpress-backend-skill-fixture.php:242
+msgid "The fixture could not complete its checks."
+msgstr "Die Testoberfläche konnte ihre Prüfungen nicht abschließen."
+
+#: wordpress-backend-skill-fixture.php:249
+msgid "The fixture completed only part of its checks."
+msgstr "Die Testoberfläche konnte nur einen Teil ihrer Prüfungen abschließen."
+
+#: wordpress-backend-skill-fixture.php:266
+msgid "Save settings"
+msgstr "Einstellungen speichern"
+
+#: wordpress-backend-skill-fixture.php:274
+msgid "The fixture build is missing. Run the documented build command before testing this runtime."
+msgstr "Der Build der Testoberfläche fehlt. Vor dem Test dieser Laufzeit den dokumentierten Build-Befehl ausführen."
+
+#: build/index.js:1
+msgid "Loading the fixture data."
+msgstr "Die Daten der Testoberfläche werden geladen."
+
+#: build/index.js:1
+msgid "Some fixture results are available, but the accessibility checks are still missing."
+msgstr "Einige Ergebnisse der Testoberfläche sind verfügbar, die Barrierefreiheitsprüfungen fehlen jedoch noch."
+
+#: build/index.js:1
+msgid "Retry fixture checks"
+msgstr "Prüfungen der Testoberfläche wiederholen"
+
+#: build/index.js:1
+msgid "No fixture result exists yet."
+msgstr "Für die Testoberfläche liegt noch kein Ergebnis vor."
+
+#: build/index.js:1
+msgid "Create example result"
+msgstr "Beispielergebnis erstellen"
+
+#: build/index.js:1
+msgid "The fixture data could not be loaded."
+msgstr "Die Daten der Testoberfläche konnten nicht geladen werden."
+
+#: build/index.js:1
+msgid "Retry fixture load"
+msgstr "Daten der Testoberfläche erneut laden"
+
+#: build/index.js:1
+msgid "This account cannot change the fixture value."
+msgstr "Dieses Konto kann den Wert der Testoberfläche nicht ändern."
+
+#: build/index.js:1
+msgid "Return to the dashboard"
+msgstr "Zum Dashboard zurückkehren"
+
+#: build/index.js:1
+msgid "The value stays unavailable until the fixture prerequisites are complete."
+msgstr "Der Wert bleibt nicht verfügbar, bis alle Voraussetzungen der Testoberfläche erfüllt sind."
+
+#: build/index.js:1
+msgid "Use a long value to test wrapping and vertical flow."
+msgstr "Einen langen Wert verwenden, um Zeilenumbrüche und den vertikalen Inhaltsfluss zu prüfen."
+
+#: build/index.js:1
+msgid "Core Components workflow"
+msgstr "Core-Komponenten-Ablauf"
+
+#: build/index.js:1
+msgid "Change one value and keep the result visible in the same task region."
+msgstr "Einen Wert ändern und das Ergebnis im selben Aufgabenbereich sichtbar halten."
+
+#: build/index.js:1
+msgid "The test value was saved for this browser session."
+msgstr "Der Testwert wurde für diese Browser-Sitzung gespeichert."
+
+#: build/index.js:1
+msgid "Translated test value"
+msgstr "Übersetzter Testwert für die responsive Prüfung"
+
+#: build/index.js:1
+msgid "Save test value"
+msgstr "Testwert für die Prüfung speichern"
+
+#: build/index.js:1
+msgid "Reset test value"
+msgstr "Testwert zurücksetzen"
+
+#: build/index.js:1
+msgid "Loading the bundled WPDS region."
+msgstr "Der gebündelte WPDS-Bereich wird geladen."
+
+#: build/index.js:1
+msgid "Bundled WPDS region"
+msgstr "Gebündelter WPDS-Bereich"
+
+#: build/index.js:1
+msgid "This region uses the public Stack API and bundled WPDS design tokens."
+msgstr "Dieser Bereich verwendet die öffentliche Stack-API und die gebündelten WPDS-Design-Tokens."
+
+#: build/index.js:1
+msgid "Responsive data view"
+msgstr "Responsive Datenansicht"
+
+#: build/index.js:1
+msgid "The table scrolls locally when its columns cannot reflow."
+msgstr "Die Tabelle scrollt nur in ihrem eigenen Bereich, wenn ihre Spalten nicht umbrechen können."
+
+#: build/index.js:1
+msgid "Fixture result table"
+msgstr "Ergebnistabelle der Testoberfläche"
+
+#: build/index.js:1
+msgid "Item"
+msgstr "Eintrag"
+
+#: build/index.js:1
+msgid "Localized number"
+msgstr "Lokalisierte Zahl"
+
+#: build/index.js:1
+msgid "Example item"
+msgstr "Beispieleintrag"
+
+#: build/index.js:1
+msgid "Server-formatted date"
+msgstr "Serverseitig formatiertes Datum"
+
+#: build/index.js:1
+msgid "JavaScript-formatted date"
+msgstr "In JavaScript formatiertes Datum"

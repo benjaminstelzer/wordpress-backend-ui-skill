@@ -1,0 +1,104 @@
+{
+  "schema_version": 1,
+  "frozen_on": "2026-09-03",
+  "contract": "docs/specs/spacing-and-css.md",
+  "cases": [
+    {
+      "id": "reuse-settings-api-form",
+      "scenario": "A classic plugin settings page needs aligned labels and controls.",
+      "runtime": "php-core",
+      "decision": "reuse",
+      "owner": "Settings API and form-table Core CSS",
+      "custom_css_allowed": false,
+      "checked_before_css": ["Settings API", "semantic admin markup", "Core form-table defaults"],
+      "prohibited": ["global .form-table override", "parallel grid over the same subtree"]
+    },
+    {
+      "id": "reuse-core-button",
+      "scenario": "A primary save action needs WordPress appearance and states.",
+      "runtime": "php-core",
+      "decision": "reuse",
+      "owner": "Core button classes",
+      "custom_css_allowed": false,
+      "checked_before_css": ["button button-primary", "submit_button()"],
+      "prohibited": ["custom button primitive", "custom focus style replacing Core"]
+    },
+    {
+      "id": "reuse-core-components-flex",
+      "scenario": "A new React field group needs vertical spacing.",
+      "runtime": "react-core-components",
+      "decision": "reuse",
+      "owner": "Flex",
+      "custom_css_allowed": false,
+      "checked_before_css": ["specialized component owner", "Flex vertical composition"],
+      "flex_gap_proven": false,
+      "prohibited": ["local stack class", "__experimentalVStack without opt-in"]
+    },
+    {
+      "id": "reuse-loaded-wpds-token",
+      "scenario": "A bundled WPDS Stack needs separation between independent sections.",
+      "runtime": "bundled-wpds",
+      "decision": "reuse",
+      "owner": "loaded WPDS gap-xl token",
+      "custom_css_allowed": false,
+      "checked_before_css": ["public Stack API bundled", "exported token stylesheet loaded", "semantic gap token available"],
+      "prohibited": ["numeric duplicate", "define --wpds-*", "override --wpds-*"]
+    },
+    {
+      "id": "exception-php-summary-grid",
+      "scenario": "A plugin-owned PHP workflow region needs a responsive card grid and Core provides no layout primitive for the region.",
+      "runtime": "php-core",
+      "decision": "exception",
+      "owner": "plugin-owned summary region",
+      "custom_css_allowed": true,
+      "checked_before_css": ["semantic admin markup", "Core classes", "Core default CSS", "available token stylesheet"],
+      "flex_gap_proven": "Core Components Flex is unavailable in this PHP runtime and no Core class expresses the card grid.",
+      "smallest_scope": ".plugin-slug-summary-grid",
+      "value_source": "Skill-Norm gap for card relationship",
+      "required_checks": ["320px reflow", "RTL", "400% zoom", "focus", "text expansion", "empty state"]
+    },
+    {
+      "id": "exception-react-cross-row-grid",
+      "scenario": "Independent React rows must share aligned columns across row boundaries, which a one-dimensional Flex stack cannot express.",
+      "runtime": "react-core-components",
+      "decision": "exception",
+      "owner": "plugin-owned aligned-row group",
+      "custom_css_allowed": true,
+      "checked_before_css": ["specialized components", "Flex", "FlexItem", "FlexBlock", "provided tokens"],
+      "flex_gap_proven": "Flex is one-dimensional and cannot align columns across independent row boundaries.",
+      "smallest_scope": ".plugin-slug-aligned-fields",
+      "value_source": "Skill-Norm gap through a plugin custom property",
+      "required_checks": ["782px stack", "320px reflow", "RTL", "400% zoom", "focus", "long labels"]
+    },
+    {
+      "id": "reject-unloaded-wpds-token",
+      "scenario": "A classic page references --wpds-gap-lg without the WPDS token stylesheet.",
+      "runtime": "php-core",
+      "decision": "reject",
+      "owner": "Core default CSS",
+      "custom_css_allowed": false,
+      "checked_before_css": ["runtime token stylesheet availability"],
+      "prohibited": ["define --wpds-gap-lg", "fallback imitating WPDS namespace"]
+    },
+    {
+      "id": "reject-global-admin-fix",
+      "scenario": "A local plugin panel has extra margin and the proposed fix targets .wp-admin .wrap globally.",
+      "runtime": "hybrid",
+      "decision": "reject",
+      "owner": "plugin panel parent",
+      "custom_css_allowed": false,
+      "checked_before_css": ["local parent flow", "duplicate child margin", "Core shell owner"],
+      "prohibited": ["global .wp-admin override", "global .wrap override", "!important"]
+    },
+    {
+      "id": "reject-cosmetic-core-rebuild",
+      "scenario": "A plugin proposes rebuilding a Notice to get different padding and border radius.",
+      "runtime": "react-core-components",
+      "decision": "reject",
+      "owner": "WordPress Notice component",
+      "custom_css_allowed": false,
+      "checked_before_css": ["Notice variants", "Core component states"],
+      "prohibited": ["custom notice primitive", "parallel palette", "parallel radius"]
+    }
+  ]
+}

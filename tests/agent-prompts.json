@@ -1,0 +1,128 @@
+{
+  "schema_version": 1,
+  "frozen_on": "2026-09-03",
+  "prohibited_match": "required-subset",
+  "output_fields": [
+    "surface",
+    "support_status",
+    "runtime_owner",
+    "shell_owner",
+    "spacing_owner",
+    "experimental_components_policy",
+    "prohibited_recommendations"
+  ],
+  "cases": [
+    {
+      "id": "agent-classic-settings",
+      "source_case": "route-classic-settings",
+      "input": "Create a plugin-owned settings page under Settings with PHP and the Settings API.",
+      "expected": {
+        "surface": "plugin-settings-tool",
+        "support_status": "supported",
+        "runtime_owner": "php-core",
+        "shell_owner": "core-admin",
+        "spacing_owner": "core-default-css",
+        "experimental_components_policy": "deny",
+        "prohibited_recommendations": ["frontend-theme-spacing", "inject-wpds-into-classic", "global-wp-admin-overrides", "custom-css-before-core"]
+      }
+    },
+    {
+      "id": "agent-core-components-workflow",
+      "source_case": "route-core-components-workflow",
+      "input": "Build a plugin-owned React workflow page with WordPress-provided @wordpress/components and no experimental component policy.",
+      "expected": {
+        "surface": "plugin-workflow-dashboard",
+        "support_status": "supported",
+        "runtime_owner": "react-core-components",
+        "shell_owner": "core-admin-plugin-root",
+        "spacing_owner": "core-components",
+        "experimental_components_policy": "unknown",
+        "prohibited_recommendations": ["assume-react-is-wpds", "define-wpds-tokens", "custom-css-before-core"]
+      }
+    },
+    {
+      "id": "agent-bundled-wpds-dashboard",
+      "source_case": "route-bundled-wpds-dashboard",
+      "input": "Build a plugin-owned dashboard that deliberately bundles the pinned public WPDS UI API and exported design-token stylesheet.",
+      "expected": {
+        "surface": "plugin-workflow-dashboard",
+        "support_status": "supported-experimental-opt-in",
+        "runtime_owner": "bundled-wpds",
+        "shell_owner": "core-admin-plugin-root",
+        "spacing_owner": "wpds-stack-and-exported-token-stylesheet",
+        "experimental_components_policy": "allow",
+        "prohibited_recommendations": ["unlock-private-theme-provider", "define-wpds-tokens", "global-wp-admin-overrides", "custom-css-before-core"]
+      }
+    },
+    {
+      "id": "agent-hybrid-settings",
+      "source_case": "route-hybrid-settings",
+      "input": "Add a React Core-components application below a classic PHP settings-page title and Core notices.",
+      "expected": {
+        "surface": "plugin-settings-tool",
+        "support_status": "supported",
+        "runtime_owner": "hybrid",
+        "shell_owner": "core-admin-region-map",
+        "spacing_owner": "region-map",
+        "experimental_components_policy": "deny",
+        "prohibited_recommendations": ["assume-react-is-wpds", "global-wp-admin-overrides", "custom-css-before-core"]
+      }
+    },
+    {
+      "id": "agent-network-admin-classic",
+      "source_case": "route-network-admin-classic",
+      "input": "Create a plugin-owned Network Admin settings page for multisite using PHP and network options.",
+      "expected": {
+        "surface": "plugin-network-admin",
+        "support_status": "supported-explicit-multisite",
+        "runtime_owner": "php-core",
+        "shell_owner": "network-admin",
+        "spacing_owner": "core-default-css",
+        "experimental_components_policy": "deny",
+        "prohibited_recommendations": ["frontend-theme-spacing", "inject-wpds-into-classic", "global-wp-admin-overrides", "custom-css-before-core"]
+      }
+    },
+    {
+      "id": "agent-post-metabox",
+      "source_case": "route-post-metabox",
+      "input": "Redesign spacing inside an existing post metabox.",
+      "expected": {
+        "surface": "post-metabox",
+        "support_status": "excluded-route-to-host-owner",
+        "runtime_owner": "host-owned",
+        "shell_owner": "post-editor",
+        "spacing_owner": "post-editor-metabox",
+        "experimental_components_policy": "deny",
+        "prohibited_recommendations": ["own-host-surface", "inject-wpds-into-classic", "global-wp-admin-overrides"]
+      }
+    },
+    {
+      "id": "agent-block-editor-sidebar",
+      "source_case": "route-block-editor-sidebar",
+      "input": "Add controls to a Block Editor sidebar SlotFill.",
+      "expected": {
+        "surface": "block-editor-sidebar-slotfill",
+        "support_status": "excluded-route-to-host-owner",
+        "runtime_owner": "host-owned",
+        "shell_owner": "block-editor",
+        "spacing_owner": "block-editor",
+        "experimental_components_policy": "unknown",
+        "prohibited_recommendations": ["own-host-surface", "frontend-theme-spacing", "recommend-without-clarification"]
+      }
+    },
+    {
+      "id": "agent-ambiguous-react-runtime",
+      "source_case": "route-ambiguous-react-runtime",
+      "input": "Make our plugin's React admin page consistent and responsive. The component packages and bundling are not specified.",
+      "expected": {
+        "surface": "plugin-owned-unspecified",
+        "support_status": "needs-clarification",
+        "runtime_owner": "unknown",
+        "shell_owner": "unknown",
+        "spacing_owner": "unknown",
+        "experimental_components_policy": "unknown",
+        "prohibited_recommendations": ["assume-react-is-wpds", "define-wpds-tokens", "recommend-without-clarification"]
+      }
+    }
+  ]
+}

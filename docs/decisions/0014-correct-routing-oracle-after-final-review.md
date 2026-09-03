@@ -7,62 +7,58 @@ accepted: 2026-09-03
 scope: tests/routing-oracle
 ---
 
-# Network-Admin-Hybrid als nicht-experimentelle Route korrigieren
+# Correct the Network Admin hybrid to a non-experimental route
 
 ## Decision
 
-Der Golden Case `route-network-admin-hybrid` verwendet
-`experimental_components_policy: deny`. Seine beschriebene React-Region nutzt
-ausdruecklich Core Components und ist damit wie der entsprechende Single-Site-
-Hybrid keine unbekannte oder experimentelle Runtime.
+The golden case `route-network-admin-hybrid` uses
+`experimental_components_policy: deny`. Its described React region explicitly
+uses Core Components and is therefore no more an unknown or experimental
+runtime than the corresponding single-site hybrid.
 
-Die kanonische Routing-Tabelle fuehrt ausserdem alle bereits im eingefrorenen
-Routing-Korpus verwendeten Surface-, Shell- und Spacing-Werte explizit auf.
-Fuer ausgeschlossene Host-Flaechen ist die Policy-Regel nun deterministisch:
-bekannte Classic/Core-PHP-Hosts ergeben `deny`, React- oder nicht spezifizierte
-Hosts `unknown`.
+The canonical routing table also explicitly lists every surface, shell, and
+spacing value already used in the frozen routing corpus. For excluded host
+surfaces, the policy rule is now deterministic: known Classic/Core PHP hosts
+produce `deny`; React or unspecified hosts produce `unknown`.
 
 ## Problem
 
-Der finale Read-only-Review fand einen Widerspruch zwischen der normativen
-Policy-Regel und einem Golden Case sowie sechs ausgeschlossene/ambige Cases,
-deren strukturierte Werte nicht in der kanonischen Wertetabelle standen. Der
-siebenfaellige Fresh-Agent-Korpus enthielt diese Luecke nicht.
+The final read-only review found a contradiction between the normative policy
+rule and one golden case, plus six excluded or ambiguous cases whose structured
+values were absent from the canonical value table. The seven-case fresh-agent
+corpus did not contain this gap.
 
 ## Drivers
 
-- Derselbe bekannte Core-only-Hybrid muss dieselbe Policy liefern.
-- Jeder Golden-Wert muss aus der installierten Skill-Dokumentation ableitbar
-  sein.
-- Ausgeschlossene Oberflaechen bleiben beim Host und duerfen keine implizite
-  Experimentfreigabe erhalten.
-- Eine fachliche Oracle-Korrektur muss nach ADR-0012 sichtbar neu baselint
-  werden.
+- The same known Core-only hybrid must produce the same policy.
+- Every golden value must be derivable from the installed Skill documentation.
+- Excluded interfaces remain with the host and must receive no implicit
+  experimental permission.
+- A semantic oracle correction must be visibly rebaselined under ADR-0012.
 
 ## Considered alternatives
 
-1. Network Admin als `unknown` behandeln: widerspricht der ausdruecklich
-   genannten Core-Components-Runtime.
-2. Die fehlenden Werte aus dem Golden-Korpus entfernen: verringert die
-   Support-Matrix und verdeckt statt behebt die Dokumentationsluecke.
-3. Nur den Fresh-Agent-Korpus erweitern: laesst den kanonischen Vertrag
-   widerspruechlich.
+1. Treat Network Admin as `unknown`: contradicts the explicitly named Core
+   Components runtime.
+2. Remove the missing values from the golden corpus: shrinks the support matrix
+   and hides the documentation gap instead of fixing it.
+3. Expand only the fresh-agent corpus: leaves the canonical contract
+   contradictory.
 
 ## Consequences
 
-- `tests/cases/routing.yaml` und sein Hash werden bewusst aktualisiert.
-- Der erweiterte Fresh-Agent-Korpus muss nach der Korrektur erneut standalone
-  und mit optionalem Scoville UI laufen.
-- Andere Routing-, Spacing-, i18n-, responsive und UI-Oracles bleiben
-  unveraendert.
+- `tests/cases/routing.yaml` and its hash are deliberately updated.
+- The expanded fresh-agent corpus must be rerun standalone and with optional
+  Scoville UI after the correction.
+- Other routing, spacing, i18n, responsive, and UI oracles remain unchanged.
 
 ## Confirmation
 
-Die Entscheidung ist umgesetzt, wenn die kanonische Tabelle alle Routing-
-Werte abdeckt, der Network-Admin-Hybrid `deny` liefert, die Manifestpruefung
-besteht und der erweiterte Fresh-Agent-Korpus in beiden Modi erneut besteht.
+The Decision is implemented when the canonical table covers all routing values,
+the Network Admin hybrid produces `deny`, manifest validation passes, and the
+expanded fresh-agent corpus passes again in both modes.
 
 ## Revisit when
 
-Ein ausgeschlossener Host in Version 1 aufgenommen wird, eine Runtime
-experimentell wird oder neue strukturierte Routing-Werte hinzukommen.
+An excluded host is included in version 1, a runtime becomes experimental, or
+new structured routing values are added.

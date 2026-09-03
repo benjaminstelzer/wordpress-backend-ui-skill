@@ -7,55 +7,83 @@ accepted: 2026-09-03
 scope: skill/ui-paths
 ---
 
-# Admin-Flaeche und Runtime-Owner getrennt klassifizieren
+# Classify admin surface and runtime owner separately
 
 ## Decision
 
-Der Skill klassifiziert jede Aufgabe auf zwei unabhaengigen Achsen: Admin-Flaeche und Runtime-/Komponenten-Owner. Die Flaeche bestimmt, ob der Skill in Version 1 zustaendig ist; der Runtime-Owner bestimmt Komponenten, CSS, Tokens und Spacing-Verantwortung.
+The Skill classifies every task on two independent axes: admin surface and
+runtime/component owner. The surface determines whether version 1 of the Skill
+applies; the runtime owner determines component, CSS, token, and spacing
+ownership.
 
-Unterstuetzt werden plugin-eigene Single-Site-Settings-/Tool-Seiten, Workflow-/Dashboard-Seiten, Data Views sowie plugin-eigene Network-Admin-Seiten mit explizitem Multisite-Kontext. Separat geroutet oder ausgeschlossen werden Block-Editor-Sidebars und SlotFills, Editor-Canvas, Post-Metaboxen, Dashboard-Widgets, Profilfelder, Erweiterungen bestehender Core-Listen/-Screens und Oberflaechen innerhalb eines anderen Plugins.
+Supported surfaces are plugin-owned single-site settings and tools pages,
+workflow and dashboard pages, data views, and plugin-owned Network Admin pages
+with explicit Multisite context. Block Editor sidebars and SlotFills, the
+editor canvas, post metaboxes, Dashboard widgets, profile fields, extensions of
+existing Core lists or screens, and interfaces inside another plugin are routed
+separately or excluded.
 
-Die Runtime-Owner sind:
+The runtime owners are:
 
-1. PHP/Core-Markup mit Core-Default-CSS;
-2. React mit Core-bereitgestelltem `@wordpress/components`;
-3. gebuendeltes experimentelles WPDS aus `@wordpress/ui`, `@wordpress/theme` und `@wordpress/admin-ui`;
-4. hybrid mit explizitem Owner je DOM-Region einschliesslich Portalen und Overlays.
+1. PHP/Core markup with Core default CSS;
+2. React with Core-provided `@wordpress/components`;
+3. bundled experimental WPDS from `@wordpress/ui`, `@wordpress/theme`, and
+   `@wordpress/admin-ui`;
+4. hybrid, with an explicit owner for each DOM region, including portals and
+   overlays.
 
-Der klassische Pfad ist die stabile Baseline. Experimentelles WPDS ist ein bewusster, versionsgebundener Opt-in. React allein bedeutet nicht WPDS. Bei einer typischen hybriden Seite besitzt Core `#wpcontent`, `.wrap`, den Seitentitel, `.wp-header-end` und seitenweite Notices; der Plugin-Root besitzt nur seinen inneren Teilbaum. `.form-table` und ein plugin-eigener Gap-Stack duerfen nicht denselben Teilbaum besitzen.
+The classic path is the stable baseline. Experimental WPDS is a deliberate,
+version-bound opt-in. React alone does not mean WPDS. On a typical hybrid page,
+Core owns `#wpcontent`, `.wrap`, the page title, `.wp-header-end`, and page-wide
+notices; the plugin root owns only its inner subtree. `.form-table` and a
+plugin-owned gap stack must not own the same subtree.
 
 ## Problem
 
-WordPress 7.0 besitzt nicht bloss die Wahl Classic oder React. React kann stabile Core-Komponenten oder experimentelle WPDS-Pakete verwenden, und dieselbe Plugin-Seite kann mehrere Owner enthalten. Ohne getrennte Flaechen- und Runtime-Klassifikation entstehen falsche Stabilitaetsannahmen, doppelte Abstaende und Eingriffe in fremd besessene DOM-Regionen.
+WordPress 7.0 is not simply a choice between Classic and React. React can use
+stable Core components or experimental WPDS packages, and the same plugin page
+can contain multiple owners. Without separate surface and runtime
+classification, agents make false stability assumptions, create duplicate
+spacing, and modify DOM regions owned elsewhere.
 
 ## Drivers
 
-- Der Skill soll fuer WordPress-Plugin-Backends allgemein einsetzbar sein.
-- Spacing und Vertical Content Flow muessen fuer Agenten eindeutig sein.
-- Offizielle Core-Fakten und projektdefinierte Normen muessen unterscheidbar bleiben.
-- Das Ergebnis muss responsive und mit bestehenden `wp-admin`-Seiten kompatibel sein.
-- Experimentelle APIs duerfen nicht als stabile globale Runtime behandelt werden.
+- The Skill should work broadly for WordPress plugin backends.
+- Spacing and vertical content flow must be unambiguous for agents.
+- Official Core facts and project-defined norms must remain distinguishable.
+- The result must be responsive and compatible with existing `wp-admin` pages.
+- Experimental APIs must not be treated as a stable global runtime.
 
 ## Considered alternatives
 
-1. Nur klassisches `wp-admin`: stabiler und kleiner, aber unzureichend fuer React-Plugin-Oberflaechen.
-2. React mit WPDS gleichsetzen: einfacher Entscheidungsbaum, aber sachlich falsch, weil `@wordpress/components` und experimentelles WPDS unterschiedliche Vertraege besitzen.
-3. Alle Admin-Einbettungen in Version 1 unterstuetzen: groessere Abdeckung, aber keine einheitliche Shell- oder Ownership-Grenze.
-4. Nur modernes WPDS: konsistenteres Token-Modell, aber fuer WordPress 7.0 experimentell und nicht global verfuegbar.
+1. Classic `wp-admin` only: smaller and more stable, but insufficient for React
+   plugin interfaces.
+2. Equate React with WPDS: a simpler decision tree, but factually wrong because
+   `@wordpress/components` and experimental WPDS have different contracts.
+3. Support every admin embedding in version 1: broader coverage, but no uniform
+   shell or ownership boundary.
+4. Modern WPDS only: a more consistent token model, but experimental in
+   WordPress 7.0 and not globally available.
 
 ## Consequences
 
-- Der Skill benoetigt eine verpflichtende Zweiachsen-Klassifikation und eine Support-Matrix.
-- Beispiele, Spacing-Regeln und Responsive-Verhalten werden je Runtime-Owner getrennt dokumentiert.
-- Gemeinsame Skill-Normen duerfen nur auf abgegrenzte Plugin-Komponenten angewendet werden.
-- Portale, Overlays und Hybrid-Grenzen benoetigen einen Owner.
-- Die Quellen- und Wartungsflaeche ist groesser als bei einem Classic-only-Skill.
-- Eine spaetere Stabilisierung von WPDS kann eine Neubewertung der Baseline erfordern.
+- The Skill needs a mandatory two-axis classification and support matrix.
+- Examples, spacing rules, and responsive behavior are documented separately
+  for each runtime owner.
+- Shared Skill-Norms may be applied only to bounded plugin components.
+- Portals, overlays, and hybrid boundaries need an owner.
+- The source and maintenance surface is larger than for a Classic-only Skill.
+- Future stabilization of WPDS may require reassessing the baseline.
 
 ## Confirmation
 
-Die Entscheidung ist umgesetzt, wenn ein eingefrorener Routing-Korpus fuer jeden Fall `surface`, `support_status`, `runtime_owner`, `shell_owner`, `spacing_owner`, Quellen und verbotene Empfehlungen erwartet und alle Faelle deterministisch klassifiziert werden.
+The Decision is implemented when a frozen routing corpus expects `surface`,
+`support_status`, `runtime_owner`, `shell_owner`, `spacing_owner`, sources, and
+forbidden recommendations for every case, and every case is classified
+deterministically.
 
 ## Revisit when
 
-`@wordpress/ui`, `@wordpress/theme` und `@wordpress/admin-ui` nicht mehr experimentell sind, WordPress eine verbindliche gemeinsame Admin-HIG veroeffentlicht oder ausgeschlossene Einbettungsflaechen in den Skill-Scope aufgenommen werden sollen.
+`@wordpress/ui`, `@wordpress/theme`, and `@wordpress/admin-ui` are no longer
+experimental; WordPress publishes a binding shared admin HIG; or excluded
+embedding surfaces should be brought into the Skill's scope.

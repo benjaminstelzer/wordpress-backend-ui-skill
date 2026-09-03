@@ -9,42 +9,66 @@ supersedes: ADR-0003
 superseded_by: ADR-0007
 ---
 
-# Token- und CSS-Ownership an den Runtime-Owner binden
+# Bind token and CSS ownership to the runtime owner
 
 ## Decision
 
-Der Skill verpflichtet Agenten je DOM-Region auf folgende Reihenfolge: vorhandene WordPress-API und semantisches Core-Markup, vorhandene Core-Klasse oder WordPress-Komponente mit Default-CSS, ein im gewaehlten Runtime-Pfad tatsaechlich bereitgestellter semantischer Token, plugin-eigene Komposition dieser Primitive und erst als letzte Ausnahme eine neue eng gescopte CSS-Regel.
+For each DOM region, the Skill requires agents to follow this order: existing
+WordPress API and semantic Core markup; an existing Core class or WordPress
+component with default CSS; a semantic token actually provided in the selected
+runtime path; a plugin-owned composition of those primitives; and only as a
+final exception, a new narrowly scoped CSS rule.
 
-Semantische `--wpds-*`-Variablen duerfen nur konsumiert werden, wenn der ausgewaehlte und geladene WPDS-Provider oder dessen Stylesheet sie bereitstellt. Der Skill und Plugin-Code duerfen `--wpds-*` weder definieren, ueberschreiben noch nachahmen. Primitive WPDS-Tokens sind Implementierungsdetails. Classic/Core erbt zuerst die Core-Rhythmik. React mit `@wordpress/components` verwendet zuerst Komponenten-Defaults und APIs; `__experimentalVStack` bleibt experimentell und sein `spacing` ist ein Multiplikator des 4-px-Rasters. Eine unvermeidbare isolierte Plugin-Luecke darf eine als **Skill-Norm** markierte Zahl oder eine plugin-eigene Custom Property verwenden, aber niemals als WordPress-Token ausgeben.
+Semantic `--wpds-*` variables may be consumed only when the selected and loaded
+WPDS provider or its stylesheet supplies them. The Skill and plugin code must
+neither define, override, nor imitate `--wpds-*`. Primitive WPDS tokens are
+implementation details. Classic/Core first inherits Core rhythm. React with
+`@wordpress/components` first uses component defaults and APIs;
+`__experimentalVStack` remains experimental, and its `spacing` is a multiplier
+of the 4 px grid. An unavoidable isolated plugin gap may use a number marked as
+a **Skill-Norm** or a plugin-owned custom property, but must never present it as
+a WordPress token.
 
 ## Problem
 
-Nicht jeder WordPress-Backend-Pfad laedt WPDS-Tokens. Die pauschale Forderung nach WordPress-Gap-Tokens kann Agenten dazu bringen, nicht vorhandene Variablen zu erfinden oder experimentelle Styles in klassische Seiten einzuschleusen.
+Not every WordPress backend path loads WPDS tokens. A blanket requirement for
+WordPress gap tokens can cause agents to invent nonexistent variables or inject
+experimental styles into classic pages.
 
 ## Drivers
 
-- Der Nutzer verlangt WordPress-Defaults und moeglichst wenig eigenes CSS.
-- Token-Verfuegbarkeit ist runtime- und providerabhaengig.
-- Core-, Components- und WPDS-Pfade besitzen unterschiedliche Stabilitaets- und Spacing-Vertraege.
-- Echte Layoutluecken muessen weiterhin klein, lokal und nachvollziehbar geschlossen werden koennen.
+- The user requires WordPress defaults and as little custom CSS as possible.
+- Token availability depends on runtime and provider.
+- Core, Components, and WPDS paths have different stability and spacing
+  contracts.
+- Genuine layout gaps must still be closable in a small, local, and traceable
+  way.
 
 ## Considered alternatives
 
-1. `--wpds-*` global fuer alle Pfade definieren: einheitliche Namen, aber erfundene und konflikttraechtige Plattformautoritaet.
-2. Nur nackte Pixelwerte verwenden: runtime-unabhaengig, aber keine Nutzung vorhandener semantischer Vertrage.
-3. WPDS auf jeder Plugin-Seite laden: einheitlicher Provider, aber experimentelle Abhaengigkeit und unnoetiger Eingriff in Classic-Seiten.
+1. Define `--wpds-*` globally for every path: consistent names, but fabricated
+   and conflict-prone platform authority.
+2. Use only raw pixel values: runtime-independent, but fails to use existing
+   semantic contracts.
+3. Load WPDS on every plugin page: one provider, but an experimental dependency
+   and unnecessary intervention on classic pages.
 
 ## Consequences
 
-- Jede Empfehlung nennt Runtime-Owner, Token-Provider und CSS-Owner.
-- Der Skill braucht getrennte Tabellen fuer Core-Beobachtungen, Components-APIs, WPDS-Tokens und Skill-Normen.
-- CSS-Ausnahmen muessen die geprueften Owner, den kleinsten Scope und Responsive-/Accessibility-Proof dokumentieren.
-- Globale `wp-admin`-Overrides, kopierte Core-CSS-Bloecke und nachgeahmte `--wpds-*`-Variablen sind unzulaessig.
+- Every recommendation names the runtime owner, token provider, and CSS owner.
+- The Skill needs separate tables for Core observations, Components APIs, WPDS
+  tokens, and Skill-Norms.
+- CSS exceptions must document the owners checked, smallest scope, and
+  responsive/accessibility proof.
+- Global `wp-admin` overrides, copied Core CSS blocks, and imitated `--wpds-*`
+  variables are prohibited.
 
 ## Confirmation
 
-Die Entscheidung ist umgesetzt, wenn Golden-Faelle fuer Classic, Core Components, WPDS und Hybrid jeweils den erwarteten Owner und die erlaubte Ausdrucksform nennen, nicht geladene `--wpds-*`-Variablen verbieten und jede Custom-CSS-Ausnahme begruenden.
+The Decision is implemented when golden cases for Classic, Core Components,
+WPDS, and Hybrid each name the expected owner and allowed expression, prohibit
+unloaded `--wpds-*` variables, and justify every custom CSS exception.
 
 ## Revisit when
 
-WordPress eine stabile, global dokumentierte Admin-Token- oder Layout-API bereitstellt.
+WordPress provides a stable, globally documented admin token or layout API.

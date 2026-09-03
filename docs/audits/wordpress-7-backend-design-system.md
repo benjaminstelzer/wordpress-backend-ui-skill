@@ -1,60 +1,97 @@
-# Audit: WordPress-7.0-Backend-Designsystem fuer Plugin-Oberflaechen
+# Audit: WordPress 7.0 backend design system for plugin interfaces
 
-Stand: 2026-09-03
+Status: 2026-09-03
 
-## Auditauftrag
+## Audit objective
 
-**Outcome:** Eine belastbare Grundlage fuer einen Agenten-Skill, der WordPress-7.0-Plugin-Oberflaechen im `wp-admin` mit konsistentem Spacing, nachvollziehbarem Vertical Content Flow, internationalisierbaren Strings und responsive ohne horizontales Ausbrechen entwerfen oder pruefen kann.
+**Outcome:** A reliable basis for an agent Skill that can design or audit
+WordPress 7.0 plugin interfaces in `wp-admin` with consistent spacing,
+comprehensible vertical content flow, internationalizable strings, and
+responsive behavior without page-wide horizontal overflow.
 
-**Canonical owner:** Offizielle WordPress-7.0-Quellen besitzen die Tatsachenhoheit. Der geplante Skill besitzt nur die daraus abgeleiteten, als solche gekennzeichneten Arbeitsregeln. Frontend-Regeln aus `theme.json`, Block-Spacing und Theme-Layout sind nicht Teil dieses Audits.
+**Canonical owner:** Official WordPress 7.0 sources own the facts. The planned
+Skill owns only the working rules derived from them and labeled as such.
+Frontend rules from `theme.json`, block spacing, and theme layout are outside
+this audit.
 
-**Risk state:** Normal. Das Audit veraendert keine WordPress-Laufzeit. Das materielle Risiko liegt in falscher Autoritaet: Ein Agent koennte eine abgeleitete Konvention als offizielle WordPress-Regel ausgeben oder klassische Core-Abstaende mit einem modernen Stack-System doppeln.
+**Risk state:** Normal. The audit changes no WordPress runtime. The material
+risk is false authority: an agent could present a derived convention as an
+official WordPress rule or double classic Core spacing with a modern stack
+system.
 
-**Proof:** Quellpruefung der in `docs/research/source-ledger.md` gepinnten WordPress-7.0- und Gutenberg-`wp/7.0`-Commits sowie offizieller WordPress-, WP-CLI-, WCAG- und i18n-Dokumentation. Es wurden noch keine gerenderten Plugin-Seiten oder Browserinteraktionen getestet.
+**Proof:** Source review of the WordPress 7.0 and Gutenberg `wp/7.0` commits
+pinned in `docs/research/source-ledger.md`, plus official WordPress, WP-CLI,
+WCAG, and i18n documentation. At this audit stage, no rendered plugin pages or
+browser interactions had been tested.
 
-## Kurzurteil
+## Summary judgment
 
-WordPress 7.0 besitzt fuer Plugin-Backends keine einzelne, stabile und vollstaendige Human Interface Guideline. Der Skill darf deshalb nicht nur zwischen Classic und React unterscheiden, sondern muss zwei Achsen getrennt klassifizieren:
+WordPress 7.0 has no single, stable, complete Human Interface Guideline for
+plugin backends. The Skill must therefore classify two axes separately rather
+than merely distinguish Classic from React:
 
-1. **Admin-Flaeche:** plugin-eigene Seite oder eingebettete/fremd besessene Oberflaeche; Version 1 unterstuetzt nur die in ADR-0001 festgelegten plugin-eigenen Seiten.
-2. **Runtime-/Komponenten-Owner:** PHP/Core-Markup, React mit Core-`@wordpress/components`, gebuendeltes experimentelles WPDS oder hybrid mit Owner je DOM-Region.
+1. **Admin surface:** a plugin-owned page or an embedded/externally owned
+   surface; version 1 supports only the plugin-owned pages defined in ADR-0001.
+2. **Runtime/component owner:** PHP/Core markup, React with Core
+   `@wordpress/components`, bundled experimental WPDS, or Hybrid with an owner
+   for each DOM region.
 
-Die offiziellen Quellen liefern konkrete Werte, aber keine vollstaendige semantische Regel fuer jeden vertikalen Abstand oder jede Userfuehrung. Ein brauchbarer Agenten-Skill muss deshalb vier feste Kennzeichnungen sichtbar trennen:
+Official sources provide concrete values but no complete semantic rule for
+every vertical gap or user-guidance decision. A useful agent Skill must visibly
+separate four fixed labels:
 
-- **Core:** dokumentierte API, etablierte Admin-Konvention oder als solche markierte beobachtete WordPress-7.0-Implementierung.
-- **WPDS:** exakter Wert oder Vertrag eines experimentellen `wp/7.0`-Pakets.
-- **WCAG:** normative Accessibility-Anforderung.
-- **Skill-Norm:** projektdefinierte Zuordnung, die Luecken schliesst und Konsistenz erzeugt.
+- **Core:** documented API, established admin convention, or an observed
+  WordPress 7.0 implementation labeled as such.
+- **WPDS:** an exact value or contract from an experimental `wp/7.0` package.
+- **WCAG:** a normative accessibility requirement.
+- **Skill-Norm:** a project-defined mapping that closes gaps and creates
+  consistency.
 
-## Quellenhierarchie
+## Source hierarchy
 
-| Rang | Quelle | Verbindlichkeit fuer den Skill |
+| Rank | Source | Authority for the Skill |
 | --- | --- | --- |
-| 1 | WordPress-7.0-Core-CSS und offizielles Plugin-Handbuch | Autoritativ fuer klassisches `wp-admin` und Settings-API-Verhalten |
-| 2 | Gutenberg-Branch `wp/7.0` | Autoritativ fuer den untersuchten Stand der WPDS-Tokens und Komponenten, aber experimentell |
-| 3 | WordPress Accessibility Coding Standards und WCAG 2.2 AA | Mindeststandard fuer Wahrnehmbarkeit, Bedienbarkeit, Verstaendlichkeit und Robustheit |
-| 4 | Etablierte Usability-Heuristiken | Evidenz fuer allgemeine Userfuehrung, aber kein Ersatz fuer WordPress-Konventionen |
-| 5 | Abgeleitete Skill-Normen | Verbindlich fuer Agentenausgaben, jedoch nie als offizielle WordPress-Vorgabe zu bezeichnen |
+| 1 | WordPress 7.0 Core CSS and official Plugin Handbook | Authoritative for classic `wp-admin` and Settings API behavior |
+| 2 | Gutenberg branch `wp/7.0` | Authoritative for the examined WPDS tokens and components, but experimental |
+| 3 | WordPress Accessibility Coding Standards and WCAG 2.2 AA | Minimum standard for perceivability, operability, understandability, and robustness |
+| 4 | Established usability heuristics | Evidence for general user guidance, but not a substitute for WordPress conventions |
+| 5 | Derived Skill-Norms | Binding for agent output, but never to be called official WordPress guidance |
 
-Das kanonische Quelleninventar steht in `docs/research/source-ledger.md`. Jede tragende Aussage erhaelt dort URL, Ref/SHA oder Dokumentstatus, Version/Paket, Abrufdatum, Faktklasse und Revalidierungstrigger. Beobachtete Core-Selektoren sind keine oeffentliche Erweiterungs-API.
+The canonical source inventory is in `docs/research/source-ledger.md`. Every
+supporting claim there receives a URL, ref/SHA or document status,
+version/package, retrieval date, fact class, and revalidation trigger. Observed
+Core selectors are not public extension APIs.
 
-## Befunde
+## Findings
 
-### F-001: Es gibt keine einzelne offizielle Backend-HIG fuer Plugin-Seiten
+### F-001: There is no single official backend HIG for plugin pages
 
-**Beobachtung:** Das Plugin-Handbuch beschreibt die Settings API als Weg zu visuell konsistenten, zukunftssicheren Einstellungsseiten. Die konkreten Layoutwerte liegen jedoch im Core-CSS. Parallel existieren Core-bereitgestellte React-Komponenten und separate experimentelle WPDS-Pakete. React ist deshalb kein Synonym fuer WPDS.
+**Observation:** The Plugin Handbook describes the Settings API as a route to
+visually consistent, future-proof settings pages. Concrete layout values,
+however, reside in Core CSS. In parallel, Core-provided React components and
+separate experimental WPDS packages exist. React is therefore not synonymous
+with WPDS.
 
-**Auswirkung:** Ein Agent, der nur nach einer "WordPress Design Guideline" sucht, vermischt leicht Frontend-Editorregeln, klassisches `wp-admin` und experimentelles WPDS.
+**Impact:** An agent searching only for a "WordPress Design Guideline" can
+easily mix frontend editor rules, classic `wp-admin`, and experimental WPDS.
 
-**Skill-Anforderung:** Vor jedem Entwurf klassifiziert der Agent zuerst die Admin-Flaeche und danach den Runtime-/Komponenten-Owner. Version 1 unterstuetzt plugin-eigene Single-Site-Settings-/Tool-Seiten, Workflow-/Dashboard-Seiten, Data Views und explizite Network-Admin-Seiten. Block-Editor-Sidebars/SlotFills, Editor-Canvas, Post-Metaboxen, Dashboard-Widgets, Profilfelder, Core-Listen-Erweiterungen und UI innerhalb eines anderen Plugins werden separat geroutet oder ausgeschlossen. Ohne Klassifikation darf er keine Spacing- oder Komponentenempfehlung ausgeben.
+**Skill requirement:** Before any design, the agent classifies the admin
+surface first and then the runtime/component owner. Version 1 supports
+plugin-owned single-site settings/tools pages, workflow/dashboard pages, data
+views, and explicit Network Admin pages. Block Editor sidebars/SlotFills, the
+editor canvas, post metaboxes, Dashboard widgets, profile fields, extensions of
+Core lists, and UI inside another plugin are separately routed or excluded. No
+spacing or component recommendation may be made before classification.
 
-**Evidenz:** [Settings API](https://developer.wordpress.org/plugins/settings/settings-api/), [`@wordpress/components`](https://github.com/WordPress/gutenberg/blob/28c0dedc4eaf001a24237a1fbba4b0887698b000/packages/components/README.md), [`@wordpress/admin-ui`](https://github.com/WordPress/gutenberg/blob/28c0dedc4eaf001a24237a1fbba4b0887698b000/packages/admin-ui/README.md), [`@wordpress/ui`](https://github.com/WordPress/gutenberg/blob/28c0dedc4eaf001a24237a1fbba4b0887698b000/packages/ui/README.md).
+**Evidence:** [Settings API](https://developer.wordpress.org/plugins/settings/settings-api/), [`@wordpress/components`](https://github.com/WordPress/gutenberg/blob/28c0dedc4eaf001a24237a1fbba4b0887698b000/packages/components/README.md), [`@wordpress/admin-ui`](https://github.com/WordPress/gutenberg/blob/28c0dedc4eaf001a24237a1fbba4b0887698b000/packages/admin-ui/README.md), [`@wordpress/ui`](https://github.com/WordPress/gutenberg/blob/28c0dedc4eaf001a24237a1fbba4b0887698b000/packages/ui/README.md).
 
-### F-002: Das moderne WPDS verwendet ein 4-px-Grundraster
+### F-002: Modern WPDS uses a 4 px base grid
 
-**Beobachtung:** Die WordPress-7.0-Dimension-Tokens definieren primitive Abstaende von `0`, `4`, `8`, `12`, `16`, `20`, `24`, `32`, `40` und `48px`. Die semantische Gap-Skala lautet:
+**Observation:** The WordPress 7.0 dimension tokens define primitive spacing of
+`0`, `4`, `8`, `12`, `16`, `20`, `24`, `32`, `40`, and `48px`. The semantic
+gap scale is:
 
-| Gap-Token | Defaultwert |
+| Gap token | Default value |
 | --- | ---: |
 | `xs` | 4px |
 | `sm` | 8px |
@@ -64,323 +101,608 @@ Das kanonische Quelleninventar steht in `docs/research/source-ledger.md`. Jede t
 | `2xl` | 32px |
 | `3xl` | 40px |
 
-Die Padding-Skala ist nicht identisch: `xl` ist dort `20px`, `2xl` `24px` und `3xl` `32px`. Die Tokens besitzen zudem Dichtevarianten. Dichte und Responsivitaet sind getrennte Achsen; "compact" ist kein Mobile-Modus.
+The padding scale is not identical: there, `xl` is `20px`, `2xl` is `24px`,
+and `3xl` is `32px`. Tokens also have density variants. Density and
+responsiveness are separate axes; "compact" is not a mobile mode.
+
+**Impact:** A simplified list without token type produces errors, especially
+for `xl` and `2xl`.
+
+**Skill requirement:** The Skill must tabulate gap and padding separately.
+Semantic `--wpds-*` tokens may be consumed only when the selected WPDS package
+actually supplies them through a public stylesheet export loaded at the render
+root; plugin code must not define, override, or imitate them. Primitive tokens
+remain internal. Classic/Core and Core Components first use their own defaults
+and APIs. An unavoidable plugin-owned number is labeled as a Skill-Norm, not a
+WordPress token.
+
+**Evidence:** [`@wordpress/theme` contract](https://github.com/WordPress/gutenberg/blob/28c0dedc4eaf001a24237a1fbba4b0887698b000/packages/theme/README.md), [`dimension.json` at the pinned `wp/7.0` state](https://github.com/WordPress/gutenberg/blob/28c0dedc4eaf001a24237a1fbba4b0887698b000/packages/theme/tokens/dimension.json).
+
+### F-003: The modern Page shell provides a concrete starting point
+
+**Observation:** By default, the `Page` component from `@wordpress/admin-ui`
+uses `padding-lg` vertically and `padding-2xl` horizontally for the header and
+padded content. At default density, that is `16px` vertically and `24px`
+horizontally. Internally, the header uses `gap="sm"`, or `8px`; the subtitle has
+`padding-block-end` with `padding-xs`, or `4px`.
 
-**Auswirkung:** Eine vereinfachte Liste ohne Tokenart erzeugt Fehler, insbesondere bei `xl` und `2xl`.
+**Impact:** `16/24px` is the strongest source-supported modern Page-shell value.
+It is not a universal value for every nested group.
 
-**Skill-Anforderung:** Der Skill muss Gap und Padding separat tabellieren. Semantische `--wpds-*`-Tokens duerfen nur konsumiert werden, wenn das gewaehlte WPDS-Paket sie ueber einen oeffentlichen Stylesheet-Export tatsaechlich liefert und dieser am Render-Root geladen ist; Plugin-Code darf sie nicht definieren, ueberschreiben oder nachahmen. Primitive Tokens bleiben intern. Classic/Core und Core Components verwenden zuerst ihre eigenen Defaults/APIs. Eine unvermeidbare plugin-eigene Zahl wird als Skill-Norm und nicht als WordPress-Token gekennzeichnet.
+**Skill requirement:** For modern full pages, `16px block / 24px inline` is the
+default. Narrow viewports may reduce inline padding, but must not switch it
+implicitly through density tokens.
 
-**Evidenz:** [`@wordpress/theme` Vertrag](https://github.com/WordPress/gutenberg/blob/28c0dedc4eaf001a24237a1fbba4b0887698b000/packages/theme/README.md), [`dimension.json` am gepinnten `wp/7.0`-Stand](https://github.com/WordPress/gutenberg/blob/28c0dedc4eaf001a24237a1fbba4b0887698b000/packages/theme/tokens/dimension.json).
+**Evidence:** [`Page` styles](https://github.com/WordPress/gutenberg/blob/28c0dedc4eaf001a24237a1fbba4b0887698b000/packages/admin-ui/src/page/style.scss), [`PageHeader`](https://github.com/WordPress/gutenberg/blob/28c0dedc4eaf001a24237a1fbba4b0887698b000/packages/admin-ui/src/page/header.tsx).
+
+### F-004: Vertical flow is not automatic in the modern Stack
 
-### F-003: Die moderne Page-Shell liefert einen konkreten Ausgangspunkt
+**Observation:** `@wordpress/ui` supplies a flexible `Stack`. Its `direction`
+and `gap` are optional and have no default. At the WordPress 7.0 pin,
+`@wordpress/theme` exports `design-tokens.css` but no public runtime
+`ThemeProvider`; the available `privateApis` are not a plugin contract. The
+separate `__experimentalVStack` from `@wordpress/components` is itself
+experimental; its `spacing` is a multiplier of the 4 px grid, not a semantic
+WPDS gap name.
 
-**Beobachtung:** Die `Page`-Komponente aus `@wordpress/admin-ui` verwendet fuer Header und gepaddeten Inhalt standardmaessig `padding-lg` vertikal und `padding-2xl` horizontal. Im Default entspricht das `16px` vertikal und `24px` horizontal. Der Header nutzt intern `gap="sm"`, also `8px`; der Untertitel besitzt `padding-block-end` mit `padding-xs`, also `4px`.
+**Impact:** An agent must own spacing at every semantic level. Otherwise,
+incidental browser margins or inconsistent one-off values emerge.
+
+**Skill requirement:** A parent owns spacing between its direct children.
+Children do not add the same outer spacing. Default heading and paragraph
+margins are neutralized inside a gap-controlled stack. In the React/Core
+Components path, specialized components own their internal rhythm. For a new
+generic vertical plugin group, the Core-provided `Flex` component owns flow:
+`direction="column"`, `align="stretch"`, `justify="flex-start"`,
+`wrap={ false }`, `expanded={ true }`, and `gap` equal to the Skill-Norm divided
+by four. This applies to `allow`, `deny`, and `unknown`; the experiment policy
+still prevents new experimental APIs. In the bundled WPDS path, `Stack`
+explicitly sets `direction="column"` and the semantic gap, loads the public CSS
+subpath, and uses no private provider API. A plugin-local stack rule is allowed
+only after an evidenced `Flex` gap.
 
-**Auswirkung:** `16/24px` ist der staerkste quellgestuetzte moderne Page-Shell-Wert. Er ist kein universeller Wert fuer jede verschachtelte Gruppe.
+**Evidence:** [`Stack` implementation](https://github.com/WordPress/gutenberg/blob/28c0dedc4eaf001a24237a1fbba4b0887698b000/packages/ui/src/stack/stack.tsx), [`Stack` types](https://github.com/WordPress/gutenberg/blob/28c0dedc4eaf001a24237a1fbba4b0887698b000/packages/ui/src/stack/types.ts), [`Flex` types](https://github.com/WordPress/gutenberg/blob/28c0dedc4eaf001a24237a1fbba4b0887698b000/packages/components/src/flex/types.ts), [`Flex` implementation](https://github.com/WordPress/gutenberg/blob/28c0dedc4eaf001a24237a1fbba4b0887698b000/packages/components/src/flex/flex/component.tsx), [`VStack` README](https://github.com/WordPress/gutenberg/blob/28c0dedc4eaf001a24237a1fbba4b0887698b000/packages/components/src/v-stack/README.md).
+
+### F-005: Classic `wp-admin` has its own legacy rhythm
+
+**Observation:** WordPress 7.0 Core includes, among other values:
+
+- `#wpcontent`: `20px` left padding.
+- `.wrap`: `10px 20px 0 2px` margin.
+- `.wrap h1`: `0` margin and `9px 0 4px` padding.
+- `.form-table td`: `15px 10px` padding.
+- `.form-table th`: `20px 10px 20px 0` padding at `200px` width.
+- `.form-table td p`: `4px` top and `0` bottom margin.
+- `p.submit`: `20px` top margin and `10px` top padding.
+
+**Impact:** A modern 4 px stack system must not be applied indiscriminately to
+`.wrap`, `.form-table`, or `p.submit`. That creates duplicate spacing and breaks
+visual integration with the admin.
 
-**Skill-Anforderung:** Fuer moderne Vollseiten ist `16px block / 24px inline` der Default. Engere Viewports duerfen das Inline-Padding reduzieren, aber nicht ueber Dichte-Tokens implizit umschalten.
+**Skill requirement:** On native Settings API pages, Core owns outer and
+row-level rhythm. Custom gaps apply only inside clearly bounded plugin
+components.
 
-**Evidenz:** [`Page`-Styles](https://github.com/WordPress/gutenberg/blob/28c0dedc4eaf001a24237a1fbba4b0887698b000/packages/admin-ui/src/page/style.scss), [`PageHeader`](https://github.com/WordPress/gutenberg/blob/28c0dedc4eaf001a24237a1fbba4b0887698b000/packages/admin-ui/src/page/header.tsx).
+**Evidence:** [`wp-admin/css/common.css` at the pinned WordPress 7.0 state](https://github.com/WordPress/wordpress-develop/blob/90a615f1834824d2583a43bfc698d9c710e5c094/src/wp-admin/css/common.css), [`wp-admin/css/forms.css`](https://github.com/WordPress/wordpress-develop/blob/90a615f1834824d2583a43bfc698d9c710e5c094/src/wp-admin/css/forms.css).
 
-### F-004: Vertical Flow ist im modernen Stack nicht automatisch
+### F-006: `782px` is the decisive Core boundary for form reflow
 
-**Beobachtung:** `@wordpress/ui` stellt einen flexiblen `Stack` bereit. Dessen `direction` und `gap` sind optional und haben keinen Default. `@wordpress/theme` exportiert am WordPress-7.0-Pin zwar `design-tokens.css`, aber keinen oeffentlichen `ThemeProvider` zur Laufzeit; die vorhandenen `privateApis` sind kein Plugin-Vertrag. Der separate `__experimentalVStack` aus `@wordpress/components` ist selbst experimentell; sein `spacing` ist ein Multiplikator des 4-px-Rasters und kein semantischer WPDS-Gap-Name.
+**Observation:** At a maximum of `782px`, Core reduces left `#wpcontent`
+padding to `10px`, sets `.wrap` to `0` left and `12px` right margin, displays
+form-table headings and cells as blocks, and makes typical form fields full
+width. Text fields and selects receive at least `40px` height; text and selects
+use a `16px` font. Mobile form rhythm changes to `10px` above the label and
+`4px 0 6px` in the field area.
 
-**Auswirkung:** Ein Agent muss fuer jede semantische Ebene einen Abstand besitzen. Andernfalls entstehen zufaellige Browser-Margins oder inkonsistente Einzelwerte.
+**Impact:** Responsive WordPress backend behavior is not merely smaller
+spacing. Columns must stack, controls must grow to an operable height, and
+reading order must be preserved.
 
-**Skill-Anforderung:** Ein Parent besitzt den Abstand zwischen seinen direkten Kindern. Kinder setzen nicht zusaetzlich denselben Aussenabstand. Standardmargins von Headings und Paragraphen werden in einem gap-gesteuerten Stack neutralisiert. Im React/Core-Components-Pfad besitzen spezialisierte Komponenten ihre interne Rhythmik. Fuer eine neue generische vertikale Plugin-Gruppe besitzt die Core-bereitgestellte `Flex`-Komponente den Flow: `direction="column"`, `align="stretch"`, `justify="flex-start"`, `wrap={ false }`, `expanded={ true }` und `gap` als Skill-Norm geteilt durch vier. Das gilt fuer `allow`, `deny` und `unknown`; die Experiment-Policy verhindert weiterhin neue experimentelle APIs. Im gebuendelten WPDS-Pfad setzt `Stack` `direction="column"` und den semantischen Gap explizit, laedt den oeffentlichen CSS-Subpath und verwendet keine privaten Provider-APIs. Eine plugin-lokale Stack-Regel ist erst nach einer belegten `Flex`-Luecke zulaessig.
+**Skill requirement:** The Skill treats `782px` as a Core compatibility
+boundary. Plugin-owned layouts should reflow intrinsically before that and must
+not wait until `782px` to escape an unusable intermediate state.
 
-**Evidenz:** [`Stack`-Implementierung](https://github.com/WordPress/gutenberg/blob/28c0dedc4eaf001a24237a1fbba4b0887698b000/packages/ui/src/stack/stack.tsx), [`Stack`-Typen](https://github.com/WordPress/gutenberg/blob/28c0dedc4eaf001a24237a1fbba4b0887698b000/packages/ui/src/stack/types.ts), [`Flex`-Typen](https://github.com/WordPress/gutenberg/blob/28c0dedc4eaf001a24237a1fbba4b0887698b000/packages/components/src/flex/types.ts), [`Flex`-Implementierung](https://github.com/WordPress/gutenberg/blob/28c0dedc4eaf001a24237a1fbba4b0887698b000/packages/components/src/flex/flex/component.tsx), [`VStack`-README](https://github.com/WordPress/gutenberg/blob/28c0dedc4eaf001a24237a1fbba4b0887698b000/packages/components/src/v-stack/README.md).
+**Evidence:** [`common.css`](https://github.com/WordPress/wordpress-develop/blob/90a615f1834824d2583a43bfc698d9c710e5c094/src/wp-admin/css/common.css), [`forms.css`](https://github.com/WordPress/wordpress-develop/blob/90a615f1834824d2583a43bfc698d9c710e5c094/src/wp-admin/css/forms.css).
 
-### F-005: Klassisches `wp-admin` besitzt eine eigene Legacy-Rhythmik
+### F-007: The modern packages remain experimental in WordPress 7.0
 
-**Beobachtung:** Im WordPress-7.0-Core gelten unter anderem:
+**Observation:** `@wordpress/ui` and `@wordpress/theme` describe themselves as
+experimental. `@wordpress/ui` is not provided through global `window.wp` and
+must be bundled. `@wordpress/admin-ui` has only minimal documentation. This is
+distinct from the React path using Core-provided `@wordpress/components`.
 
-- `#wpcontent`: `20px` linkes Padding.
-- `.wrap`: `10px 20px 0 2px` Margin.
-- `.wrap h1`: `0` Margin und `9px 0 4px` Padding.
-- `.form-table td`: `15px 10px` Padding.
-- `.form-table th`: `20px 10px 20px 0` Padding bei `200px` Breite.
-- `.form-table td p`: `4px` oben und `0` unten.
-- `p.submit`: `20px` Margin oben und `10px` Padding oben.
+**Impact:** A Skill must not treat the modern path as a stable, universally
+available plugin API.
 
-**Auswirkung:** Ein modernes 4-px-Stack-System darf nicht pauschal ueber `.wrap`, `.form-table` oder `p.submit` gelegt werden. Das erzeugt doppelte Abstaende und bricht die visuelle Einordnung in den Admin.
+**Skill requirement:** WPDS examples must name bundling, version pins, the
+token stylesheet, and experimental status. Core Components examples instead
+use packages registered by WordPress and component APIs. The classic path
+remains the stable baseline.
 
-**Skill-Anforderung:** Bei nativen Settings-API-Seiten besitzt Core die aeussere und zeilenbezogene Rhythmik. Eigene Gaps gelten nur innerhalb klar abgegrenzter Plugin-Komponenten.
+**Evidence:** [`@wordpress/ui`](https://github.com/WordPress/gutenberg/blob/28c0dedc4eaf001a24237a1fbba4b0887698b000/packages/ui/README.md), [`@wordpress/theme`](https://github.com/WordPress/gutenberg/blob/28c0dedc4eaf001a24237a1fbba4b0887698b000/packages/theme/README.md), [`@wordpress/admin-ui`](https://github.com/WordPress/gutenberg/blob/28c0dedc4eaf001a24237a1fbba4b0887698b000/packages/admin-ui/README.md), [`@wordpress/components`](https://github.com/WordPress/gutenberg/blob/28c0dedc4eaf001a24237a1fbba4b0887698b000/packages/components/README.md).
 
-**Evidenz:** [`wp-admin/css/common.css` am gepinnten WordPress-7.0-Stand](https://github.com/WordPress/wordpress-develop/blob/90a615f1834824d2583a43bfc698d9c710e5c094/src/wp-admin/css/common.css), [`wp-admin/css/forms.css`](https://github.com/WordPress/wordpress-develop/blob/90a615f1834824d2583a43bfc698d9c710e5c094/src/wp-admin/css/forms.css).
+### F-008: WordPress defines no universal content width for plugin pages
 
-### F-006: `782px` ist die entscheidende Core-Grenze fuer Form-Reflow
+**Observation:** The examined Core and WPDS sources provide shell spacing and
+reflow behavior, but no universal maximum width for settings, dashboards, and
+data tables.
 
-**Beobachtung:** Bei maximal `782px` reduziert Core das linke `#wpcontent`-Padding auf `10px`, setzt `.wrap` links auf `0` und rechts auf `12px`, stellt Form-Tabellenkoepfe und -zellen blockweise dar und setzt typische Formularfelder auf volle Breite. Textfelder und Selects erhalten mindestens `40px` Hoehe; Text und Selects verwenden `16px` Schrift. Die mobile Form-Rhythmik wird auf `10px` oberhalb des Labels sowie `4px 0 6px` im Feldbereich umgestellt.
+**Impact:** One fixed `max-width` would be an invented WordPress rule and would
+be unsuitable for data-rich pages.
 
-**Auswirkung:** Responsive Verhalten bedeutet im WordPress-Backend nicht nur kleinere Abstaende. Spalten muessen stapeln, Controls wachsen auf bedienbare Hoehe und die Lesereihenfolge muss erhalten bleiben.
+**Skill requirement:** The Skill needs layout archetypes rather than a
+universal width: focused settings, a multi-column overview, and a data-rich
+list/table. Every width recommendation must be marked as a Skill-Norm, not a
+Core fact.
 
-**Skill-Anforderung:** Der Skill muss `782px` als Core-Kompatibilitaetsgrenze behandeln. Plugin-eigene Layouts sollen zuvor intrinsisch umbrechen und duerfen nicht erst bei `782px` auf einen unbrauchbaren Zwischenzustand reagieren.
+### F-009: Use WordPress components and default CSS before custom CSS
 
-**Evidenz:** [`common.css`](https://github.com/WordPress/wordpress-develop/blob/90a615f1834824d2583a43bfc698d9c710e5c094/src/wp-admin/css/common.css), [`forms.css`](https://github.com/WordPress/wordpress-develop/blob/90a615f1834824d2583a43bfc698d9c710e5c094/src/wp-admin/css/forms.css).
+**Observation:** The Plugin Handbook justifies the Settings API with visual
+consistency, future-proofing, and less custom work. `@wordpress/components`
+provides shared React UI elements. Core also provides native buttons, form
+controls, notices, tables, and admin-shell classes. Which options are allowed
+depends on runtime and DOM owner; an observed Core selector is not
+automatically a public plugin API.
 
-### F-007: Die modernen Pakete sind in WordPress 7.0 noch experimentell
+**Impact:** Custom CSS for existing WordPress primitives creates a parallel
+design language, raises maintenance cost, and can hide Core updates, RTL, high
+contrast, focus states, or mobile behavior.
 
-**Beobachtung:** `@wordpress/ui` und `@wordpress/theme` bezeichnen sich als experimentell. `@wordpress/ui` wird nicht ueber das globale `window.wp` bereitgestellt und muss gebuendelt werden. `@wordpress/admin-ui` ist nur knapp dokumentiert. Das ist vom React-Pfad mit Core-bereitgestelltem `@wordpress/components` zu unterscheiden.
+**Skill requirement:** Before every custom CSS rule, the agent identifies
+runtime and DOM owner and then checks: documented Core API/semantic markup;
+suitable existing component or default CSS; an actually provided semantic
+token; narrowly bounded composition; and only then justified plugin CSS. It
+must not recreate a Core component merely to change spacing, colors, radii,
+shadows, or control heights.
 
-**Auswirkung:** Ein Skill darf den modernen Pfad nicht als stabile, ueberall vorhandene Plugin-API behandeln.
+**Evidence:** [Settings API](https://developer.wordpress.org/plugins/settings/settings-api/), [`@wordpress/components` Component Reference](https://developer.wordpress.org/block-editor/reference-guides/components/), [Development Platform](https://developer.wordpress.org/block-editor/how-to-guides/platform/).
 
-**Skill-Anforderung:** WPDS-Beispiele muessen Paketierung, Version-Pinning, Token-Stylesheet und den experimentellen Status nennen. Core-Components-Beispiele verwenden dagegen die von WordPress registrierten Pakete und Komponenten-APIs. Der klassische Pfad bleibt die stabile Baseline.
+### F-010: Good user guidance starts with task, hierarchy, and next action
 
-**Evidenz:** [`@wordpress/ui`](https://github.com/WordPress/gutenberg/blob/28c0dedc4eaf001a24237a1fbba4b0887698b000/packages/ui/README.md), [`@wordpress/theme`](https://github.com/WordPress/gutenberg/blob/28c0dedc4eaf001a24237a1fbba4b0887698b000/packages/theme/README.md), [`@wordpress/admin-ui`](https://github.com/WordPress/gutenberg/blob/28c0dedc4eaf001a24237a1fbba4b0887698b000/packages/admin-ui/README.md), [`@wordpress/components`](https://github.com/WordPress/gutenberg/blob/28c0dedc4eaf001a24237a1fbba4b0887698b000/packages/components/README.md).
+**Observation:** Established usability heuristics call for visible system
+status, alignment with users' language, control and a way back, consistency
+with platform standards, error prevention, and recognition rather than recall.
+The WordPress admin roadmap names visual clarity, lower cognitive load, better
+workflows, good defaults, density, usability, and accessibility as goals.
 
-### F-008: WordPress definiert keine universelle Inhaltsbreite fuer Plugin-Seiten
-
-**Beobachtung:** Die untersuchten Core- und WPDS-Quellen liefern Shell-Abstaende und Reflow-Verhalten, aber keine universelle maximale Breite fuer Settings, Dashboards und Datentabellen.
-
-**Auswirkung:** Eine einzige feste `max-width` waere eine erfundene WordPress-Regel und fuer datenreiche Seiten ungeeignet.
-
-**Skill-Anforderung:** Der Skill benoetigt Layout-Archetypen statt einer Universalbreite: fokussierte Settings, mehrspaltige Uebersicht und datenreiche Liste/Tabelle. Jede Breitenempfehlung muss als Skill-Norm und nicht als Core-Fakt markiert sein.
-
-### F-009: WordPress-Komponenten und Default-CSS sind vor eigenem CSS zu verwenden
-
-**Beobachtung:** Das Plugin-Handbuch begruendet die Settings API mit visueller Konsistenz, Zukunftssicherheit und weniger eigener Arbeit. `@wordpress/components` stellt gemeinsame React-UI-Elemente bereit. Core bietet zudem native Buttons, Form Controls, Notices, Tabellen und Admin-Shell-Klassen. Welche dieser Optionen zulaessig ist, haengt vom Runtime- und DOM-Owner ab; ein beobachteter Core-Selektor ist nicht automatisch eine oeffentliche Plugin-API.
-
-**Auswirkung:** Eigenes CSS fuer bereits vorhandene WordPress-Primitive schafft eine parallele Designsprache, erhoeht den Wartungsaufwand und kann Core-Updates, RTL, High Contrast, Focus States oder Mobile-Verhalten ueberdecken.
-
-**Skill-Anforderung:** Der Agent muss vor jeder eigenen CSS-Regel den Runtime- und DOM-Owner bestimmen und dann pruefen: dokumentierte Core-API/semantisches Markup, passende vorhandene Komponente oder Default-CSS, tatsaechlich bereitgestellter semantischer Token, eng begrenzte Komposition, erst dann begruendetes Plugin-CSS. Er darf keine Core-Komponente nur zum Zweck anderer Abstaende, Farben, Radien, Schatten oder Control-Hoehen nachbauen.
-
-**Evidenz:** [Settings API](https://developer.wordpress.org/plugins/settings/settings-api/), [`@wordpress/components` Component Reference](https://developer.wordpress.org/block-editor/reference-guides/components/), [Development Platform](https://developer.wordpress.org/block-editor/how-to-guides/platform/).
-
-### F-010: Gute Userfuehrung beginnt mit Aufgabe, Hierarchie und naechster Aktion
-
-**Beobachtung:** Etablierte Usability-Heuristiken fordern sichtbaren Systemstatus, Uebereinstimmung mit der Sprache der Nutzenden, Kontrolle und Rueckweg, Konsistenz mit Plattformstandards, Fehlervermeidung und Wiedererkennen statt Erinnern. Die WordPress-Admin-Roadmap nennt visuelle Klarheit, geringere kognitive Last, bessere Workflows, gute Defaults, Dichte, Usability und Accessibility als Ziele.
-
-**Auswirkung:** Ein reines Spacing-Regelwerk kann formal konsistent und trotzdem schwer benutzbar sein. Abstaende muessen eine reale Informations- und Aufgabenhierarchie sichtbar machen.
-
-**Skill-Anforderung:** Jede Seite benoetigt eine klar benannte Hauptaufgabe, eine erkennbare aktuelle Position, eine priorisierte naechste Aktion, logische Abschnitte, kontextnahe Hilfe und einen sicheren Rueckweg bei mehrstufigen oder destruktiven Aktionen. Dekorative Container ohne neue Beziehung sind zu vermeiden.
-
-**Evidenz:** [Nielsen Norman Group: 10 Usability Heuristics](https://www.nngroup.com/articles/ten-usability-heuristics/), [WordPress Admin Design](https://make.wordpress.org/core/2023/07/12/admin-design/).
-
-### F-011: Navigation muss der Groesse der Plugin-Aufgabe entsprechen
-
-**Beobachtung:** Das Plugin-Handbuch empfiehlt fuer ein Plugin mit nur einer Optionsseite ein Untermenue unter einem vorhandenen Top-Level-Menue wie Settings oder Tools.
-
-**Auswirkung:** Ein eigenes Top-Level-Menue fuer eine einzelne kleine Seite verlaengert die globale Admin-Navigation und gibt dem Plugin mehr visuelles Gewicht als seiner Aufgabe entspricht.
-
-**Skill-Anforderung:** Der Agent darf eine neue Top-Level-Navigation nur fuer ein eigenstaendiges, mehrseitiges Arbeitsgebiet mit begruendeter primaerer Nutzung empfehlen. Eine einzelne Einstellungs- oder Werkzeugseite nutzt standardmaessig den vorhandenen Core-Kontext.
-
-**Evidenz:** [Plugin Handbook: Administration Menus](https://developer.wordpress.org/plugins/administration-menus/).
-
-### F-012: Zustandsfuehrung und Fehlerbehandlung sind Teil des Designsystems
-
-**Beobachtung:** WordPress bietet fuer klassische Settings `add_settings_error()`, `settings_errors()` und Admin Notices. Core-`common.js` verschiebt `div.updated`, `div.error` und `div.notice`, sofern sie nicht `.inline` tragen, hinter `.wp-header-end`; ersatzweise wird der erste Titel in `.wrap` verwendet. `.below-h2` ist nur ein veralteter Kompatibilitaetsname. Fuer React-Oberflaechen existieren Notice- und Snackbar-Muster; Snackbars sind fuer kurzlebige, niedrig priorisierte Meldungen gedacht, waehrend wichtigere Meldungen als Notice erscheinen sollen. WCAG 2.2 verlangt textliche Fehleridentifikation, sichtbare Labels oder Anweisungen und programmatisch erkennbare Statusmeldungen.
-
-**Auswirkung:** Ohne Zustandsvertrag wissen Nutzende nach Speichern, Laden oder Fehlern nicht, was geschehen ist oder wie sie fortfahren koennen. Ein nur farblicher Zustand oder eine verschwindende kritische Meldung ist unzureichend.
-
-**Skill-Anforderung:** Der Skill muss mindestens Initial-, Loading-, Empty-, Success-, Error-, Disabled- und Permission-State dort definieren, wo sie fuer den Flow auftreten. Classic-Seiten setzen Seitentitel und `.wp-header-end` in Core-kompatibler Reihenfolge. Inline-Fehler bleiben mit `.inline` beim Feld und verwenden nicht `.below-h2`; seitenweite Ergebnisse verwenden verschiebbare Core Notices. Niedrig priorisierte bestaetigende React-Rueckmeldungen duerfen Snackbar verwenden, wenn die Information auch anderswo erreichbar bleibt. Jeder Fehler benennt Problem und naechsten Korrekturschritt, soweit bekannt.
-
-**Evidenz:** [`add_settings_error()`](https://developer.wordpress.org/reference/functions/add_settings_error/), [`common.js` Notice-Verhalten](https://github.com/WordPress/wordpress-develop/blob/90a615f1834824d2583a43bfc698d9c710e5c094/src/js/_enqueues/admin/common.js), [WordPress Notices](https://developer.wordpress.org/block-editor/how-to-guides/notices/), [Snackbar](https://developer.wordpress.org/block-editor/reference-guides/components/snackbar/), [WCAG 2.2 Error Identification](https://www.w3.org/WAI/WCAG22/Understanding/error-identification.html), [Labels or Instructions](https://www.w3.org/WAI/WCAG22/Understanding/labels-or-instructions.html), [Status Messages](https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html).
-
-### F-013: WCAG 2.2 AA ist fuer WordPress-Oberflaechen der Mindeststandard
-
-**Beobachtung:** Die WordPress Accessibility Coding Standards erwarten fuer Code im WordPress-Oekosystem WCAG 2.2 Level AA. Reflow verlangt grundsaetzlich die Nutzung ohne Informations- oder Funktionsverlust bei einer Breite entsprechend `320 CSS px`; zweidimensional notwendige Inhalte wie Datentabellen duerfen eine lokale Ausnahme bilden. WCAG 2.2 AA verlangt ausserdem logische Focus-Reihenfolge, sichtbaren Focus, nicht verdeckten Focus und mindestens `24 x 24 CSS px` grosse Pointer-Ziele oder eine zulaessige Abstandsausnahme.
-
-**Auswirkung:** Responsive Design darf nicht nur bei typischen Telefonbreiten getestet werden. Zoom, Tastatur, Focus, Labels, Statusmeldungen und lokale Scrollcontainer sind Teil derselben Qualitaetsgrenze.
-
-**Skill-Anforderung:** WCAG 2.2 AA ist der Default. Der Skill muss `320px` Reflow, `24px` Mindestziel nach WCAG und die groessere WordPress-Core-Mobile-Hoehe von `40px` korrekt auseinanderhalten. Datentabellen duerfen lokal horizontal scrollen; die gesamte Admin-Seite darf dadurch nicht zweidimensional scrollen.
-
-**Evidenz:** [WordPress Accessibility Coding Standards](https://developer.wordpress.org/coding-standards/wordpress-coding-standards/accessibility/), [WCAG 2.2 Reflow](https://www.w3.org/WAI/WCAG22/Understanding/reflow.html), [Focus Order](https://www.w3.org/WAI/WCAG22/Understanding/focus-order.html), [Target Size Minimum](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum).
-
-### F-014: Der Skill muss Scoville UI steuern koennen, aber ohne diese Abhaengigkeit funktionieren
-
-**Beobachtung:** Der Nutzer verlangt einen standalone nutzbaren WordPress-Backend-Skill und optional eine konfliktfreie Komposition mit Scoville UI. ADR-0002 weist dem WordPress-Skill die plattformspezifische Tatsachen- und Regelhoheit zu; allgemeine UI-Pruefungen duerfen nur innerhalb dieser Grenzen ergaenzen.
-
-**Auswirkung:** Bei gemeinsamer Nutzung muss klar sein, welcher Skill welche Entscheidung besitzt. Eine harte Abhaengigkeit wuerde den WordPress-Skill dagegen unnoetig unbrauchbar machen, wenn Scoville UI nicht installiert oder nicht aktiv ist.
-
-**Skill-Anforderung:** Der WordPress-Backend-Skill ist standalone vollstaendig. Wenn Scoville UI ebenfalls aktiv ist, besitzt der WordPress-Skill WordPress-spezifische Komponenten, Defaults, Tokens, Spacing, Admin-Shell und CSS-Ausnahmen. Scoville UI besitzt die verbleibende Aufgabenfuehrung, Hierarchie, Zustandsvollstaendigkeit, Accessibility- und Renderpruefung, ohne die WordPress-Eigentuemer zu ueberschreiben.
-
-### F-015: Internationalisierung ist ein String-, Runtime- und Layoutvertrag
-
-**Beobachtung:** Das Plugin-Handbuch verlangt eine Textdomain, die dem kleingeschriebenen Plugin-Slug mit Bindestrichen entspricht. Nutzergerichtete PHP- und JavaScript-Strings muessen mit WordPress-gettext-Funktionen ausgezeichnet werden; dazu gehoeren auch ARIA-, Screenreader- und Alternativtexte. Die Textdomain muss literal sein. Vollstaendige Phrasen, Pluralformen, Kontext, Positionsplatzhalter und unmittelbar vorangestellte `translators:`-Kommentare erhalten uebersetzbare Grammatik. JavaScript benoetigt `wp-i18n` beziehungsweise `@wordpress/i18n` und `wp_set_script_translations()` nach Registrierung der Script-Handle. Eigene JavaScript-Uebersetzungen benoetigen den dokumentierten PO-zu-JSON- und Handle-/Pfad-Workflow. Uebersetzungen gelten als nicht vertrauenswuerdig und werden am Ausgabekontext escaped. WordPress empfiehlt ausserdem, mit einer Verdopplung der Stringlaenge zu rechnen.
-
-**Auswirkung:** i18n kann nicht nach der UI-Implementierung als reine Sprachdatei ergaenzt werden. Verkettete Strings, variable Domains, fehlende JS-Anbindung, feste Breiten oder Links/Rechts-CSS koennen sonst nicht verlaesslich uebersetzt oder responsive dargestellt werden.
-
-**Skill-Anforderung:** Jede nutzergerichtete UI-Zeichenkette in PHP und JavaScript ist extrahierbar. Der Skill verlangt eine gemeinsame literale Textdomain, vollstaendige Phrasen, Positionsplatzhalter, Plural/Kontext, `translators:`-Kommentare und kontextgerechtes Escaping. Datums- und Zahlenwerte verwenden `wp_date()`, `number_format_i18n()` beziehungsweise `dateI18n` aus `@wordpress/date`. Clientseitige locale-formatierte Zahlen werden in der Baseline serverformatiert; eine JS-Alternative braucht eine eigene Quelle, Locale-Zuordnung und Browserpruefung. Quellen werden mit `wp i18n make-pot` in POT extrahiert; eine dagegen gepflegte Test-PO wird mit `wp i18n make-mo` in ein ladbares MO kompiliert und der Plugin-Sprachpfad bei `init` mit `load_plugin_textdomain()` registriert. `wp i18n make-json --no-purge` erzeugt aus der PO die Test-JSON-Datei. Browser-Assertions beweisen nach reproduzierbarem Locale-Wechsel je einen wirklich uebersetzten PHP- und React-String. Gerenderte Faelle decken Textverdopplung, lange deutsche Labels, mindestens eine RTL-Sprache und locale-abhaengige Formate ab.
-
-**Evidenz:** [How to Internationalize Your Plugin](https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/), [Internationalization Guidelines](https://developer.wordpress.org/apis/internationalization/internationalization-guidelines/), [Internationalization Security](https://developer.wordpress.org/plugins/internationalization/security/), [JavaScript Internationalization](https://developer.wordpress.org/block-editor/how-to-guides/internationalization/), [`wp_set_script_translations()`](https://developer.wordpress.org/reference/functions/wp_set_script_translations/), [`load_plugin_textdomain()`](https://developer.wordpress.org/reference/functions/load_plugin_textdomain/), [`wp i18n make-pot`](https://developer.wordpress.org/cli/commands/i18n/make-pot/), [`wp i18n make-mo`](https://developer.wordpress.org/cli/commands/i18n/make-mo/), [`wp i18n make-json`](https://developer.wordpress.org/cli/commands/i18n/make-json/), [`wp_date()`](https://developer.wordpress.org/reference/functions/wp_date/), [`number_format_i18n()`](https://developer.wordpress.org/reference/functions/number_format_i18n/), [`@wordpress/date`](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-date/).
-
-## Abgeleitete normative Spacing-Matrix
-
-Die folgende Matrix ist eine **Skill-Norm**, keine offizielle WordPress-HIG. Sie schliesst die in F-001 und F-004 festgestellte semantische Luecke. Die Token-Namen duerfen nur im gebuendelten WPDS-Pfad verwendet werden, wenn der oeffentliche Token-Stylesheet geladen ist. Im Classic- oder Core-Components-Pfad steuert dieselbe Beziehung die Auswahl vorhandener Defaults/APIs oder einer ausdruecklich als Skill-Norm markierten lokalen Ausnahme.
-
-| Semantische Beziehung | Gap | WPDS-Gap-Name, falls bereitgestellt | Regel |
+**Impact:** A pure spacing system can be formally consistent but still hard to
+use. Spacing must reveal a real information and task hierarchy.
+
+**Skill requirement:** Every page needs a clearly named primary task, a
+recognizable current location, a prioritized next action, logical sections,
+contextual help, and a safe path back in multi-step or destructive actions.
+Decorative containers without a new relationship should be avoided.
+
+**Evidence:** [Nielsen Norman Group: 10 Usability Heuristics](https://www.nngroup.com/articles/ten-usability-heuristics/), [WordPress Admin Design](https://make.wordpress.org/core/2023/07/12/admin-design/).
+
+### F-011: Navigation must fit the size of the plugin task
+
+**Observation:** For a plugin with only one options page, the Plugin Handbook
+recommends a submenu under an existing top-level menu such as Settings or
+Tools.
+
+**Impact:** A separate top-level menu for one small page lengthens global admin
+navigation and gives the plugin more visual weight than its task warrants.
+
+**Skill requirement:** The agent may recommend new top-level navigation only
+for a standalone, multi-page area with justified primary use. A single settings
+or tools page uses the existing Core context by default.
+
+**Evidence:** [Plugin Handbook: Administration Menus](https://developer.wordpress.org/plugins/administration-menus/).
+
+### F-012: State guidance and error handling are part of the design system
+
+**Observation:** For classic settings, WordPress provides
+`add_settings_error()`, `settings_errors()`, and admin notices. Core
+`common.js` moves `div.updated`, `div.error`, and `div.notice` after
+`.wp-header-end` unless they carry `.inline`; otherwise it uses the first title
+in `.wrap`. `.below-h2` is only a deprecated compatibility name. React
+interfaces have notice and snackbar patterns; snackbars are for short-lived,
+low-priority messages, while more important messages should be notices. WCAG
+2.2 requires textual error identification, visible labels or instructions, and
+programmatically determinable status messages.
+
+**Impact:** Without a state contract, users do not know what happened after
+saving, loading, or an error, or how to continue. A color-only state or a
+critical message that disappears is insufficient.
+
+**Skill requirement:** Where the flow uses them, the Skill defines at least
+initial, loading, empty, success, error, disabled, and permission states.
+Classic pages place the page title and `.wp-header-end` in Core-compatible
+order. Inline errors remain with the field using `.inline`, not `.below-h2`;
+page-wide results use movable Core notices. Low-priority confirming React
+feedback may use a snackbar when the information remains available elsewhere.
+Every error names the problem and the next corrective step where known.
+
+**Evidence:** [`add_settings_error()`](https://developer.wordpress.org/reference/functions/add_settings_error/), [`common.js` notice behavior](https://github.com/WordPress/wordpress-develop/blob/90a615f1834824d2583a43bfc698d9c710e5c094/src/js/_enqueues/admin/common.js), [WordPress Notices](https://developer.wordpress.org/block-editor/how-to-guides/notices/), [Snackbar](https://developer.wordpress.org/block-editor/reference-guides/components/snackbar/), [WCAG 2.2 Error Identification](https://www.w3.org/WAI/WCAG22/Understanding/error-identification.html), [Labels or Instructions](https://www.w3.org/WAI/WCAG22/Understanding/labels-or-instructions.html), [Status Messages](https://www.w3.org/WAI/WCAG22/Understanding/status-messages.html).
+
+### F-013: WCAG 2.2 AA is the minimum standard for WordPress interfaces
+
+**Observation:** WordPress Accessibility Coding Standards expect WCAG 2.2
+Level AA for code in the WordPress ecosystem. Reflow generally requires use
+without loss of information or function at a width equivalent to `320 CSS px`;
+content requiring two dimensions, such as data tables, may use a local
+exception. WCAG 2.2 AA also requires logical focus order, visible focus,
+unobscured focus, and pointer targets at least `24 x 24 CSS px` or a permitted
+spacing exception.
+
+**Impact:** Responsive design cannot be tested only at common phone widths.
+Zoom, keyboard, focus, labels, status messages, and local scroll containers are
+part of the same quality boundary.
+
+**Skill requirement:** WCAG 2.2 AA is the default. The Skill must distinguish
+`320px` reflow, the WCAG `24px` minimum target, and the larger WordPress Core
+mobile height of `40px`. Data tables may scroll horizontally in a local
+container; the entire admin page must not thereby become two-dimensionally
+scrollable.
+
+**Evidence:** [WordPress Accessibility Coding Standards](https://developer.wordpress.org/coding-standards/wordpress-coding-standards/accessibility/), [WCAG 2.2 Reflow](https://www.w3.org/WAI/WCAG22/Understanding/reflow.html), [Focus Order](https://www.w3.org/WAI/WCAG22/Understanding/focus-order.html), [Target Size Minimum](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum).
+
+### F-014: The Skill must be able to direct Scoville UI but work without that dependency
+
+**Observation:** The user requires a standalone WordPress Backend Skill and
+optional conflict-free composition with Scoville UI. ADR-0002 gives the
+WordPress Skill platform-specific factual and rule authority; general UI checks
+may supplement it only within those boundaries.
+
+**Impact:** When both are used, decision ownership must be clear. A hard
+dependency would make the WordPress Skill needlessly unusable when Scoville UI
+is not installed or active.
+
+**Skill requirement:** The WordPress Backend Skill is complete standalone. When
+Scoville UI is also active, the WordPress Skill owns WordPress-specific
+components, defaults, tokens, spacing, the admin shell, and CSS exceptions.
+Scoville UI owns remaining task guidance, hierarchy, state completeness,
+accessibility, and rendered validation without overriding WordPress owners.
+
+### F-015: Internationalization is a string, runtime, and layout contract
+
+**Observation:** The Plugin Handbook requires a text domain matching the
+lowercase, hyphenated plugin slug. User-facing PHP and JavaScript strings must
+be marked with WordPress gettext functions, including ARIA, screen-reader, and
+alternative text. The text domain must be literal. Complete phrases, plural
+forms, context, positional placeholders, and immediately preceding
+`translators:` comments preserve translatable grammar. JavaScript needs
+`wp-i18n` or `@wordpress/i18n` and `wp_set_script_translations()` after script
+handle registration. Custom JavaScript translations need the documented
+PO-to-JSON and handle/path workflow. Translations are untrusted and escaped for
+the output context. WordPress also recommends planning for doubled string
+length.
+
+**Impact:** i18n cannot be added after UI implementation as only a language
+file. Concatenated strings, variable domains, missing JavaScript binding, fixed
+widths, or left/right CSS may otherwise be impossible to translate or render
+responsively and reliably.
+
+**Skill requirement:** Every user-facing UI string in PHP and JavaScript is
+extractable. The Skill requires one shared literal text domain, complete
+phrases, positional placeholders, plural/context, `translators:` comments, and
+context-appropriate escaping. Date and number values use `wp_date()`,
+`number_format_i18n()`, or `dateI18n` from `@wordpress/date`. Client-side
+locale-formatted numbers are formatted by the server in the baseline; a
+JavaScript alternative needs its own source, locale mapping, and browser test.
+Sources are extracted into POT with `wp i18n make-pot`; a test PO maintained
+against it is compiled into loadable MO with `wp i18n make-mo`, and the plugin
+language path is registered on `init` with `load_plugin_textdomain()`.
+`wp i18n make-json --no-purge` creates the test JSON from the PO. Browser
+assertions prove one genuinely translated PHP and React string after a
+reproducible locale switch. Rendered cases cover doubled text, long German
+labels, at least one RTL language, and locale-dependent formats.
+
+**Evidence:** [How to Internationalize Your Plugin](https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/), [Internationalization Guidelines](https://developer.wordpress.org/apis/internationalization/internationalization-guidelines/), [Internationalization Security](https://developer.wordpress.org/plugins/internationalization/security/), [JavaScript Internationalization](https://developer.wordpress.org/block-editor/how-to-guides/internationalization/), [`wp_set_script_translations()`](https://developer.wordpress.org/reference/functions/wp_set_script_translations/), [`load_plugin_textdomain()`](https://developer.wordpress.org/reference/functions/load_plugin_textdomain/), [`wp i18n make-pot`](https://developer.wordpress.org/cli/commands/i18n/make-pot/), [`wp i18n make-mo`](https://developer.wordpress.org/cli/commands/i18n/make-mo/), [`wp i18n make-json`](https://developer.wordpress.org/cli/commands/i18n/make-json/), [`wp_date()`](https://developer.wordpress.org/reference/functions/wp_date/), [`number_format_i18n()`](https://developer.wordpress.org/reference/functions/number_format_i18n/), [`@wordpress/date`](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-date/).
+
+## Derived normative spacing matrix
+
+The following matrix is a **Skill-Norm**, not an official WordPress HIG. It
+closes the semantic gap identified in F-001 and F-004. Token names may be used
+only in the bundled WPDS path when the public token stylesheet is loaded. In the
+Classic or Core Components path, the same relationship guides selection of
+existing defaults/APIs or a local exception explicitly marked as a Skill-Norm.
+
+| Semantic relationship | Gap | WPDS gap name, if provided | Rule |
 | --- | ---: | --- | --- |
-| Control zu Help-, Status- oder Error-Text | 4px | `xs` | Engste lesbare Beziehung; keine weitere Child-Margin |
-| Heading zu seinem eigenen Einleitungstext | 8px | `sm` | Direkte Beschreibung derselben Region; Heading- und Absatzmargins im Stack neutralisieren |
-| Direkt zusammengehoerige Controls oder Icon und Label | 8px | `sm` | Ein gemeinsamer Bedienblock |
-| Elemente innerhalb einer Feldgruppe | 12px | `md` | Label, Control-Gruppe und ergaenzende Aktion |
-| Zusammengehoerige Einstellungsgruppen | 16px | `lg` | Normaler lokaler Abschnittsrhythmus |
-| Eigenstaendige Sektionen | 24px | `xl` | Default zwischen inhaltlich abgeschlossenen Sektionen |
-| Grosse Seitenregionen | 32px | `2xl` | Header, Hauptinhalt, gesonderte Nebenregion |
-| Sehr starke Trennung | 40px | `3xl` | Ausnahme, nicht Standard zwischen allen Bloecken |
+| Control to help, status, or error text | 4px | `xs` | Tightest readable relationship; no additional child margin |
+| Heading to its own introductory text | 8px | `sm` | Direct description of the same region; neutralize heading and paragraph margins in the stack |
+| Directly related controls or icon and label | 8px | `sm` | One shared interaction block |
+| Elements within a field group | 12px | `md` | Label, control group, and supplementary action |
+| Related settings groups | 16px | `lg` | Normal local section rhythm |
+| Independent sections | 24px | `xl` | Default between semantically complete sections |
+| Large page regions | 32px | `2xl` | Header, main content, separate secondary region |
+| Very strong separation | 40px | `3xl` | Exception, not the default between every block |
 
-### Flow-Eigentum
+### Flow ownership
 
-1. Der direkte Parent besitzt den Abstand zwischen Geschwistern.
-2. Ein Element besitzt keinen Aussenabstand, wenn sein Parent bereits den Flow per `gap` steuert.
-3. Verschachtelte Stacks verwenden die semantisch passende Ebene; sie erben den Parent-Gap nicht blind.
-4. Visuelle Container wie Card oder Panel steuern Innenpadding, nicht den Abstand zur Nachbarsektion.
-5. Ausgeblendete oder leere Elemente duerfen keine Abstandsluecke hinterlassen.
-6. Fehler-, Hilfe- und Statusmeldungen bleiben bei dem Control, dessen Zustand sie erklaeren.
-7. Im klassischen Settings-API-Pfad gelten diese Regeln nur innerhalb Plugin-eigener Komponenten; Core bleibt Owner der Form-Zeile.
-8. In hybriden Seiten besitzt jede DOM-Region genau einen Runtime- und Spacing-Owner; das gilt auch fuer Portale und Overlays.
-9. Core besitzt bei der typischen React-in-`.wrap`-Einbettung `#wpcontent`, `.wrap`, Seitentitel, `.wp-header-end` und seitenweite Notices; der Plugin-Root besitzt nur seinen inneren Teilbaum.
-10. `.form-table` und ein plugin-eigener Gap-Stack duerfen nicht denselben Teilbaum besitzen.
-11. Im Core-Components-Pfad besitzen spezialisierte Komponenten ihre interne Rhythmik. Neue generische vertikale Gruppen verwenden fuer alle Werte von `experimental_components_policy` `Flex` mit `direction="column"`, `align="stretch"`, `justify="flex-start"`, `wrap={ false }`, `expanded={ true }` und `gap` `1/2/3/4/6/8/10`. Bestehende experimentelle Teilbaeume bleiben ihr Owner; neues lokales Stack-CSS benoetigt eine belegte `Flex`-Luecke.
+1. The direct parent owns spacing between siblings.
+2. An element has no outer spacing when its parent already controls flow with
+   `gap`.
+3. Nested stacks use the semantically appropriate level; they do not blindly
+   inherit the parent gap.
+4. Visual containers such as a card or panel control internal padding, not the
+   gap to an adjacent section.
+5. Hidden or empty elements must leave no spacing hole.
+6. Error, help, and status messages remain with the control whose state they
+   explain.
+7. In the classic Settings API path, these rules apply only inside plugin-owned
+   components; Core remains owner of the form row.
+8. On hybrid pages, every DOM region has exactly one runtime and spacing owner;
+   this includes portals and overlays.
+9. In a typical React-in-`.wrap` embedding, Core owns `#wpcontent`, `.wrap`, the
+   page title, `.wp-header-end`, and page-wide notices; the plugin root owns only
+   its inner subtree.
+10. `.form-table` and a plugin-owned gap stack must not own the same subtree.
+11. In the Core Components path, specialized components own their internal
+    rhythm. For every `experimental_components_policy` value, new generic
+    vertical groups use `Flex` with `direction="column"`, `align="stretch"`,
+    `justify="flex-start"`, `wrap={ false }`, `expanded={ true }`, and `gap`
+    `1/2/3/4/6/8/10`. Existing experimental subtrees remain their own owner;
+    new local stack CSS needs an evidenced `Flex` gap.
 
-## Abgeleiteter Responsive-Vertrag
+## Derived responsive contract
 
-Dieser Vertrag ist ebenfalls eine Skill-Norm und muss im Skill als solche gekennzeichnet werden.
+This contract is also a Skill-Norm and must be labeled as such in the Skill.
 
-1. **Intrinsisch zuerst:** Grid und Flex muessen ohne feste Seitenbreite umbrechen koennen. Lange Labels, lokalisierte Texte und Notices duerfen keine horizontale Seite erzeugen.
-2. **Core-Grenze respektieren:** Bei `<=782px` werden mehrspaltige Form- und Aktionslayouts einspaltig, sofern nicht jedes Element nachweislich bedienbar und lesbar bleibt.
-3. **Mobile Controls:** Typische Texteingaben und Selects erhalten mindestens die von Core verwendete Hoehe von `40px`; Dichte-Tokens duerfen Touch-Ziele nicht verkleinern.
-4. **Shell nicht verdoppeln:** Klassische Seiten uebernehmen `.wrap` und Core-Padding. Moderne Vollseiten beginnen bei `16px` Block- und `24px` Inline-Padding; engeres Inline-Padding muss explizit definiert und getestet sein.
-5. **Reading order:** Visuelle Umordnung darf DOM-, Tastatur- und Screenreader-Reihenfolge nicht widersprechen.
-6. **Actions:** Primaeraktionen bleiben sichtbar, Nebenaktionen duerfen umbrechen oder in ein eindeutig beschriftetes Menue wechseln. Kein horizontales Scrollen fuer normale Formaktionen.
-7. **Data views:** Breite Datentabellen erhalten eine bewusst dokumentierte Small-Screen-Darstellung oder einen lokalen Scrollcontainer; blosses Abschneiden oder horizontales Scrollen der gesamten Seite ist keine responsive Strategie.
-8. **Logische Eigenschaften:** Plugin-eigenes CSS verwendet nach Moeglichkeit `margin-inline`, `padding-inline`, `block-size` und `inline-size`, damit RTL und unterschiedliche Admin-Shellbreiten nicht durch Links/Rechts-Annahmen brechen.
-9. **Reflow-Untergrenze:** Nicht ausgenommene Inhalte bleiben bei `320 CSS px` und bei entsprechendem Zoom ohne Informations- oder Funktionsverlust in einer Scrollrichtung nutzbar.
-10. **i18n-Stress:** Textverdopplung, lange deutsche Labels, eine RTL-Sprache und locale-abhaengige Werte sind regulaere Layoutfaelle, keine spaete Sonderpruefung.
-11. **Pruefmatrix:** Die WordPress-7.0-Fixture wird mindestens bei `783`, `782`, `600`, `390` und `320 CSS px` sowie `1280px` bei `400%` Zoom oder gleichwertigem Reflow geprueft. Fuer nicht ausgenommene Seitenshells gilt `document.documentElement.scrollWidth <= window.innerWidth`; notwendiger Tabellen-Overflow bleibt lokal.
+1. **Intrinsic first:** Grid and Flex must reflow without a fixed page width.
+   Long labels, localized text, and notices must not create page-wide
+   horizontal overflow.
+2. **Respect the Core boundary:** At `<=782px`, multi-column form and action
+   layouts become single-column unless every element demonstrably remains
+   operable and readable.
+3. **Mobile controls:** Typical text inputs and selects receive at least the
+   `40px` height used by Core; density tokens must not shrink touch targets.
+4. **Do not double the shell:** Classic pages inherit `.wrap` and Core padding.
+   Modern full pages start with `16px` block and `24px` inline padding; narrower
+   inline padding must be explicitly defined and tested.
+5. **Reading order:** Visual reordering must not conflict with DOM, keyboard, or
+   screen-reader order.
+6. **Actions:** Primary actions remain visible; secondary actions may wrap or
+   move into an unambiguously labeled menu. Normal form actions must not require
+   horizontal scrolling.
+7. **Data views:** Wide data tables receive a deliberately documented small-screen
+   presentation or a local scroll container; clipping or horizontal scrolling
+   of the entire page is not a responsive strategy.
+8. **Logical properties:** Plugin-owned CSS uses `margin-inline`,
+   `padding-inline`, `block-size`, and `inline-size` where possible so RTL and
+   different admin-shell widths do not break through left/right assumptions.
+9. **Reflow floor:** Non-exempt content remains usable in one scroll direction
+   at `320 CSS px` and corresponding zoom without loss of information or
+   function.
+10. **i18n stress:** Doubled text, long German labels, an RTL language, and
+    locale-dependent values are regular layout cases, not late special tests.
+11. **Test matrix:** Test the WordPress 7.0 fixture at least at `783`, `782`,
+    `600`, `390`, and `320 CSS px`, plus `1280px` at `400%` zoom or equivalent
+    reflow. Non-exempt page shells satisfy
+    `document.documentElement.scrollWidth <= window.innerWidth`; required table
+    overflow remains local.
 
-## CSS-Eigentums- und Ausnahmevertrag (Skill-Norm)
+## CSS ownership and exception contract (Skill-Norm)
 
-Der Agent bestimmt zuerst Runtime- und DOM-Owner, arbeitet dann diese Reihenfolge ab und beendet die Suche am ersten geeigneten Owner:
+The agent first identifies runtime and DOM owner, then follows this sequence and
+stops at the first suitable owner:
 
-1. Vorhandenes semantisches HTML, WordPress-API und Core-Admin-Markup.
-2. Vorhandene Core-Klasse oder WordPress-Komponente mitsamt Default-CSS.
-3. Ein semantischer Token, den der geladene oeffentliche Runtime-Stylesheet tatsaechlich bereitstellt.
-4. Plugin-eigene Komposition vorhandener Primitive mit `gap`, Grid/Flex und logischen Eigenschaften.
-5. Neue, eng gescopte CSS-Regel nur bei nachgewiesener Luecke.
+1. Existing semantic HTML, WordPress API, and Core admin markup.
+2. Existing Core class or WordPress component with its default CSS.
+3. A semantic token actually provided by the loaded public runtime stylesheet.
+4. Plugin-owned composition of existing primitives using `gap`, Grid/Flex, and
+   logical properties.
+5. A new narrowly scoped CSS rule only for a demonstrated gap.
 
-Eine CSS-Ausnahme muss im Agentenergebnis kurz belegen:
+A CSS exception must briefly establish in the agent output:
 
-- welche WordPress-Option geprueft wurde;
-- warum Default-CSS oder Token das konkrete Layout nicht ausdruecken kann;
-- welchen kleinsten Plugin-eigenen Scope die Regel besitzt;
-- welche Core-/Komponenten-Defaults oder tatsaechlich bereitgestellten Tokens sie weiterhin verwendet;
-- wie Reflow, RTL, Focus, Zoom und betroffene Zustände geprueft werden.
+- which WordPress option was checked;
+- why default CSS or a token cannot express the specific layout;
+- the smallest plugin-owned scope of the rule;
+- which Core/component defaults or actually provided tokens it still uses;
+- how reflow, RTL, focus, zoom, and affected states are tested.
 
-Im WPDS-Pfad duerfen semantische `--wpds-*` nur konsumiert werden; Plugin-Code definiert, ueberschreibt oder imitiert diesen Namespace nicht. Primitive WPDS-Tokens sind intern. Classic/Core erbt Core-Rhythmik; React/Core Components verwendet Komponenten-Defaults und APIs. Eine isolierte Plugin-Luecke darf eine plugin-eigene Custom Property oder eine als **Skill-Norm** markierte Zahl verwenden.
+In the WPDS path, semantic `--wpds-*` may only be consumed; plugin code does not
+define, override, or imitate that namespace. Primitive WPDS tokens are internal.
+Classic/Core inherits Core rhythm; React/Core Components uses component
+defaults and APIs. An isolated plugin gap may use a plugin-owned custom property
+or a number marked as a **Skill-Norm**.
 
-Nicht erlaubt sind globale Overrides von `wp-admin`, das Kopieren grosser Core-CSS-Bloecke, nachgeahmte `--wpds-*`, neue nackte Abstandswerte trotz geeignetem Owner, der Nachbau vorhandener Buttons/Inputs/Notices nur fuer eine andere Optik und `!important` ohne dokumentierten unvermeidbaren Integrationskonflikt. Eigene Farben sind grundsaetzlich ausgeschlossen; falls eine echte Produktfunktion eine Ausnahme erfordert, benoetigt sie einen dokumentierten WCAG-AA-Kontrastnachweis.
+Prohibited practices include global `wp-admin` overrides, copying large Core
+CSS blocks, imitated `--wpds-*`, new raw spacing values despite a suitable
+owner, rebuilding existing buttons/inputs/notices only for different styling,
+and `!important` without a documented unavoidable integration conflict. Custom
+colors are excluded by default; if a genuine product function requires an
+exception, it needs documented WCAG AA contrast evidence.
 
-## Basismodell fuer Userfuehrung (Skill-Norm)
+## Baseline user-guidance model (Skill-Norm)
 
-### Aufgaben- und Informationshierarchie
+### Task and information hierarchy
 
-1. Die Seite benennt in genau einem primaeren Titel, wo sich die Person befindet.
-2. Ein kurzer Kontext erklaert nur, was vor der ersten Entscheidung noetig ist.
-3. Die primaere Aufgabe und ihre naechste Aktion sind ohne Scroll-Suche erkennbar, soweit der Seitentyp das erlaubt.
-4. Abschnitte folgen der Aufgabenreihenfolge statt interner Daten- oder Code-Struktur.
-5. Verwandte Controls stehen naeher beieinander als unabhaengige Gruppen; die normative Spacing-Matrix macht diese Beziehung sichtbar.
-6. Fortgeschrittene oder seltene Einstellungen duerfen progressiv offengelegt werden, bleiben aber auffindbar und behalten ihren Zustand.
+1. Exactly one primary title tells the person where they are.
+2. Short context explains only what is needed before the first decision.
+3. The primary task and next action are recognizable without searching by
+   scrolling where the page type allows.
+4. Sections follow task order rather than internal data or code structure.
+5. Related controls are closer than independent groups; the normative spacing
+   matrix makes the relationship visible.
+6. Advanced or rare settings may be progressively disclosed but remain
+   discoverable and retain their state.
 
-### Aktionen und Sicherheit
+### Actions and safety
 
-1. Eine Region besitzt hoechstens eine visuell primaere Aktion.
-2. Sekundaere Aktionen konkurrieren nicht gleich stark; destruktive Aktionen sind semantisch und raeumlich getrennt.
-3. Mehrstufige oder destruktive Flows zeigen Konsequenz, Rueckweg und gegebenenfalls Wiederherstellung oder Bestaetigung.
-4. Lade- und Speicherzustand verhindern unbeabsichtigte Doppelaktionen, ohne Status oder Focus verschwinden zu lassen.
+1. A region has at most one visually primary action.
+2. Secondary actions do not compete at equal strength; destructive actions are
+   semantically and spatially separated.
+3. Multi-step or destructive flows show the consequence, a way back, and where
+   applicable recovery or confirmation.
+4. Loading and saving state prevents unintended duplicate actions without
+   making status or focus disappear.
 
-### Formulare
+### Forms
 
-1. Jedes Eingabefeld besitzt ein dauerhaft sichtbares, programmatisch verknuepftes Label.
-2. Help-Text erklaert Format, Folge oder Grenze vor der Fehleingabe und steht in der engsten `4px`-Beziehung zum Control; im WPDS-Pfad entspricht das bereitgestelltem `xs`, im Classic-Pfad bleibt Core Owner der `.description`-Rhythmik.
-3. Validierung erhaelt eingegebene Werte, kennzeichnet das konkrete Feld und beschreibt den Fehler in Text.
-4. Nach einem fehlgeschlagenen Submit fuehrt ein Summary oder Focus-Management zur ersten sinnvollen Korrekturstelle, ohne eine verwirrende Focus-Reihenfolge zu erzeugen.
-5. Abhaengige Controls zeigen Ursache und Zustand; blosses Deaktivieren ohne Erklaerung ist zu vermeiden.
+1. Every input has a persistently visible, programmatically associated label.
+2. Help text explains format, consequence, or limits before an error and has
+   the tightest `4px` relationship to the control; in WPDS this corresponds to
+   provided `xs`, while in Classic Core owns `.description` rhythm.
+3. Validation preserves entered values, identifies the specific field, and
+   describes the error in text.
+4. After a failed submit, a summary or focus management leads to the first
+   meaningful correction point without creating a confusing focus order.
+5. Dependent controls show cause and state; avoid disabling without explanation.
 
-### Systemzustand und Orientierung
+### System state and orientation
 
-1. Jede gestartete Aktion liefert zeitnah Rueckmeldung.
-2. Loading, Empty, Success, Error, Disabled und Permission werden nur dort vorgesehen, wo der reale Flow sie kennt, dann aber vollstaendig.
-3. Seitenweite Meldungen verwenden WordPress Notices; feldbezogene Meldungen bleiben inline; Snackbars sind nur fuer niedrig priorisierte, nicht exklusive Information.
-4. Ein Zustandswechsel wird nie ausschliesslich durch Farbe, Position oder kurzlebige Animation vermittelt.
-5. Struktur bleibt ueber Zustandswechsel stabil genug, dass Nutzer die Orientierung behalten.
+1. Every started action provides timely feedback.
+2. Loading, empty, success, error, disabled, and permission states are defined
+   only where the real flow has them, but completely when they occur.
+3. Page-wide messages use WordPress notices; field-specific messages remain
+   inline; snackbars are only for low-priority, non-exclusive information.
+4. A state change is never conveyed only through color, position, or brief
+   animation.
+5. Structure remains stable enough across state changes for users to keep their
+   orientation.
 
-## Internationalisierungsvertrag
+## Internationalization contract
 
-1. Die Textdomain ist ein literaler String, entspricht dem Plugin-Slug, ist kleingeschrieben und verwendet Bindestriche statt Unterstrichen oder Leerzeichen.
-2. Jede nutzergerichtete PHP-Zeichenkette einschliesslich ARIA-/Screenreader-/Alternativtext verwendet die passende WordPress-gettext-Funktion; Ausgabe wird am HTML-, Attribut- oder sonstigen Zielkontext escaped.
-3. Jede nutzergerichtete JavaScript-Zeichenkette verwendet `@wordpress/i18n` beziehungsweise die registrierte `wp-i18n`-Abhaengigkeit. `wp_set_script_translations()` wird erst nach Registrierung der Script-Handle mit derselben Textdomain und explizitem Sprachdateipfad aufgerufen.
-4. Vollstaendige Phrasen werden uebersetzt; String-Verkettung und uebersetzte Satzfragmente sind unzulaessig. Mehrere Werte verwenden nummerierte Positionsplatzhalter, damit Uebersetzungen ihre Reihenfolge aendern koennen.
-5. Pluralformen verwenden `_n()`/`_nx()` beziehungsweise die JavaScript-Pendants; mehrdeutige Begriffe erhalten Kontext mit `_x()`/`_nx()`.
-6. Nicht offensichtliche Platzhalter oder Bedeutungen erhalten einen unmittelbar vor der gettext-Anweisung stehenden, kleingeschriebenen `translators:`-Kommentar.
-7. URLs, Markup und variable Daten werden nicht als frei uebersetzbarer Bestandteil eingebettet, wenn sichere Platzhalter oder getrenntes Markup den Fall ausdruecken.
-8. PHP formatiert Datum/Zeit und Zahlen mit WordPress-locale-APIs wie `wp_date()` und `number_format_i18n()`; JavaScript verwendet fuer lokalisierte Datumswerte `dateI18n` aus `@wordpress/date`. Locale-formatierte Client-Zahlen kommen in der Baseline serverformatiert; eine JS-Alternative benoetigt eine separat belegte Locale-Zuordnung und Browserpruefung.
-9. Nach dem JavaScript-Build extrahiert `wp i18n make-pot . languages/<slug>.pot --domain=<slug> --exclude=src` PHP und den registrierten Build-Pfad in ein POT. Eine Test-PO namens `<slug>-<locale>.po` wird dagegen gepflegt, mit `wp i18n make-mo` zu `languages/<slug>-<locale>.mo` kompiliert und der Plugin-Sprachpfad bei `init` ueber `load_plugin_textdomain()` registriert.
-10. Dieselbe PO wird mit `wp i18n make-json --no-purge` in JSON ueberfuehrt. Der Golden-Fall fixiert entweder `<domain>-<locale>-<handle>.json` oder korrekte PO-Dateireferenzen zum registrierten Build-Pfad fuer den MD5-Namen; `src/`-Referenzen bei registriertem `build/`-Script sind unzulaessig.
-11. Nach reproduzierbarem Site-/Admin-User-Locale-Wechsel beweisen Browser-Assertions mindestens einen tatsaechlich uebersetzten PHP- und React-String. Fest eingebaute Teststrings gelten nicht als Runtime-Beweis.
-12. Textverdopplung, lange deutsche Labels, mindestens eine RTL-Sprache und locale-abhaengige Zahlen/Datumswerte sind Teil der Spacing-, Responsive- und Render-Validierung.
+1. The text domain is a literal string matching the lowercase, hyphenated
+   plugin slug.
+2. Every user-facing PHP string, including ARIA, screen-reader, and alternative
+   text, uses the appropriate WordPress gettext function; output is escaped for
+   its HTML, attribute, or other target context.
+3. Every user-facing JavaScript string uses `@wordpress/i18n` or the registered
+   `wp-i18n` dependency. `wp_set_script_translations()` is called only after
+   script-handle registration with the same text domain and an explicit
+   language-file path.
+4. Complete phrases are translated; string concatenation and translated
+   sentence fragments are prohibited. Multiple values use numbered positional
+   placeholders so translations can reorder them.
+5. Plural forms use `_n()`/`_nx()` or JavaScript counterparts; ambiguous terms
+   receive context with `_x()`/`_nx()`.
+6. Non-obvious placeholders or meanings receive a lowercase `translators:`
+   comment immediately before the gettext statement.
+7. URLs, markup, and variable data are not embedded as freely translatable
+   content when safe placeholders or separate markup can express the case.
+8. PHP formats date/time and numbers with WordPress locale APIs such as
+   `wp_date()` and `number_format_i18n()`; JavaScript uses `dateI18n` from
+   `@wordpress/date` for localized dates. Locale-formatted client numbers are
+   server-formatted in the baseline; a JavaScript alternative needs separately
+   evidenced locale mapping and a browser test.
+9. After the JavaScript build,
+   `wp i18n make-pot . languages/<slug>.pot --domain=<slug> --exclude=src`
+   extracts PHP and the registered build path into a POT. A test PO named
+   `<slug>-<locale>.po` is maintained against it, compiled with
+   `wp i18n make-mo` into `languages/<slug>-<locale>.mo`, and the plugin
+   language path is registered on `init` through `load_plugin_textdomain()`.
+10. The same PO is converted to JSON with `wp i18n make-json --no-purge`. The
+    golden case fixes either `<domain>-<locale>-<handle>.json` or correct PO
+    file references to the registered build path for the MD5 name; `src/`
+    references are prohibited when the registered script is under `build/`.
+11. After a reproducible site and admin-user locale switch, browser assertions
+    prove at least one genuinely translated PHP and React string. Hard-coded
+    test strings are not runtime proof.
+12. Doubled text, long German labels, at least one RTL language, and
+    locale-dependent numbers/dates are part of spacing, responsive, and
+    rendered validation.
 
-## Kompositionsvertrag mit Scoville UI
+## Composition contract with Scoville UI
 
-- Der WordPress-Backend-Skill hat keine technische oder instruktionale Laufzeitabhaengigkeit von Scoville UI.
-- Ist nur der WordPress-Skill aktiv, muss er UI-Pfad, Plattform-Owner, Spacing, Responsive Flow, Basis-Userfuehrung, States und Accessibility selbst ausreichend abdecken.
-- Sind beide Skills aktiv, ist der WordPress-Skill der kanonische Owner fuer WordPress-Backend-Designsystem, Default-CSS, Komponentenwahl, Tokens, Spacing und CSS-Ausnahmen.
-- Scoville UI darf die offene, produktbezogene UI-Qualitaet verbessern, aber keine parallelen Pixelwerte, Breakpoints, Komponenten oder visuelle Sprache einfuehren.
-- Scoville UI kann gerenderte Hierarchie, Aufgabenfluss, Zustände, Accessibility und Responsivitaet pruefen; bei Konflikten gilt der hoehere WordPress-/Accessibility-Owner.
-- Der WordPress-Skill muss ohne installierten, geladenen oder anwendbaren Scoville-UI-Skill dieselbe plattformspezifische Entscheidung liefern.
+- The WordPress Backend Skill has no technical or instructional runtime
+  dependency on Scoville UI.
+- When only the WordPress Skill is active, it must sufficiently cover the UI
+  path, platform owner, spacing, responsive flow, baseline user guidance,
+  states, and accessibility itself.
+- When both Skills are active, the WordPress Skill is canonical owner for the
+  WordPress backend design system, default CSS, component choice, tokens,
+  spacing, and CSS exceptions.
+- Scoville UI may improve open product-specific UI quality, but must introduce
+  no parallel pixel values, breakpoints, components, or visual language.
+- Scoville UI may audit rendered hierarchy, task flow, states, accessibility,
+  and responsiveness; on conflict, the higher WordPress/accessibility owner
+  prevails.
+- Without an installed, loaded, or applicable Scoville UI Skill, the WordPress
+  Skill must produce the same platform-specific decision.
 
-## Agenten-Anti-Patterns
+## Agent anti-patterns
 
-- Frontend-`theme.json`, `blockGap` oder Theme-Spacing als Backend-Quelle verwenden.
-- Abgeleitete Skill-Normen als "offizielle WordPress-Vorgabe" ausgeben.
-- Gap- und Padding-Tokens wegen gleicher Namen gleichsetzen.
-- `compact` automatisch mit Mobile gleichsetzen.
-- React automatisch mit experimentellem WPDS gleichsetzen.
-- Eine fehlende Projekt-Policy als stillen Opt-in fuer neue experimentelle Komponenten behandeln.
-- Bei `deny` oder `unknown` eine vorhandene nicht-experimentelle Core-Komponente ueberspringen und direkt eigenes Stack-CSS schreiben.
-- `--wpds-*` auf einer Seite definieren, ueberschreiben oder nachahmen, auf der der oeffentliche Token-Stylesheet sie nicht liefert.
-- `.form-table` zusaetzlich mit einem globalen Stack-Gap versehen.
-- Einzelnen Kindern willkuerliche `margin-bottom`-Werte geben, obwohl der Parent den Flow steuern kann.
-- Eine feste Universalbreite fuer Settings, Dashboards und Tabellen verwenden.
-- Responsive nur als kleinere Abstaende behandeln, ohne Reflow, Control-Groesse und Reading Order zu pruefen.
-- Experimentelle Pakete als global vorhandene `window.wp`-API voraussetzen.
-- Vorhandene WordPress-Buttons, Inputs, Notices oder Tabellen visuell neu implementieren, obwohl Core oder `@wordpress/components` den Fall abdeckt.
-- Globales Plugin-CSS gegen `.wp-admin`, `.wrap`, `.form-table` oder Core-Control-Klassen richten, um ein lokales Layoutproblem zu loesen.
-- Mehrere gleich starke Primaeraktionen, dekorative Card-Verschachtelung oder versteckte Statuswechsel als Ersatz fuer klare Userfuehrung einsetzen.
-- Nutzergerichtete Strings verketten, eine variable Textdomain verwenden, JavaScript-Uebersetzungen nicht an die Script-Handle binden oder uebersetzte Ausgabe ungeprueft als vertrauenswuerdig behandeln.
-- Nur POT-Extraktion oder fest eingebaute deutsche/RTL-Teststrings als Beweis fuer geladene PHP-/JavaScript-Uebersetzungen ausgeben.
-- Eine WordPress-Locale ohne belegte Regel in ein JavaScript-BCP-47-Locale umformen.
-- Feste Breiten oder Links/Rechts-Eigenschaften verwenden, die lange Uebersetzungen oder RTL brechen.
+- Use frontend `theme.json`, `blockGap`, or theme spacing as a backend source.
+- Present derived Skill-Norms as "official WordPress guidance."
+- Equate gap and padding tokens because their names match.
+- Automatically equate `compact` with mobile.
+- Automatically equate React with experimental WPDS.
+- Treat a missing project policy as silent opt-in to new experimental components.
+- Under `deny` or `unknown`, skip an existing non-experimental Core component
+  and write custom stack CSS directly.
+- Define, override, or imitate `--wpds-*` on a page where the public token
+  stylesheet does not supply it.
+- Add a global stack gap to `.form-table`.
+- Give individual children arbitrary `margin-bottom` values when the parent can
+  own flow.
+- Use one fixed universal width for settings, dashboards, and tables.
+- Treat responsive design only as smaller spacing without testing reflow,
+  control size, and reading order.
+- Assume experimental packages are globally available through `window.wp`.
+- Reimplement existing WordPress buttons, inputs, notices, or tables visually
+  when Core or `@wordpress/components` covers the case.
+- Target `.wp-admin`, `.wrap`, `.form-table`, or Core control classes with
+  global plugin CSS to solve a local layout problem.
+- Use multiple equally strong primary actions, decorative card nesting, or
+  hidden state changes instead of clear user guidance.
+- Concatenate user-facing strings, use a variable text domain, fail to bind
+  JavaScript translations to the script handle, or treat translated output as
+  trusted without checking.
+- Present only POT extraction or hard-coded German/RTL test strings as proof of
+  loaded PHP/JavaScript translations.
+- Transform a WordPress locale into a JavaScript BCP 47 locale without an
+  evidenced rule.
+- Use fixed widths or left/right properties that break long translations or RTL.
 
-## Erforderliche Bestandteile des geplanten Skills
+## Required parts of the planned Skill
 
-1. Klare Trigger und Ausschluesse fuer WordPress-Plugin-Backend statt Frontend/Block-Theme.
-2. Zweiachsen-Klassifikation fuer Admin-Flaeche und Runtime-Owner mit Support-Matrix.
-3. Quellenledger mit Ref/SHA, Paketversion, Abrufdatum, Supportstatus, Revalidierungstrigger und Kennzeichnung `Core`, `WPDS`, `WCAG` oder `Skill-Norm`.
-4. Getrennte Tabellen fuer Gap, Padding und Dichte.
-5. Normative Vertical-Flow-Matrix und Flow-Eigentumsregeln.
-6. CSS-Eigentumsleiter mit Default-CSS-first-Regel und strengem Ausnahmeformat.
-7. Page-Shell-, Settings-, Section-, Card-, Toolbar-, Form- und Data-View-Muster.
-8. Basisregeln fuer Navigation, Aufgabenhierarchie, Aktionen, Formulare, States, Feedback und Recovery.
-9. Responsive Vertrag einschliesslich `782px`, `320px` Reflow, intrinsischem Layout, RTL und lokalem Data-View-Overflow.
-10. Beispiele fuer PHP/Core, React/Core Components, gebuendeltes WPDS und Hybrid mit Owner je DOM-Region.
-11. Anti-Patterns und Entscheidungsbaum fuer gemischte Seiten, Portale und Overlays.
-12. Standalone-Vertrag und optionale Komposition mit Scoville UI ohne Abhaengigkeit.
-13. Verbindlicher PHP-/JavaScript-i18n-Vertrag einschliesslich Textdomain, PO/POT/JSON, Runtime-Uebersetzung, Escaping, Plural/Kontext, locale-Formaten, Textverdopplung und RTL.
-14. Vor der Skill-Formulierung eingefrorene Routing-, Experiment-Policy-, Spacing-, CSS-Ownership-, UI-Guidance-/Accessibility- und i18n-Golden-Faelle.
-15. Reproduzierbare getrennte WordPress-7.0-Single-Site- und WordPress-7.0.x-Multisite-Fixtures mit exakt gepinnten npm-Paketen, Lockfile, `npm ci`, nativem XAMPP-Manifest samt read-only Validator, geladenem oeffentlichem WPDS-Token-Stylesheet und Network-Admin-Fall.
-16. Repository-freier Fresh-Agent-Smoke-Test sowie gerenderte Validierungsrubrik fuer `783/782/600/390/320px`, Zoom, Tastatur, nicht verdeckten Focus, Target Size, Kontrast, Labels, Fehler-/Statussemantik und lokalisierte Inhalte.
+1. Clear triggers and exclusions for WordPress plugin backend rather than
+   frontend/block theme.
+2. Two-axis classification for admin surface and runtime owner with a support
+   matrix.
+3. Source ledger with ref/SHA, package version, retrieval date, support status,
+   revalidation trigger, and `Core`, `WPDS`, `WCAG`, or `Skill-Norm` labels.
+4. Separate tables for gap, padding, and density.
+5. Normative vertical-flow matrix and flow-ownership rules.
+6. CSS ownership ladder with a default-CSS-first rule and strict exception
+   format.
+7. Page shell, settings, section, card, toolbar, form, and Data View patterns.
+8. Baseline rules for navigation, task hierarchy, actions, forms, states,
+   feedback, and recovery.
+9. Responsive contract including `782px`, `320px` reflow, intrinsic layout,
+   RTL, and local Data View overflow.
+10. Examples for PHP/Core, React/Core Components, bundled WPDS, and Hybrid with
+    an owner for each DOM region.
+11. Anti-patterns and a decision tree for mixed pages, portals, and overlays.
+12. Standalone contract and optional composition with Scoville UI without a
+    dependency.
+13. Binding PHP/JavaScript i18n contract including text domain, PO/POT/JSON,
+    runtime translation, escaping, plural/context, locale formats, doubled
+    text, and RTL.
+14. Routing, experiment-policy, spacing, CSS-ownership, UI-guidance/accessibility,
+    and i18n golden cases frozen before Skill wording.
+15. Reproducible separate WordPress 7.0 single-site and WordPress 7.0.x
+    multisite fixtures with exactly pinned npm packages, lockfile, `npm ci`, a
+    native XAMPP manifest and read-only validator, loaded public WPDS token
+    stylesheet, and a Network Admin case.
+16. Repository-free fresh-agent smoke test and rendered validation rubric for
+    `783/782/600/390/320px`, zoom, keyboard, unobscured focus, target size,
+    contrast, labels, error/status semantics, and localized content.
 
-## Auditgrenzen
+## Audit limits
 
-- Keine Live- oder Screenshot-Pruefung einer konkreten Plugin-Seite.
-- Keine vollstaendige Farb-, Typografie-, Icon- oder Navigationsspezifikation. Core-/WPDS-Farben bleiben Owner; WCAG-AA-Kontrast bleibt trotzdem Pflicht.
-- Keine Aussage, dass experimentelle WPDS-Pakete in einer spaeteren WordPress-7.x-Version unveraendert bleiben.
-- Keine universelle Empfehlung fuer Content-Max-Width, Tabellenersatz oder Navigationsarchitektur ohne konkreten Seitentyp.
-- Der Audit prueft Quellen und leitet einen Skill-Vertrag ab; er ist noch nicht der Skill selbst.
+- No live or screenshot review of a concrete plugin page.
+- No complete color, typography, icon, or navigation specification. Core/WPDS
+  colors remain the owner; WCAG AA contrast remains mandatory.
+- No claim that experimental WPDS packages remain unchanged in a later
+  WordPress 7.x version.
+- No universal recommendation for content max width, table replacement, or
+  navigation architecture without a concrete page type.
+- The audit reviews sources and derives a Skill contract; it is not the Skill
+  itself.
 
-## Auditfazit
+## Audit conclusion
 
-Die Quellen reichen aus, um einen konsistenten Skill zu bauen, wenn der Skill Admin-Flaeche und Runtime-Owner getrennt routet und seine eigene normative Schicht offenlegt. Die wichtigste Invariante lautet: **Core besitzt Legacy-Shell und native Form-Rhythmik; ein Plugin besitzt nur seine abgegrenzten DOM-Regionen; jeder Flow hat genau einen Parent-Owner; WPDS-Tokens existieren nur, wenn ihr oeffentlicher Stylesheet am Render-Root geladen ist.** Responsive und mehrsprachige Konsistenz entsteht aus intrinsischem Reflow, der Core-Grenze von `782px`, logischen Eigenschaften und getesteter Textexpansion/RTL, nicht aus pauschal kleineren Abstaenden.
+The sources are sufficient to build a consistent Skill when the Skill routes
+admin surface and runtime owner separately and discloses its own normative
+layer. The central invariant is: **Core owns the legacy shell and native form
+rhythm; a plugin owns only its bounded DOM regions; every flow has exactly one
+parent owner; WPDS tokens exist only when their public stylesheet is loaded at
+the render root.** Responsive multilingual consistency comes from intrinsic
+reflow, the Core boundary at `782px`, logical properties, and tested text
+expansion/RTL, not blanket reductions in spacing.

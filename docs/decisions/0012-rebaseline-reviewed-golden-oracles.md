@@ -7,60 +7,58 @@ accepted: 2026-09-03
 scope: tests/golden-oracles
 ---
 
-# Review-korrigierte Golden Oracles neu baselinen
+# Rebaseline review-corrected golden oracles
 
 ## Decision
 
-Der nach dem finalen Review korrigierte Golden-Korpus ist die reproduzierbare
-Baseline fuer W-006. Seine sechs Dateien und SHA-256-Werte stehen in
-`tests/cases/MANIFEST.sha256`; der Contract-Validator berechnet jeden Hash neu
-und lehnt fehlende, zusaetzliche oder veraenderte Case-Dateien ab.
+The golden corpus corrected after final review is the reproducible baseline for
+W-006. Its six files and SHA-256 values are listed in
+`tests/cases/MANIFEST.sha256`; the contract validator recalculates every hash
+and rejects missing, additional, or changed case files.
 
-Der 28. Spacing-Fall `wpds-heading-intro` wurde waehrend W-005 ergaenzt, weil
-der Review eine echte Luecke zwischen Spezifikation und Oracle gefunden hatte.
-Der historische Vor-W-005-Stand mit 27 Faellen ist deshalb nicht mehr der
-fachlich richtige Oracle. W-006 prueft den explizit neu baselinten Stand statt
-einen nicht gespeicherten Vorzustand als unveraendert zu behaupten.
+The 28th spacing case, `wpds-heading-intro`, was added during W-005 because the
+review found a real gap between specification and oracle. The historical
+pre-W-005 state with 27 cases is therefore no longer the semantically correct
+oracle. W-006 tests the explicitly rebaselined state instead of claiming that
+an unsaved earlier state remained unchanged.
 
 ## Problem
 
-Der Plan verlangte vor W-005 eingefrorene Oracles, speicherte aber weder Git-
-Historie noch Datei-Hashes. Nach der notwendigen Heading-zu-Intro-Korrektur war
-der alte Zustand weder richtig noch reproduzierbar. Eine blosse Fallzahl konnte
-spaetere stille Aenderungen nicht erkennen.
+The Plan required oracles frozen before W-005, but stored neither Git history
+nor file hashes. After the necessary heading-to-intro correction, the old state
+was neither correct nor reproducible. A case count alone could not detect later
+silent changes.
 
 ## Drivers
 
-- Materielle Review-Korrekturen duerfen nicht zugunsten eines Prozessclaims
-  verworfen werden.
-- W-006 braucht eine reproduzierbare, maschinenpruefbare Baseline.
-- Jede spaetere Oracle-Aenderung muss sichtbar und begruendet sein.
-- Fallzahl und Inhalt muessen getrennt abgesichert werden.
+- Material review corrections must not be discarded to preserve a process
+  claim.
+- W-006 needs a reproducible, machine-checkable baseline.
+- Every later oracle change must be visible and justified.
+- Case count and content must be protected separately.
 
 ## Considered alternatives
 
-1. Den 28. Fall entfernen: wuerde die belegte Heading-zu-Intro-Luecke erneut
-   oeffnen.
-2. Nur die Zahl 28 dokumentieren: erkennt inhaltliche Aenderungen nicht.
-3. Einen historischen Stand aus Erinnerung rekonstruieren: waere keine
-   belastbare Evidenz.
+1. Remove the 28th case: would reopen the evidenced heading-to-intro gap.
+2. Document only the count of 28: would not detect content changes.
+3. Reconstruct a historical state from memory: would not be reliable evidence.
 
 ## Consequences
 
-- Der aktuelle Korpus ist ab diesem Decision-Zeitpunkt eingefroren.
-- Eine fachlich notwendige Aenderung braucht eine neue oder ersetzende Decision,
-  ein aktualisiertes Manifest und erneut ausgefuehrte betroffene Checks.
-- W-006 darf nicht behaupten, der 27-Fall-Stand sei unveraendert geblieben.
-- Das Manifest ist Testevidenz, kein Ersatz fuer Fresh-Agent- oder Runtime-
-  Validierung.
+- The current corpus is frozen from the time of this Decision.
+- A semantically necessary change requires a new or superseding Decision, an
+  updated manifest, and rerun affected checks.
+- W-006 must not claim that the 27-case state remained unchanged.
+- The manifest is test evidence, not a replacement for fresh-agent or runtime
+  validation.
 
 ## Confirmation
 
-Die Entscheidung ist umgesetzt, wenn `MANIFEST.sha256` alle sechs Case-Dateien
-genau einmal enthaelt, der Contract-Validator die aktuellen SHA-256-Werte
-verifiziert und W-006 ADR-0012 als Decision referenziert.
+The Decision is implemented when `MANIFEST.sha256` contains each of the six
+case files exactly once, the contract validator verifies the current SHA-256
+values, and W-006 references ADR-0012 as its Decision.
 
 ## Revisit when
 
-Ein Golden Case fachlich geaendert werden muss, neue Case-Dateien hinzukommen
-oder eine Versionskontrolle den Baseline-Nachweis uebernimmt.
+A golden case must change semantically, new case files are added, or version
+control assumes responsibility for baseline evidence.

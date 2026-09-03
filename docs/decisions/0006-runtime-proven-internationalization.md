@@ -9,46 +9,81 @@ supersedes: ADR-0004
 superseded_by: ADR-0008
 ---
 
-# Internationalisierung als runtime-gepruefte UI-Invariante
+# Internationalization as a runtime-proven UI invariant
 
 ## Decision
 
-Jede vom Skill erzeugte oder gepruefte Plugin-Backend-Oberflaeche ist in PHP und JavaScript internationalisierbar. Alle nutzergerichteten Strings einschliesslich `aria-label`, Screenreader-Text und Alternativtext verwenden WordPress-i18n-APIs mit einer literalen Textdomain, die dem kleingeschriebenen Plugin-Slug mit Bindestrichen entspricht. JavaScript registriert `wp-i18n` als Abhaengigkeit und bindet die bereits registrierte Script-Handle mit `wp_set_script_translations()` und einem expliziten Sprachdateipfad an dieselbe Textdomain.
+Every plugin backend interface generated or audited by the Skill is
+internationalizable in PHP and JavaScript. All user-facing strings, including
+`aria-label`, screen-reader text, and alternative text, use WordPress i18n APIs
+with a literal text domain matching the lowercase, hyphenated plugin slug.
+JavaScript registers `wp-i18n` as a dependency and binds the already registered
+script handle to the same text domain with `wp_set_script_translations()` and an
+explicit language-file path.
 
-Der Vertrag umfasst vollstaendige Phrasen statt String-Verkettung, Positionsplatzhalter, Pluralformen, Kontext, unmittelbar vorangestellte `translators:`-Kommentare, kontextgerechtes Escaping und locale-gerechte Datums-/Zahlenformatierung. PHP verwendet `wp_date()` und `number_format_i18n()`. JavaScript verwendet `dateI18n` aus `@wordpress/date`; clientseitig angezeigte locale-formatierte Zahlen werden in der Baseline serverseitig mit `number_format_i18n()` geliefert. Eine rein clientseitige Zahlen-, Prozent- oder Waehrungsformatierung ist nur mit separat dokumentierter WordPress-/Web-API, belegter Locale-Zuordnung und eigenem Browsertest zulaessig.
+The contract covers complete phrases instead of string concatenation,
+positional placeholders, plural forms, context, immediately preceding
+`translators:` comments, context-appropriate escaping, and locale-aware date
+and number formatting. PHP uses `wp_date()` and `number_format_i18n()`.
+JavaScript uses `dateI18n` from `@wordpress/date`; locale-formatted numbers shown
+client-side are supplied by the server with `number_format_i18n()` in the
+baseline. Pure client-side number, percentage, or currency formatting is
+allowed only with a separately documented WordPress or Web API, evidenced
+locale mapping, and its own browser test.
 
-Extraktion allein ist kein Beweis. Die Fixture enthaelt eine Test-PO, erzeugt POT und JavaScript-JSON reproduzierbar und beweist nach Locale-Wechsel im Browser jeweils mindestens einen tatsaechlich uebersetzten PHP- und React-String. Layout und Validierung decken Textverdopplung, lange deutsche Beschriftungen, mindestens eine RTL-Sprache und locale-abhaengige Formate ab.
+Extraction alone is not proof. The fixture includes a test PO, generates POT
+and JavaScript JSON reproducibly, and proves at least one actually translated
+PHP and React string in the browser after switching locale. Layout and
+validation cover doubled text, long German labels, at least one RTL language,
+and locale-dependent formats.
 
 ## Problem
 
-`make-pot` beweist nur Extrahierbarkeit. Es beweist weder eine geladene PHP-Uebersetzung noch korrekte JSON-Dateinamen, Script-Handle, Pfad oder die tatsaechliche JavaScript-Uebersetzung im Browser. Nachtraegliche Lokalisierung behebt ausserdem keine dynamisch zusammengesetzten Strings oder Layouts, die bei laengerem beziehungsweise RTL-Text brechen.
+`make-pot` proves only extractability. It proves neither a loaded PHP
+translation nor correct JSON filenames, script handle, path, or an actual
+JavaScript translation in the browser. Localization added later also cannot
+repair dynamically assembled strings or layouts that break with longer or RTL
+text.
 
 ## Drivers
 
-- Der Nutzer verlangt mehrsprachige Plugin-Oberflaechen als feste Eigenschaft.
-- WordPress stellt abgestimmte PHP-, JavaScript-, Sprachpaket- und WP-CLI-Vertraege bereit.
-- Assistive Strings sind ebenso nutzergerichtet wie sichtbarer Text.
-- Uebersetzungen sind nicht vertrauenswuerdig und muessen am Ausgabekontext escaped werden.
-- Spacing, Reihenfolge, Breiten und Statusmeldungen muessen auch mit expandierendem oder RTL-Text funktionieren.
+- The user requires multilingual plugin interfaces as a fixed property.
+- WordPress provides coordinated PHP, JavaScript, language-pack, and WP-CLI
+  contracts.
+- Assistive strings are just as user-facing as visible text.
+- Translations are untrusted and must be escaped for the output context.
+- Spacing, order, widths, and status messages must work with expanding or RTL
+  text.
 
 ## Considered alternatives
 
-1. Nur POT-Extraktion pruefen: reproduzierbar, aber kein Runtime-Beweis.
-2. Nur PHP internationalisieren: unzureichend fuer React- und hybride Oberflaechen.
-3. Browserstrings fest in Testsprachen einbauen: prueft Layout, aber nicht den WordPress-Uebersetzungsweg.
-4. Locale-Abbildung fuer JavaScript-Zahlen erfinden: flexibel, aber nicht quellentreu und fehleranfaellig.
+1. Test only POT extraction: reproducible, but not runtime proof.
+2. Internationalize only PHP: insufficient for React and hybrid interfaces.
+3. Hard-code browser strings in test languages: tests layout, but not the
+   WordPress translation path.
+4. Invent locale mapping for JavaScript numbers: flexible, but not source-faithful
+   and prone to error.
 
 ## Consequences
 
-- Der Skill benoetigt konkrete PHP-, JavaScript-, PO/POT/JSON-, Runtime- und Layoutregeln.
-- Beispiele duerfen keine unuebersetzten nutzergerichteten Literale oder variable Textdomains enthalten.
-- Die Fixture benoetigt mindestens eine echte Testuebersetzung und Locale-Wechsel.
-- i18n-Stressfaelle werden Teil der Spacing-, Responsive-, Accessibility- und Render-Validierung.
+- The Skill needs concrete PHP, JavaScript, PO/POT/JSON, runtime, and layout
+  rules.
+- Examples must not contain untranslated user-facing literals or variable text
+  domains.
+- The fixture needs at least one real test translation and locale switch.
+- i18n stress cases become part of spacing, responsive, accessibility, and
+  rendered validation.
 
 ## Confirmation
 
-Die Entscheidung ist umgesetzt, wenn der vorab eingefrorene Golden-Korpus positive und negative PHP-/JavaScript-Faelle abdeckt, `wp i18n make-pot` und `wp i18n make-json` die erwarteten Dateien erzeugen und Browser-Assertions nach Locale-Wechsel tatsaechlich uebersetzte PHP- und React-Strings sowie robuste deutsche/RTL-Layouts belegen.
+The Decision is implemented when the prefrozen golden corpus covers positive
+and negative PHP and JavaScript cases, `wp i18n make-pot` and
+`wp i18n make-json` produce the expected files, and browser assertions after a
+locale switch demonstrate actually translated PHP and React strings plus robust
+German and RTL layouts.
 
 ## Revisit when
 
-WordPress den empfohlenen PHP-/JavaScript-Uebersetzungs-, JSON- oder Sprachpaket-Workflow aendert oder eine dokumentierte clientseitige Zahlenformatierungs-API fuer den Zielpfad bereitstellt.
+WordPress changes the recommended PHP/JavaScript translation, JSON, or
+language-pack workflow, or provides a documented client-side number-formatting
+API for the target path.

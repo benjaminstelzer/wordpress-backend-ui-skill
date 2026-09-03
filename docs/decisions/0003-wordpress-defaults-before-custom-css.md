@@ -8,41 +8,59 @@ scope: skill/css-ownership
 superseded_by: ADR-0005
 ---
 
-# WordPress-Defaults und Tokens vor eigenem CSS verwenden
+# Use WordPress defaults and tokens before custom CSS
 
 ## Decision
 
-Der Skill verpflichtet Agenten auf folgende Reihenfolge: vorhandene WordPress-API und semantisches Core-Markup, vorhandene Core-Klasse oder WordPress-Komponente mit Default-CSS, vorhandener WordPress-Token, plugin-eigene Komposition dieser Primitive und erst als letzte Ausnahme eine neue eng gescopte CSS-Regel. Eigene Abstaende verwenden WordPress Gap- oder Padding-Tokens, sofern ein passender Token existiert.
+The Skill requires agents to follow this order: existing WordPress API and
+semantic Core markup; an existing Core class or WordPress component with
+default CSS; an existing WordPress token; a plugin-owned composition of those
+primitives; and only as a final exception, a new narrowly scoped CSS rule.
+Custom spacing uses WordPress gap or padding tokens whenever a suitable token
+exists.
 
 ## Problem
 
-Plugin-Backends definieren haeufig eigene Buttons, Inputs, Cards, Abstaende und Responsive-Regeln, obwohl WordPress bereits passende Defaults besitzt. Dadurch entstehen inkonsistente Oberflaechen, doppelte Abstaende, globale Overrides und Wartungsprobleme nach Core-Updates.
+Plugin backends often define custom buttons, inputs, cards, spacing, and
+responsive rules even though WordPress already provides suitable defaults.
+This creates inconsistent interfaces, duplicate spacing, global overrides, and
+maintenance problems after Core updates.
 
 ## Drivers
 
-- Der Nutzer hat minimale eigene CSS-Definitionen explizit verlangt.
-- WordPress-Default-CSS soll die visuelle Baseline bleiben.
-- WordPress Gap-Tokens sollen nackte Abstandsangaben ersetzen.
-- RTL, Mobile, Focus, Zoom und Core-Updates sollen nicht durch parallele CSS-Systeme geschwaecht werden.
-- Echte Layoutluecken muessen weiterhin klein und nachvollziehbar geschlossen werden koennen.
+- The user explicitly required minimal custom CSS.
+- WordPress default CSS should remain the visual baseline.
+- WordPress gap tokens should replace raw spacing values.
+- RTL, mobile, focus, zoom, and Core updates should not be weakened by parallel
+  CSS systems.
+- Genuine layout gaps must still be closable in a small, traceable way.
 
 ## Considered alternatives
 
-1. Vollstaendig eigenes Plugin-Designsystem: hohe Kontrolle, aber eine parallele Sprache und grosse Wartungsflaeche.
-2. Core-CSS ohne jede Ausnahme: maximale Naehe zu WordPress, aber unzureichend fuer echte plugin-spezifische Layoutkompositionen.
-3. Freie Mischung von Core und Custom CSS: kurzfristig flexibel, aber ohne deterministische Ownership und schwer auditierbar.
+1. A completely custom plugin design system: high control, but a parallel
+   language and large maintenance surface.
+2. Core CSS without any exception: maximum proximity to WordPress, but
+   insufficient for genuine plugin-specific layout compositions.
+3. Free mixing of Core and custom CSS: flexible in the short term, but without
+   deterministic ownership and difficult to audit.
 
 ## Consequences
 
-- Der Skill braucht einen verpflichtenden CSS-Owner-Check vor jeder neuen Regel.
-- Ausnahmen muessen Owner-Luecke, kleinsten Scope, verwendete Tokens und Responsive-/Accessibility-Proof nennen.
-- Globale `wp-admin`-Overrides, kopierte Core-CSS-Bloecke und nackte Werte trotz passendem Token sind unzulaessig.
-- Eigene CSS-Dateien bleiben fuer echte Komposition, Layout-Archetypen und klar begrenzte Integrationsluecken moeglich.
+- The Skill needs a mandatory CSS-owner check before every new rule.
+- Exceptions must state the ownership gap, smallest scope, tokens used, and
+  responsive/accessibility proof.
+- Global `wp-admin` overrides, copied Core CSS blocks, and raw values where a
+  suitable token exists are prohibited.
+- Custom CSS files remain possible for genuine composition, layout archetypes,
+  and clearly bounded integration gaps.
 
 ## Confirmation
 
-Die Entscheidung ist umgesetzt, wenn Beispiele und Agententests zuerst Core/API/Komponenten auswaehlen, Spacing ueber WordPress-Tokens ausdruecken und jede verbleibende Custom-CSS-Regel den dokumentierten Ausnahmevertrag erfuellt.
+The Decision is implemented when examples and agent tests choose Core APIs and
+components first, express spacing through WordPress tokens, and every remaining
+custom CSS rule satisfies the documented exception contract.
 
 ## Revisit when
 
-WordPress eine stabilere Admin-Komponenten- oder Layout-API bereitstellt, die heute notwendige Custom-CSS-Ausnahmen ersetzt.
+WordPress provides a more stable admin component or layout API that replaces
+custom CSS exceptions needed today.

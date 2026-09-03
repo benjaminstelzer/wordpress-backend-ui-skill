@@ -7,75 +7,74 @@ accepted: 2026-09-03
 scope: validation/runtime
 ---
 
-# Native XAMPP-Runtimes statt Docker verwenden
+# Use native XAMPP runtimes instead of Docker
 
 ## Decision
 
-Die kanonische Runtime-Validierung dieses Projekts verwendet die vorhandene
-native XAMPP-Installation fuer eine getrennte WordPress-7.0-Single-Site und
-eine WordPress-7.0.x-Multisite. Docker und `wp-env` sind keine Voraussetzung
-mehr und werden aus Paket, Lockfile, Skripten und Abnahmeanweisungen entfernt.
+This project's canonical runtime validation uses the existing native XAMPP
+installation for a separate WordPress 7.0 single site and a WordPress 7.0.x
+multisite. Docker and `wp-env` are no longer prerequisites and are removed from
+the package, lockfile, scripts, and acceptance instructions.
 
-Ein versioniertes Fixture-Manifest beschreibt ausschliesslich erwartete
-relative Pfade, WordPress-Versionen, Site-Typen, Plugin-Status und Locale. Ein
-read-only PowerShell-Validator nimmt den XAMPP-Root explizit entgegen, leitet
-daraus PHP, WP-CLI und beide isolierten WordPress-Pfade ab und prueft die
-Anforderungen, ohne Zugangsdaten oder bestehende Sites zu veraendern. Die
-gerenderten Browserpruefungen laufen gegen dieselben beiden Installationen.
+A versioned fixture manifest describes only expected relative paths, WordPress
+versions, site types, plugin status, and locale. A read-only PowerShell
+validator receives the XAMPP root explicitly, derives PHP, WP-CLI, and both
+isolated WordPress paths from it, and checks the requirements without changing
+credentials or existing sites. Rendered browser checks run against the same two
+installations.
 
-Der XAMPP-Pfad ist Testinfrastruktur des Repositories und keine Abhaengigkeit
-des veroeffentlichten Agenten-Skills.
+The XAMPP path is repository test infrastructure, not a dependency of the
+published agent Skill.
 
 ## Problem
 
-Beide gepinnten `wp-env`-Starts enden in dieser Umgebung bei `spawn docker
-ENOENT`. Docker ist nicht vorhanden und soll nicht installiert werden. Die
-bereits isoliert angelegten XAMPP-Sites decken Single Site und Network Admin
-tatsaechlich ab, waren aber noch nicht der reproduzierbare kanonische
-Abnahmepfad.
+Both pinned `wp-env` starts end with `spawn docker ENOENT` in this environment.
+Docker is unavailable and should not be installed. The already isolated XAMPP
+sites actually cover both Single Site and Network Admin, but were not yet the
+reproducible canonical acceptance path.
 
 ## Drivers
 
-- Die Abnahme muss mit der verfuegbaren lokalen Infrastruktur ausfuehrbar sein.
-- Ein fehlender externer Runtime-Dienst darf nicht als bestandener Test gelten.
-- Single Site und Network Admin muessen getrennt und wiederholbar pruefbar sein.
-- Zugangsdaten und andere XAMPP-Sites bleiben ausserhalb des Repositories und
-  der Testausgabe.
-- Der publizierte Skill darf weder Docker noch XAMPP zur Laufzeit benoetigen.
+- Acceptance must be executable with the available local infrastructure.
+- A missing external runtime service must not count as a passing test.
+- Single Site and Network Admin must be testable separately and repeatedly.
+- Credentials and other XAMPP sites remain outside the repository and test
+  output.
+- The published Skill must require neither Docker nor XAMPP at runtime.
 
 ## Considered alternatives
 
-1. Docker installieren: wurde ausdruecklich ausgeschlossen und fuegt eine fuer
-   das Ergebnis unnoetige Runtime hinzu.
-2. `wp-env` als blockierende Pflicht behalten: laesst die lokale Abnahme trotz
-   zwei funktionierender WordPress-Installationen dauerhaft unausfuehrbar.
-3. Nur eine Single Site pruefen: deckt Network Admin und Multisite-spezifische
-   Navigation nicht ab.
-4. Die XAMPP-Pruefung nur manuell dokumentieren: liefert keine wiederholbare
-   Preflight- und Runtime-Verifikation.
+1. Install Docker: explicitly excluded and adds a runtime unnecessary for the
+   result.
+2. Keep `wp-env` as a blocking requirement: leaves local acceptance permanently
+   unexecutable despite two working WordPress installations.
+3. Test only one single site: does not cover Network Admin or Multisite-specific
+   navigation.
+4. Document the XAMPP check only as a manual procedure: provides no repeatable
+   preflight and runtime verification.
 
 ## Consequences
 
-- W-005 bleibt als historisch nicht erfuellter Docker-Pfad erhalten und wird
-  durch einen neuen Work Item ersetzt; seine Acceptance wird nicht umgedeutet.
-- Das Repository verliert `@wordpress/env` und die beiden `.wp-env`-Dateien.
-- Der native Validator ist Windows-/PowerShell-Testtooling; der Skill selbst
-  bleibt plattform- und Scoville-UI-unabhaengig.
-- Die aktuell beobachteten Runtime-Versionen werden exakt festgehalten. Eine
-  Aenderung erfordert eine bewusste Manifest- und Evidenzaktualisierung.
-- Browser- und Accessibility-Evidenz bleibt erforderlich; der Preflight allein
-  beweist keine gerenderte UI.
+- W-005 remains as the historical unfulfilled Docker path and is replaced by a
+  new Work Item; its Acceptance is not reinterpreted.
+- The repository loses `@wordpress/env` and both `.wp-env` files.
+- The native validator is Windows/PowerShell test tooling; the Skill itself
+  remains platform-independent and independent of Scoville UI.
+- Currently observed runtime versions are recorded exactly. A change requires
+  a deliberate manifest and evidence update.
+- Browser and accessibility evidence remains required; preflight alone does not
+  prove rendered UI.
 
 ## Confirmation
 
-Die Entscheidung ist umgesetzt, wenn das Manifest und der read-only Validator
-beide isolierten XAMPP-Sites, ihre exakten WordPress-Versionen, Single-/
-Multisite-Modus, aktives Fixture, Plugin-Verknuepfung, Locale und erforderliche
-Build-Artefakte pruefen, die Dokumentation nur diesen kanonischen Pfad verlangt
-und keine Docker-/`wp-env`-Abhaengigkeit mehr im Paket verbleibt.
+The Decision is implemented when the manifest and read-only validator check
+both isolated XAMPP sites, their exact WordPress versions, single/multisite
+mode, active fixture, plugin linkage, locale, and required build artifacts; the
+documentation requires only this canonical path; and no Docker or `wp-env`
+dependency remains in the package.
 
 ## Revisit when
 
-Das Projekt auf eine andere Testmaschine wechselt, XAMPP ersetzt wird, eine
-plattformneutrale bereits verfuegbare Runtime dieselbe Abdeckung bietet oder
-die WordPress-7-Zielversionen bewusst angehoben werden.
+The project moves to another test machine, XAMPP is replaced, an already
+available platform-neutral runtime provides the same coverage, or the
+WordPress 7 target versions are deliberately raised.

@@ -9,47 +9,83 @@ supersedes: ADR-0005
 superseded_by: ADR-0009
 ---
 
-# Runtime-spezifisches Spacing deterministisch besitzen
+# Own runtime-specific spacing deterministically
 
 ## Decision
 
-Der Skill verpflichtet Agenten je DOM-Region auf folgende Reihenfolge: vorhandene WordPress-API und semantisches Core-Markup, vorhandene Core-Klasse oder WordPress-Komponente mit Default-CSS, ein im gewaehlten Runtime-Pfad tatsaechlich bereitgestellter semantischer Token, plugin-eigene Komposition dieser Primitive und erst als letzte Ausnahme eine neue eng gescopte CSS-Regel.
+For each DOM region, the Skill requires agents to follow this order: existing
+WordPress API and semantic Core markup; an existing Core class or WordPress
+component with default CSS; a semantic token actually provided in the selected
+runtime path; a plugin-owned composition of those primitives; and only as a
+final exception, a new narrowly scoped CSS rule.
 
-Semantische `--wpds-*`-Variablen duerfen nur konsumiert werden, wenn der ausgewaehlte und geladene WPDS-Provider oder dessen Stylesheet sie bereitstellt. Skill und Plugin-Code duerfen `--wpds-*` weder definieren, ueberschreiben noch nachahmen. Primitive WPDS-Tokens sind Implementierungsdetails. Classic/Core erbt zuerst die Core-Rhythmik.
+Semantic `--wpds-*` variables may be consumed only when the selected and loaded
+WPDS provider or its stylesheet supplies them. The Skill and plugin code must
+neither define, override, nor imitate `--wpds-*`. Primitive WPDS tokens are
+implementation details. Classic/Core first inherits Core rhythm.
 
-Im React/Core-Components-Pfad besitzen spezialisierte Komponenten zuerst ihre interne Rhythmik. Fuer eine generische plugin-eigene vertikale Geschwistergruppe ist der Core-bereitgestellte `__experimentalVStack` der Default-Flow-Owner, sofern er im gepinnten `@wordpress/components`-Stand verfuegbar ist und das Projekt experimentelle Komponenten akzeptiert. Seine numerische `spacing`-Prop ist der jeweilige Skill-Norm-Gap geteilt durch das dokumentierte 4-px-Raster: `1/2/3/4/6/8/10` fuer `4/8/12/16/24/32/40px`. Der experimentelle Status wird immer genannt. Verbietet das Projekt experimentelle Komponenten, besitzt eine einzige plugin-lokale Stack-Komposition den Flow und verwendet denselben als Skill-Norm markierten Gap; einzelne Kinder erhalten keine parallelen Aussenabstaende. Der Golden-Fall enthaelt diese Projektbedingung und bestimmt dadurch genau einen Owner.
+In the React/Core Components path, specialized components own their internal
+rhythm first. For a generic plugin-owned vertical sibling group, the
+Core-provided `__experimentalVStack` is the default flow owner when it is
+available in the pinned `@wordpress/components` version and the project accepts
+experimental components. Its numeric `spacing` prop is the relevant Skill-Norm
+gap divided by the documented 4 px grid: `1/2/3/4/6/8/10` for
+`4/8/12/16/24/32/40px`. Its experimental status is always named. If the project
+forbids experimental components, one plugin-local stack composition owns the
+flow and uses the same gap marked as a Skill-Norm; individual children receive
+no parallel outer margins. The golden case includes this project condition and
+therefore determines exactly one owner.
 
-Eine unvermeidbare isolierte Plugin-Luecke darf eine als **Skill-Norm** markierte Zahl oder eine plugin-eigene Custom Property verwenden, aber niemals als WordPress-Token ausgegeben werden.
+An unavoidable isolated plugin gap may use a number marked as a **Skill-Norm**
+or a plugin-owned custom property, but must never present it as a WordPress
+token.
 
 ## Problem
 
-Nicht jeder WordPress-Backend-Pfad laedt WPDS-Tokens. Zugleich laesst die allgemeine Forderung nach Komponenten-Defaults offen, ob zwei Agenten fuer dieselbe Core-Components-Struktur `__experimentalVStack`, eine andere Layoutkomponente oder eigenes CSS waehlen. Token-Verfuegbarkeit und Flow-Owner muessen daher beide deterministisch sein.
+Not every WordPress backend path loads WPDS tokens. At the same time, the
+general requirement to use component defaults leaves open whether two agents
+choose `__experimentalVStack`, another layout component, or custom CSS for the
+same Core Components structure. Both token availability and flow owner must
+therefore be deterministic.
 
 ## Drivers
 
-- Der Nutzer verlangt WordPress-Defaults und moeglichst wenig eigenes CSS.
-- Token-Verfuegbarkeit ist runtime- und providerabhaengig.
-- Zwei Agenten sollen bei identischer Struktur und Projektbedingung denselben Spacing-Owner waehlen.
-- Core-, Components- und WPDS-Pfade besitzen unterschiedliche Stabilitaets- und Spacing-Vertraege.
+- The user requires WordPress defaults and as little custom CSS as possible.
+- Token availability depends on runtime and provider.
+- Two agents should choose the same spacing owner for an identical structure
+  and project condition.
+- Core, Components, and WPDS paths have different stability and spacing
+  contracts.
 
 ## Considered alternatives
 
-1. `--wpds-*` global fuer alle Pfade definieren: einheitliche Namen, aber erfundene Plattformautoritaet.
-2. `Flex`, `VStack` und eigenes `gap` gleichrangig zulassen: flexibel, aber nicht deterministisch.
-3. WPDS auf jeder Plugin-Seite laden: einheitlicher Provider, aber experimentelle Abhaengigkeit und unnoetiger Eingriff in Classic-Seiten.
-4. Experimentelles `VStack` immer erzwingen: deterministisch, ignoriert aber eine legitime Projektgrenze gegen experimentelle APIs.
+1. Define `--wpds-*` globally for every path: consistent names, but fabricated
+   platform authority.
+2. Permit `Flex`, `VStack`, and custom `gap` equally: flexible, but not
+   deterministic.
+3. Load WPDS on every plugin page: one provider, but an experimental dependency
+   and unnecessary intervention on classic pages.
+4. Always require experimental `VStack`: deterministic, but ignores a legitimate
+   project boundary against experimental APIs.
 
 ## Consequences
 
-- Jede Empfehlung nennt Runtime-, DOM-, Token- und Flow-Owner.
-- Core-Components-Golden-Faelle nennen erwartete Komponente, Projektbedingung und `spacing`-Multiplikator.
-- Der Skill braucht getrennte Tabellen fuer Core-Beobachtungen, Components-APIs, WPDS-Tokens und Skill-Normen.
-- CSS-Ausnahmen muessen die geprueften Owner, den kleinsten Scope und Responsive-/Accessibility-Proof dokumentieren.
+- Every recommendation names the runtime, DOM, token, and flow owner.
+- Core Components golden cases name the expected component, project condition,
+  and `spacing` multiplier.
+- The Skill needs separate tables for Core observations, Components APIs, WPDS
+  tokens, and Skill-Norms.
+- CSS exceptions must document the owners checked, smallest scope, and
+  responsive/accessibility proof.
 
 ## Confirmation
 
-Die Entscheidung ist umgesetzt, wenn Golden-Faelle fuer Classic, Core Components, WPDS und Hybrid jeweils genau einen erwarteten Owner und eine erlaubte Ausdrucksform nennen, Core-Components-Faelle Komponente und Multiplikator pruefen, nicht geladene `--wpds-*` verbieten und jede Custom-CSS-Ausnahme begruenden.
+The Decision is implemented when golden cases for Classic, Core Components,
+WPDS, and Hybrid each name exactly one expected owner and allowed expression;
+Core Components cases test the component and multiplier; unloaded `--wpds-*`
+variables are prohibited; and every custom CSS exception is justified.
 
 ## Revisit when
 
-`VStack` stabilisiert oder ersetzt wird oder WordPress eine stabile, global dokumentierte Admin-Token-/Layout-API bereitstellt.
+`VStack` is stabilized or replaced, or WordPress provides a stable, globally
+documented admin token or layout API.

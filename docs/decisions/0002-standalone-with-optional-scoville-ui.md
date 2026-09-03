@@ -7,40 +7,58 @@ accepted: 2026-09-03
 scope: skill/composition
 ---
 
-# Standalone-Skill mit optionaler Scoville-UI-Komposition
+# Standalone Skill with optional Scoville UI composition
 
 ## Decision
 
-Der WordPress-Backend-Skill ist eigenstaendig und darf nicht von Scoville UI abhaengen. Wenn Scoville UI verfuegbar und fuer dieselbe Aufgabe anwendbar ist, kann es optional komponiert werden. Der WordPress-Skill bleibt dann kanonischer Owner des WordPress-Backend-Designsystems; Scoville UI wendet seine allgemeinen UI-Qualitaetspruefungen innerhalb dieser Grenzen an.
+The WordPress Backend Skill is standalone and must not depend on Scoville UI.
+When Scoville UI is available and applies to the same task, it may optionally be
+composed with this Skill. The WordPress Skill remains the canonical owner of the
+WordPress backend design system; Scoville UI applies its general UI quality
+checks within those boundaries.
 
 ## Problem
 
-Der Skill soll auch in Umgebungen ohne Scoville UI vollstaendig nutzbar sein. Gleichzeitig soll ein Agent bei gemeinsamer Nutzung nicht zwei konkurrierende Designsysteme, Spacing-Skalen oder Komponentenregeln erhalten.
+The Skill must remain fully usable in environments without Scoville UI. At the
+same time, an agent using both Skills must not receive two competing design
+systems, spacing scales, or component rules.
 
 ## Drivers
 
-- Der Nutzer hat die Unabhaengigkeit explizit verlangt.
-- Scoville UI soll optional nutzbar und kompatibel sein.
-- WordPress-spezifische Plattformregeln muessen allgemeinen UI-Defaults vorgehen.
-- Doppelte oder widerspruechliche Instruktionen muessen vermieden werden.
+- The user explicitly required independence.
+- Scoville UI should be optional and compatible.
+- WordPress-specific platform rules must take precedence over general UI
+  defaults.
+- Duplicate or contradictory instructions must be avoided.
 
 ## Considered alternatives
 
-1. Harte Abhaengigkeit von Scoville UI: weniger doppelte UI-Grundlagen, aber der Skill waere nicht standalone nutzbar.
-2. Keine Komposition: klare Unabhaengigkeit, aber gemeinsame Aufgaben koennten nicht von Scoville-UIs Render-, Accessibility- und Qualitaetspruefung profitieren.
-3. Gleichrangige Skills ohne Concern-Ownership: flexibel, aber Konflikte bei Spacing, Breakpoints und Komponentenwahl waeren nicht deterministisch loesbar.
+1. Hard dependency on Scoville UI: fewer duplicated UI fundamentals, but the
+   Skill would not work standalone.
+2. No composition: clear independence, but shared tasks could not benefit from
+   Scoville UI's rendering, accessibility, and quality checks.
+3. Peer Skills without concern ownership: flexible, but conflicts over spacing,
+   breakpoints, and component choice would not be resolved deterministically.
 
 ## Consequences
 
-- Der WordPress-Skill muss selbst Mindestregeln fuer Hierarchie, Userfuehrung, States, Responsivitaet und Accessibility enthalten.
-- Eine optionale Kompositionssektion definiert Concern-Ownership und Konfliktaufloesung.
-- Scoville UI darf keine WordPress-Tokens, Default-CSS oder Komponentenwahl durch eine parallele visuelle Sprache ersetzen.
-- Tests muessen Standalone- und Kompositionsfaelle getrennt abdecken.
+- The WordPress Skill must itself contain minimum rules for hierarchy, user
+  guidance, states, responsiveness, and accessibility.
+- An optional composition section defines concern ownership and conflict
+  resolution.
+- Scoville UI must not replace WordPress tokens, default CSS, or component
+  choices with a parallel visual language.
+- Tests must cover standalone and composition cases separately.
 
 ## Confirmation
 
-Die Entscheidung ist umgesetzt, wenn der fertige Skill ohne Scoville UI vollstaendige WordPress-Backend-Anweisungen liefert und bei gemeinsamer Aktivierung beide Skills anhand einer eindeutigen Ownership-Matrix ohne widerspruechliche Werte arbeiten.
+The Decision is implemented when the completed Skill provides complete
+WordPress backend guidance without Scoville UI and, when both are active, the
+two Skills work from an unambiguous ownership matrix without contradictory
+values.
 
 ## Revisit when
 
-Scoville UI selbst eine verbindliche, versionsgebundene WordPress-Backend-Spezialisierung als kanonischen Owner integriert oder der Nutzer die Abhaengigkeitsrichtung explizit aendert.
+Scoville UI itself integrates a binding, version-bound WordPress backend
+specialization as canonical owner, or the user explicitly changes the
+dependency direction.

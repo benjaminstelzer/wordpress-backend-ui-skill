@@ -9,49 +9,84 @@ supersedes: ADR-0007
 superseded_by: ADR-0010
 ---
 
-# Experiment-Policy und Runtime-Spacing deterministisch entscheiden
+# Decide experimental policy and runtime spacing deterministically
 
 ## Decision
 
-Der Skill verpflichtet Agenten je DOM-Region auf folgende Reihenfolge: vorhandene WordPress-API und semantisches Core-Markup, vorhandene Core-Klasse oder WordPress-Komponente mit Default-CSS, ein im gewaehlten Runtime-Pfad tatsaechlich bereitgestellter semantischer Token, plugin-eigene Komposition dieser Primitive und erst als letzte Ausnahme eine neue eng gescopte CSS-Regel.
+For each DOM region, the Skill requires agents to follow this order: existing
+WordPress API and semantic Core markup; an existing Core class or WordPress
+component with default CSS; a semantic token actually provided in the selected
+runtime path; a plugin-owned composition of those primitives; and only as a
+final exception, a new narrowly scoped CSS rule.
 
-Semantische `--wpds-*`-Variablen duerfen nur konsumiert werden, wenn der ausgewaehlte und geladene WPDS-Provider oder dessen Stylesheet sie bereitstellt. Skill und Plugin-Code duerfen `--wpds-*` weder definieren, ueberschreiben noch nachahmen. Primitive WPDS-Tokens sind Implementierungsdetails. Classic/Core erbt zuerst die Core-Rhythmik.
+Semantic `--wpds-*` variables may be consumed only when the selected and loaded
+WPDS provider or its stylesheet supplies them. The Skill and plugin code must
+neither define, override, nor imitate `--wpds-*`. Primitive WPDS tokens are
+implementation details. Classic/Core first inherits Core rhythm.
 
-Routing- und Spacing-Oracles enthalten `experimental_components_policy: allow | deny | unknown`. Repository-Evidenz fuer eine bereits bewusst verwendete experimentelle Komponente darf `allow` begruenden; die blosse Verfuegbarkeit tut es nicht. Bei `unknown` gilt der sichere Default `deny`: Der Agent fuehrt keine neue experimentelle API ein, verwendet genau eine plugin-lokale Stack-Komposition mit als Skill-Norm markiertem Gap und nennt den fehlenden Opt-in. Eine Rueckfrage ist nur noetig, wenn der Nutzer ausdruecklich die experimentelle Variante bewerten oder waehlen will.
+Routing and spacing oracles contain
+`experimental_components_policy: allow | deny | unknown`. Repository evidence
+of an experimental component already being used deliberately may justify
+`allow`; mere availability does not. For `unknown`, the safe default is `deny`:
+the agent introduces no new experimental API, uses exactly one plugin-local
+stack composition with a gap marked as a Skill-Norm, and names the missing
+opt-in. A question is necessary only when the user explicitly wants to assess
+or choose the experimental variant.
 
-Im React/Core-Components-Pfad besitzen spezialisierte Komponenten zuerst ihre interne Rhythmik. Fuer eine generische plugin-eigene vertikale Geschwistergruppe ist bei `allow` der Core-bereitgestellte `__experimentalVStack` der Flow-Owner. Seine numerische `spacing`-Prop ist der jeweilige Skill-Norm-Gap geteilt durch das dokumentierte 4-px-Raster: `1/2/3/4/6/8/10` fuer `4/8/12/16/24/32/40px`. Bei `deny` oder `unknown` besitzt eine einzige plugin-lokale Stack-Komposition den Flow und verwendet denselben als Skill-Norm markierten Gap; einzelne Kinder erhalten keine parallelen Aussenabstaende.
+In the React/Core Components path, specialized components own their internal
+rhythm first. For a generic plugin-owned vertical sibling group, the
+Core-provided `__experimentalVStack` owns flow under `allow`. Its numeric
+`spacing` prop is the relevant Skill-Norm gap divided by the documented 4 px
+grid: `1/2/3/4/6/8/10` for `4/8/12/16/24/32/40px`. Under `deny` or `unknown`,
+one plugin-local stack composition owns flow and uses the same gap marked as a
+Skill-Norm; individual children receive no parallel outer margins.
 
-Eine unvermeidbare isolierte Plugin-Luecke darf eine als **Skill-Norm** markierte Zahl oder eine plugin-eigene Custom Property verwenden, aber niemals als WordPress-Token ausgegeben werden.
+An unavoidable isolated plugin gap may use a number marked as a **Skill-Norm**
+or a plugin-owned custom property, but must never present it as a WordPress
+token.
 
 ## Problem
 
-Nicht jeder WordPress-Backend-Pfad laedt WPDS-Tokens. Zugleich bleibt der Core-Components-Flow nondeterministisch, wenn die Aufgabe keine Aussage zu experimentellen Komponenten enthaelt. Verfuegbarkeit darf nicht stillschweigend als Zustimmung gelten.
+Not every WordPress backend path loads WPDS tokens. At the same time, Core
+Components flow remains nondeterministic when the task says nothing about
+experimental components. Availability must not silently count as consent.
 
 ## Drivers
 
-- Der Nutzer verlangt WordPress-Defaults und moeglichst wenig eigenes CSS.
-- Token-Verfuegbarkeit ist runtime- und providerabhaengig.
-- Zwei Agenten sollen bei identischer Struktur und Evidenz denselben Spacing-Owner waehlen.
-- Neue experimentelle APIs benoetigen einen nachweisbaren Opt-in.
+- The user requires WordPress defaults and as little custom CSS as possible.
+- Token availability depends on runtime and provider.
+- Two agents should choose the same spacing owner given identical structure and
+  evidence.
+- New experimental APIs need an evidenced opt-in.
 
 ## Considered alternatives
 
-1. `unknown` als `allow` behandeln: weniger eigenes CSS, aber unbelegter Experiment-Opt-in.
-2. Bei `unknown` immer nachfragen: sicher, aber blockiert reversible Standardfaelle unnoetig.
-3. `Flex`, `VStack` und eigenes `gap` gleichrangig zulassen: flexibel, aber nicht deterministisch.
-4. WPDS auf jeder Plugin-Seite laden: einheitlicher Provider, aber experimentelle Abhaengigkeit und Eingriff in Classic-Seiten.
+1. Treat `unknown` as `allow`: less custom CSS, but an unevidenced experimental
+   opt-in.
+2. Always ask under `unknown`: safe, but blocks reversible default cases
+   unnecessarily.
+3. Permit `Flex`, `VStack`, and custom `gap` equally: flexible, but not
+   deterministic.
+4. Load WPDS on every plugin page: one provider, but an experimental dependency
+   and intervention on classic pages.
 
 ## Consequences
 
-- Jeder Routing-/Spacing-Fall besitzt einen expliziten Experiment-Policy-Wert.
-- Jede Empfehlung nennt Runtime-, DOM-, Token- und Flow-Owner.
-- Core-Components-Golden-Faelle nennen erwartete Komponente und gegebenenfalls `spacing`-Multiplikator.
-- `unknown` fuehrt reproduzierbar zum lokalen Skill-Norm-Stack und nicht zu einer stillen experimentellen Abhaengigkeit.
+- Every routing and spacing case has an explicit experiment-policy value.
+- Every recommendation names the runtime, DOM, token, and flow owner.
+- Core Components golden cases name the expected component and, where
+  applicable, the `spacing` multiplier.
+- `unknown` reproducibly selects the local Skill-Norm stack, not a silent
+  experimental dependency.
 
 ## Confirmation
 
-Die Entscheidung ist umgesetzt, wenn Golden-Faelle alle drei Policy-Werte abdecken, bei identischer Evidenz genau einen Owner ergeben, `unknown` keine neue experimentelle API einfuehrt, nicht geladene `--wpds-*` verbieten und jede Custom-CSS-Ausnahme begruenden.
+The Decision is implemented when golden cases cover all three policy values,
+produce exactly one owner for identical evidence, introduce no new experimental
+API under `unknown`, prohibit unloaded `--wpds-*`, and justify every custom CSS
+exception.
 
 ## Revisit when
 
-`VStack` stabilisiert oder ersetzt wird oder WordPress eine stabile, global dokumentierte Admin-Token-/Layout-API bereitstellt.
+`VStack` is stabilized or replaced, or WordPress provides a stable, globally
+documented admin token or layout API.

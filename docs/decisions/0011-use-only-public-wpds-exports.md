@@ -7,71 +7,67 @@ accepted: 2026-09-03
 scope: skill/wpds-runtime
 ---
 
-# Nur oeffentliche WPDS-Exporte im Plugin-Runtime-Pfad verwenden
+# Use only public WPDS exports in the plugin runtime path
 
 ## Decision
 
-Der gebuendelte experimentelle WPDS-Pfad fuer WordPress 7.0 verwendet nur
-oeffentliche Paket-Exporte. `@wordpress/ui`-Komponenten werden exakt gepinnt und
-gebuendelt. Semantische Default-Tokens kommen aus dem oeffentlich exportierten
-CSS-Subpath `@wordpress/theme/design-tokens.css` und muessen am tatsaechlichen
-Renderziel geladen sein.
+The bundled experimental WPDS path for WordPress 7.0 uses only public package
+exports. `@wordpress/ui` components are pinned exactly and bundled. Semantic
+default tokens come from the publicly exported CSS subpath
+`@wordpress/theme/design-tokens.css` and must be loaded at the actual render
+target.
 
-`ThemeProvider` ist am Pin `@wordpress/theme` 0.7.1 kein oeffentlicher
-Runtime-Export. Plugin-Code importiert ihn deshalb nicht und entsperrt auch
-keine `privateApis`. Eine nicht standardmaessige Dichte wird erst empfohlen,
-wenn das Zielpaket dafuer einen oeffentlichen Provider-Vertrag anbietet.
+At the `@wordpress/theme` 0.7.1 pin, `ThemeProvider` is not a public runtime
+export. Plugin code therefore does not import it and does not unlock any
+`privateApis`. A non-default density is recommended only when the target package
+offers a public provider contract for it.
 
-`Stack` setzt fuer vertikalen Flow `direction="column"` und einen semantischen
-`gap` explizit, weil beide Props am Pin keinen Default besitzen. Plugin-CSS
-definiert, ueberschreibt oder imitiert weiterhin keine `--wpds-*`-Variable.
+For vertical flow, `Stack` explicitly sets `direction="column"` and a semantic
+`gap`, because neither prop has a default at the pin. Plugin CSS continues to
+neither define, override, nor imitate any `--wpds-*` variable.
 
 ## Problem
 
-Die erste Fixture und das erste Beispiel importierten `ThemeProvider` direkt
-aus `@wordpress/theme`. Der Typ ist im Paket sichtbar, der Runtime-Einstieg
-exportiert jedoch nur `privateApis`. Die Anleitung war dadurch nicht baubar und
-haette Agenten zu einem privaten WordPress-Vertrag gedrueckt.
+The first fixture and first example imported `ThemeProvider` directly from
+`@wordpress/theme`. The type is visible in the package, but the runtime entry
+exports only `privateApis`. The guidance was therefore not buildable and would
+have directed agents toward a private WordPress contract.
 
 ## Drivers
 
-- Der Skill darf keine nicht oeffentliche API als Plugin-Vertrag ausgeben.
-- Der WPDS-Pfad soll reproduzierbar und gegen die gepinnten Pakete pruefbar
-  bleiben.
-- Semantische Tokens sollen konsumiert werden, ohne sie in Plugin-CSS
-  nachzubauen.
-- Experimentelle Nutzung braucht einen ausdruecklichen Opt-in und eine klare
-  Upgrade-Grenze.
+- The Skill must not present a non-public API as a plugin contract.
+- The WPDS path should remain reproducible and testable against the pinned
+  packages.
+- Semantic tokens should be consumed without recreating them in plugin CSS.
+- Experimental use needs an explicit opt-in and a clear upgrade boundary.
 
 ## Considered alternatives
 
-1. `privateApis` entsperren: technisch moeglich, aber ausdruecklich kein
-   Plugin-Vertrag.
-2. Einen eigenen Provider nachbauen: erzeugt eine parallele und unbelegte
-   WPDS-Laufzeit.
-3. WPDS vollstaendig ausschliessen: sicher, aber unnoetig; `Stack` und der
-   CSS-Subpath sind oeffentlich exportiert.
+1. Unlock `privateApis`: technically possible, but explicitly not a plugin
+   contract.
+2. Recreate a provider: creates a parallel and unevidenced WPDS runtime.
+3. Exclude WPDS entirely: safe but unnecessary; `Stack` and the CSS subpath are
+   publicly exported.
 
 ## Consequences
 
-- Der Default-Density-Pfad ist testbar; andere Dichten sind auf diesem Pin
-  nicht Teil des Skill-Vertrags.
-- Build-Evidenz muss zeigen, dass der Token-CSS-Subpath geladen wird und kein
-  unaufgeloestes `--wpds-*` verbleibt.
-- Bei JavaScript-Imports aus `@wordpress/theme` muss die Externalisierung zu
-  `wp-theme` separat beachtet werden; der Baseline-Pfad importiert nur den
-  CSS-Subpath.
-- Portals und Overlays pruefen Runtime und Token-Styles am wirklichen
-  Renderziel.
+- The default-density path is testable; other densities are not part of the
+  Skill contract at this pin.
+- Build evidence must show that the token CSS subpath is loaded and no
+  unresolved `--wpds-*` remains.
+- JavaScript imports from `@wordpress/theme` require separate attention to
+  externalization as `wp-theme`; the baseline path imports only the CSS subpath.
+- Portals and overlays check runtime and token styles at the actual render
+  target.
 
 ## Confirmation
 
-Die Entscheidung ist umgesetzt, wenn Beispiele, Golden Cases, Fixture und
-Validator keinen direkten oder privaten `ThemeProvider`-Import enthalten,
-`Stack` Richtung und Gap explizit setzt und ein gerenderter Test den geladenen
-Tokenwert statt nur den numerischen Fallback nachweist.
+The Decision is implemented when examples, golden cases, fixture, and validator
+contain no direct or private `ThemeProvider` import; `Stack` explicitly sets
+direction and gap; and a rendered test proves the loaded token value rather
+than only the numeric fallback.
 
 ## Revisit when
 
-`@wordpress/theme` einen oeffentlichen Provider exportiert, Paket-Exports oder
-Dependency Extraction sich aendern oder WordPress den WPDS-Pfad stabilisiert.
+`@wordpress/theme` exports a public provider, package exports or Dependency
+Extraction change, or WordPress stabilizes the WPDS path.

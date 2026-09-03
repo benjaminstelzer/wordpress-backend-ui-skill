@@ -1,34 +1,30 @@
 # WordPress Backend UI
 
-A WordPress plugin backend should look like it belongs in WordPress. This is
-less obvious than it sounds once Classic admin CSS, Core Components and an
-experimental design system all appear in the same conversation.
+A plugin backend should feel like WordPress before it starts looking like
+another product.
 
 WordPress Backend UI is an Agent Skill for designing, implementing and auditing
-plugin-owned `wp-admin` pages against WordPress 7.0. It determines who owns the
-surface and each part of the UI before it recommends a component, a gap or a
-line of CSS.
+plugin-owned `wp-admin` interfaces against WordPress 7.0. It gives an agent a
+clear contract for surface ownership, vertical flow, spacing, responsive
+behavior, accessibility, interface states and internationalization.
 
-The result is a clear vertical flow, responsive layouts, accessible states and
-translatable PHP and JavaScript. More importantly, the Skill tries to get there
-with WordPress itself. Custom CSS is the exception, not the opening move.
+The Skill does not add another UI framework. It tells the agent when WordPress
+APIs, Core Components, default CSS or provided design tokens already own the
+decision, and when a small local CSS exception is actually justified.
 
 ## Why this Skill?
 
-WordPress does not provide one complete, stable backend HIG for every plugin
-surface. It provides several real owners instead: the Settings API and Core
-admin CSS, `@wordpress/components`, and the newer bundled WPDS path. At the
-WordPress 7.0 target, that path remains experimental because it depends on the
-experimental `@wordpress/ui` and `@wordpress/theme` packages;
-`@wordpress/admin-ui` is only sparsely documented and depends on them.
+WordPress does not have one complete, stable backend design system for every
+plugin surface. Classic admin CSS, Core Components and the newer bundled WPDS
+path coexist, but they do not have the same runtime, support status or spacing
+owner.
 
-Ignoring those boundaries creates familiar problems. A Classic form receives a
-second spacing system. React is mistaken for WPDS. A plugin defines tokens that
-only look official. Mobile fixes shrink gaps while the form itself still does
-not reflow.
+Without those boundaries, agents tend to mix systems. A Classic form gets a
+second spacing scale, React is mistaken for WPDS, custom tokens start looking
+official, and a mobile fix changes gaps without fixing the layout itself.
 
-This Skill makes the missing decisions explicit without pretending WordPress
-published rules it did not publish.
+This Skill makes the ownership decisions explicit. The interface can still be
+custom where the task requires it, but WordPress remains the starting point.
 
 ## How to use
 
@@ -43,101 +39,113 @@ Audit this WordPress plugin backend, especially its spacing, states and custom C
 ```
 
 ```text
-Use the WordPress Backend UI Skill to implement this React admin page with full i18n support.
+Use WordPress Backend UI to implement this React admin page with full i18n support.
 ```
 
-The Skill first classifies the admin surface and runtime. If the UI belongs to
-the editor, a Core screen or another plugin, it routes to that owner instead of
-quietly applying a full-page plugin design system where it does not belong.
+The Skill first checks whether the interface is really a plugin-owned admin
+surface. Editor UI, Core screens, post metaboxes and interfaces owned by another
+plugin stay with their host design system.
 
 ## Install
 
-Copy the repository's `wordpress-backend-ui/` directory so the final path is:
+The repository contains one installable Agent Skill directory. Usually, let
+Codex install it with this prompt:
+
+```text
+Install this Agent Skill from GitHub and make it available for all my projects:
+https://github.com/benjaminstelzer/wordpress-backend-ui-skill/tree/main/wordpress-backend-ui
+```
+
+For a manual installation, copy the repository's `wordpress-backend-ui/`
+directory so the final path is:
 
 ```text
 <skills-dir>/wordpress-backend-ui/SKILL.md
 ```
 
-The Skill has no runtime dependency on Scoville UI or any other Scoville Skill.
-
-## Requirements
-
-- An Agent Skill-compatible host.
-- A WordPress plugin backend. The current contract and fixture target WordPress
-  7.0.
-- Node 24, npm, Python 3 and WP-CLI only when running the repository's
-  development fixture, contract and translation checks.
-- PowerShell and an isolated XAMPP setup only when repeating the repository's
-  local Single Site and Network Admin runtime checks. The Skill itself needs
-  neither XAMPP nor Docker.
-
-Version 1 covers plugin-owned settings, tools, workflows, dashboards, data
-views and explicit Network Admin pages. It does not own editor canvas UI,
-SlotFills, post metaboxes, Dashboard widgets, profile fields, extensions of
-existing Core screens or UI inside another plugin. Those surfaces stay with
-their host design system.
+The Skill works standalone. It does not require Scoville UI, Node, XAMPP or
+Docker. Those tools belong only to optional repository development and runtime
+validation.
 
 ## What it enforces
 
-- **Two ownership checks.** The admin surface and the runtime are classified
-  separately. React does not automatically mean WPDS.
-- **WordPress before plugin CSS.** APIs, semantic markup, Core classes,
-  components, default CSS and provided tokens are checked before a local rule.
-- **One owner for vertical flow.** The direct parent owns spacing between its
-  children. Cards own internal padding. Empty children leave no mystery gap
-  behind.
-- **A documented spacing scale.** Semantic relationships map to a consistent
-  4, 8, 12, 16, 24, 32 and 40 pixel sequence. The mapping is clearly labeled as
-  a Skill-Norm where WordPress itself leaves the decision open.
-- **Responsive task preservation.** Settings, workflows and data views adapt as
-  different page types. The test contract covers the WordPress boundary at 782
-  pixels, WCAG reflow at 320 CSS pixels, zoom, long translations and RTL.
-- **Complete interface states.** Loading, empty, success, error, disabled and
-  permission states keep a visible next step or recovery where one exists.
-- **Internationalization as part of the UI.** PHP, JavaScript, accessible text,
-  dates, numbers, translation artifacts and localized layout follow one
-  testable contract.
+- **Surface ownership before styling.** The agent first determines whether the
+  plugin owns the page or must follow another WordPress surface.
+- **Runtime ownership before components.** Classic admin UI, Core Components
+  and bundled WPDS are separate implementation paths. React alone decides
+  nothing.
+- **WordPress before custom CSS.** APIs, semantic markup, Core classes,
+  components, default CSS and provided tokens come before a local rule.
+- **One owner for vertical flow.** The direct parent controls the space between
+  its children. Components keep responsibility for their internal padding.
+- **A consistent spacing contract.** Semantic relationships map to a documented
+  4, 8, 12, 16, 24, 32 and 40 pixel sequence where WordPress leaves the choice
+  open.
+- **Responsive task preservation.** Settings, workflows and data views reflow
+  according to their purpose instead of receiving one generic mobile layout.
+- **Complete and accessible states.** Loading, empty, success, error, disabled
+  and permission states keep their meaning, focus behavior and available next
+  step.
+- **Internationalization as part of the layout.** PHP, JavaScript, accessible
+  text, dates, numbers, long translations and RTL belong to the UI contract.
 
-The complete behavior contract is in
-[`SKILL.md`](wordpress-backend-ui/SKILL.md).
+The complete contract is in [`SKILL.md`](wordpress-backend-ui/SKILL.md).
+
+## How it works
+
+### Surface and runtime
+
+The Skill classifies the admin surface first, then selects the supported
+runtime path. This keeps host-owned interfaces with their host and prevents an
+experimental component package from quietly becoming the design system for an
+entire plugin.
+
+### Spacing and CSS
+
+Vertical flow belongs to the nearest layout parent. The Skill maps intended
+relationships to WordPress component gaps or available design tokens before it
+allows custom CSS. A local CSS exception must solve a concrete layout problem,
+stay at the smallest useful scope and survive responsive, zoom, translation and
+RTL checks.
+
+### Responsive UI and i18n
+
+Responsive behavior starts with the task, not a breakpoint. Forms reflow,
+actions wrap, data views contain their overflow, and text remains usable at 320
+CSS pixels and 400 percent zoom. Translation is tested as runtime behavior in
+both PHP and JavaScript, because an extractable string is not automatically a
+loaded translation.
 
 ## Optional Scoville UI composition
 
-The Skill works standalone. When Scoville UI is also active, WordPress Backend
-UI remains the owner of WordPress components, shell behavior, spacing, tokens,
-responsive constraints, i18n and CSS exceptions. Scoville UI can strengthen
-the remaining task flow, hierarchy, accessibility and rendered checks inside
-those boundaries.
+WordPress Backend UI remains the owner of WordPress surfaces, components,
+spacing, tokens, responsive constraints, internationalization and CSS
+exceptions. When
+[Scoville UI](https://github.com/benjaminstelzer/scoville-ui-anti-ai-slop) is
+also active, it can strengthen task flow, hierarchy, accessibility and rendered
+validation inside those boundaries.
 
-Optional means optional. Installing one Skill should not turn the other into a
-missing dependency with better branding.
+Optional means optional. Installing one Skill does not turn the other into a
+missing dependency.
 
 ## Status
 
 Current release: **v1.0.0**.
 
-The source ledger is pinned to WordPress 7.0 and Gutenberg `wp/7.0`. Static
-contracts, the Skill package validator, a clean exact-lockfile Node 24 offline
-install from the populated npm cache, PHP/JavaScript
-runtime translation, Single Site, Network Admin, RTL and responsive browser
-checks passed locally against a WordPress 7.0 Single Site and a WordPress 7.0.4
-Network Admin. A read-only native XAMPP validator pins and verifies both local
-runtimes without making Docker a project requirement. Repository-free
-Fresh-Agent checks passed for all eight frozen routing prompts, both standalone
-and with optional Scoville UI composition. In both runs the WordPress ownership
-fields matched exactly; the Scoville UI run only added checks inside those
-boundaries.
+The contract, installable Skill and production fixture were validated against a
+WordPress 7.0 Single Site and a WordPress 7.0.4 Network Admin installation.
+Responsive behavior, RTL and PHP and JavaScript translations were exercised in
+the local XAMPP fixtures. The repository also contains frozen routing, spacing,
+CSS ownership, UI state and internationalization cases.
 
 ## Sources
 
 - [`wordpress-7-backend-design-system.md`](docs/audits/wordpress-7-backend-design-system.md)
   contains the source-backed audit and its derivation boundaries.
-- [`source-ledger.md`](docs/research/source-ledger.md) pins Core, Gutenberg,
-  WPDS, accessibility and i18n sources with revalidation triggers.
-- [`routing.yaml`](tests/cases/routing.yaml),
-  [`spacing.yaml`](tests/cases/spacing.yaml), and the remaining files in
-  [`tests/cases/`](tests/cases/) define the frozen behavioral oracles.
+- [`source-ledger.md`](docs/research/source-ledger.md) pins the relevant
+  WordPress, Gutenberg, accessibility and internationalization sources.
+- [`tests/cases/`](tests/cases/) contains the frozen behavioral contracts.
 
 ## License
 
-MIT. See [`LICENSE`](LICENSE).
+MIT - see [`LICENSE`](LICENSE).

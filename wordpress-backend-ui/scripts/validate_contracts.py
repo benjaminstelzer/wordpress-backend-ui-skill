@@ -34,6 +34,12 @@ def require(condition: bool, message: str, errors: list[str]) -> None:
         errors.append(message)
 
 
+def sha256_text(path: Path) -> str:
+    """Hash UTF-8 text with canonical LF line endings across Git checkouts."""
+    canonical_text = path.read_text(encoding="utf-8")
+    return hashlib.sha256(canonical_text.encode("utf-8")).hexdigest()
+
+
 def validate(root: Path) -> list[str]:
     errors: list[str] = []
     cases_dir = root / "tests" / "cases"
@@ -55,7 +61,7 @@ def validate(root: Path) -> list[str]:
         errors,
     )
     for case_path in case_paths:
-        actual_hash = hashlib.sha256(case_path.read_bytes()).hexdigest()
+        actual_hash = sha256_text(case_path)
         require(
             manifest_entries.get(case_path.name) == actual_hash,
             f"oracle manifest:{case_path.name}: hash mismatch",
@@ -89,7 +95,7 @@ def validate(root: Path) -> list[str]:
     require(agent_prompts.get("schema_version") == 1, "agent prompts: schema version", errors)
     require(agent_prompts.get("prohibited_match") == "required-subset", "agent prompts: prohibited match", errors)
     prompt_manifest = (root / "tests" / "agent-prompts.sha256").read_text(encoding="utf-8").strip()
-    prompt_hash = hashlib.sha256((root / "tests" / "agent-prompts.json").read_bytes()).hexdigest()
+    prompt_hash = sha256_text(root / "tests" / "agent-prompts.json")
     require(
         prompt_manifest == f"{prompt_hash}  agent-prompts.json",
         "agent prompts: frozen hash mismatch",

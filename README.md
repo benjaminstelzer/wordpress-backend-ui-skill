@@ -73,9 +73,7 @@ directory so the final path is:
 <skills-dir>/wordpress-backend-ui/SKILL.md
 ```
 
-The Skill works standalone. It does not require Scoville UI, Node, XAMPP or
-Docker. Those tools belong only to optional repository development and runtime
-validation.
+The Skill works standalone.
 
 ## What it enforces
 
@@ -157,7 +155,7 @@ missing dependency.
 
 ## Status
 
-Current release: **v1.1.0**.
+Current release: **v1.1.1**.
 
 The contract, installable Skill and production fixture were validated against a
 WordPress 7.0 Single Site and a WordPress 7.0.4 Network Admin installation.

@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.1.1 - 2026-09-04
+
+### Changed
+
+- Remove the tooling clarification from the README installation section.
+  The installable Skill and its behavior are unchanged.
+
 ## 1.1.0 - 2026-09-04
 
 ### Changed

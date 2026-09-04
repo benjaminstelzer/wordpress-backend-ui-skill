@@ -17,8 +17,10 @@ breakpoint.
   AA separately requires `24 x 24 CSS px` pointer targets or an allowed
   exception.
 - Use logical properties in unavoidable plugin CSS.
-- Treat doubled text, long German labels, RTL, errors, notices, dates, and
-  numbers as normal content inputs.
+- Treat doubled text, long labels, errors, notices, dates, and numbers as
+  normal content inputs. Include RTL only when a supported or explicitly
+  planned UI language requires it, following the
+  [language-scope rule](internationalization.md#language-scoped-rtl-checks).
 - Primary actions remain visible. Secondary actions wrap or move to an
   accessible labeled menu.
 - Non-exempt shells satisfy:
@@ -73,9 +75,20 @@ not a responsive switch.
 
 ## Test matrix
 
-Render each applicable archetype at `783`, `782`, `600`, `390`, and `320` CSS
+For a new page or a full responsive audit, render each applicable archetype at
+`783`, `782`, `600`, `390`, and `320` CSS
 pixels, plus `1280px` at `400%` zoom or an equivalent reflow setup. Repeat the
-decisive cases with doubled text, long German labels, RTL, errors/notices,
+decisive cases with doubled text, long labels, errors/notices,
 empty/loading/success/permission states, and keyboard-only traversal.
+Add RTL cases only when RTL is in language scope. LTR-only or unspecified
+language scope does not make an RTL check mandatory.
+
+For a focused audit or isolated change, select the widths, content, and states
+that can affect the scoped conclusion. A spacing check includes a wrapping
+boundary when wrapping changes those distances, not every page and state by
+default. Preserve the same reflow and accessibility requirements for the
+affected UI. Report which cases were inspected, without calling a partial
+matrix a complete responsive audit. A source-only review leaves rendered
+behavior unverified rather than requiring a browser session.
 
 Source and build inspection do not prove these conditions.

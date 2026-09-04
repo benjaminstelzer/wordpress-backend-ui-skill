@@ -1,6 +1,44 @@
-# Surface and runtime routing
+# Task, surface, and runtime routing
 
-Classify the surface before the runtime. Do not infer either from the other.
+Use the working mode defined in [SKILL.md](../SKILL.md#select-the-working-mode-and-scope).
+Within the selected scope, classify the surface before the runtime. Do not
+infer either from the other.
+
+## Select the focus
+
+Take the target page or region and concerns from the request. Combine concerns
+when requested or causally necessary, not merely because they share a file.
+An unqualified page audit covers that page's applicable UI concerns. It does
+not cover every plugin screen. A targeted audit covers only the selected
+concerns and the dependencies needed to evaluate them.
+
+| Focus | Inspect | Main reference |
+| --- | --- | --- |
+| Spacing and vertical flow | Parent/child ownership, gap versus margins, internal padding, hidden content, Core defaults, actual rendered distances where available. | [spacing.md](spacing.md) |
+| Core defaults, tokens, and CSS | Runtime owner, reused Core markup/components, token availability and loading when consumed, CSS exceptions. | [spacing.md](spacing.md), [version-compatibility.md](version-compatibility.md) when version-sensitive |
+| Responsive layout | Affected reflow, wrapping, overflow, order, zoom, and relevant widths. | [responsive.md](responsive.md) |
+| User guidance and states | Task hierarchy, actions, feedback, recovery, and states possible in the selected flow. | [ui-guidance.md](ui-guidance.md) |
+| Accessibility | Relevant semantics, keyboard/focus behavior, labels, contrast, targets, and reflow. | [ui-guidance.md](ui-guidance.md), [responsive.md](responsive.md) for layout |
+| i18n-readiness | Strings, domains, formatting, dependencies/loading hooks, expansion, and language-scoped RTL. Translation delivery only when requested. | [internationalization.md](internationalization.md) |
+
+For a spacing audit, inspect the affected subtree and its actual spacing owner.
+Use computed styles and rendered geometry when available. A declared `gap`
+alone does not establish the visible distance when margins, padding, or layout
+participate. Compare against Core/component defaults before applying a
+Skill-Norm. A native spacing value is not defective merely because it differs
+from the Skill's fallback scale.
+
+Check responsive or state variants when they can change the spacing conclusion,
+such as wrapped controls or a hidden child. Do not automatically add catalog
+generation, RTL tests, navigation redesign, or every application state. For a
+source-only request, report source findings and the unverified rendering
+boundary rather than requiring a browser or claiming visual proof.
+
+In Implement, new pages apply all relevant design-system concerns to that page.
+An isolated fix applies them to the changed region and affected behavior, not
+unrelated screens. Preserve functioning Classic elements and Core defaults.
+Stop when the requested outcome has proportionate evidence. Missing browser
+access limits rendered claims, not the ability to provide a source audit.
 
 ## Surface support
 
@@ -31,7 +69,9 @@ plugin-owned page shell, a generic spacing matrix, or global admin CSS.
 Check the actual supported installation and minimum supported version. Style
 and script registries are separate even though both use `wp-theme`. Registration
 does not prove enqueue, successful loading, token availability, or rendering.
-Read [version-compatibility.md](version-compatibility.md) for examples and checks.
+Read [version-compatibility.md](version-compatibility.md) when the task depends
+on token/provider availability, loading, or fallback. A spacing check on native
+Core markup does not require a token-loading audit if it consumes no tokens.
 Do not infer future 7.x contracts or package versions from either row.
 
 ## Runtime owners
@@ -208,9 +248,9 @@ sidebar/SlotFill handoff must include `own-host-surface`,
 `frontend-theme-spacing`, and `recommend-without-clarification` because this
 Skill must stop before prescribing the host-owned details.
 
-## Required classification output
+## Classification output
 
-Return:
+For an explicit classification request, return:
 
 - `surface` and `support_status`;
 - `runtime_owner`;
@@ -221,16 +261,20 @@ Return:
 - prohibited recommendations for this route.
 
 When structured output was requested, use the canonical values above for all
-six fields and for each prohibited-recommendation identifier.
+six fields and for each prohibited-recommendation identifier. Otherwise use
+these facts to establish ownership and report only those needed to explain the
+scoped result. Do not add a full classification report to every finding.
 
 For a version-sensitive recommendation, also record supported/observed versions,
 token stylesheet owner, required token names, and loading/fallback evidence.
 These facts supplement the six stable fields, they do not change a PHP route
 to `bundled-wpds` just because Core tokens are available.
 
-If surface, runtime, token-style, or ownership evidence is missing, return
+If decision-relevant surface, runtime, token-style, or ownership evidence is missing, return
 `needs-clarification`, name the missing fact, and emit no downstream spacing or
-component recommendation.
+component recommendation that depends on it. A token-style fact is not needed
+for a native Core region that consumes no tokens. Continue independent checks
+within scope without inventing the missing owner or blocking on unrelated facts.
 
 ## Fact labels
 

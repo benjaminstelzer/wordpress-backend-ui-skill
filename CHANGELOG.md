@@ -1,5 +1,28 @@
 # Changelog
 
+## 1.1.0 - 2026-09-04
+
+### Changed
+
+- Add Implement and Audit modes with a separate target and focus. Audit is
+  read-only unless corrections are requested, and a full audit is a broader
+  scope rather than another mode.
+- Scope reference selection, responsive checks, and result reporting to the
+  requested work. Keep one design-system contract and the same boundaries
+  with optional Scoville UI composition.
+- Require RTL checks only when a supported or explicitly planned UI language
+  uses RTL. General i18n-readiness does not require an RTL test.
+- Apply the same language scope to responsive, CSS-exception, and versioned
+  layout checks. Preserve existing Core direction handling and RTL fixtures.
+
+### Validation
+
+- Frozen contracts, eight PHP enqueue cases, the Skill validator, and the
+  project-profile validator passed.
+- The working-mode scenarios received source-level walkthroughs. They are
+  not executed UI tasks or browser tests, and the contract validator does not
+  prove agent behavior. No new fixture build or browser validation is claimed.
+
 ## 1.0.2 - 2026-09-03
 
 ### Changed

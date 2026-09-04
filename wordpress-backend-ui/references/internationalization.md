@@ -19,7 +19,8 @@ managed catalogs or WordPress language packs.
 
 Readiness requires extractable source strings, correct domains and i18n APIs,
 safe formatting and escaping, appropriate script dependencies and loading
-hooks, locale-aware values, and layouts that tolerate expansion and RTL.
+hooks, locale-aware values, and layouts that tolerate expansion. RTL checks
+follow the language scope below, not i18n-readiness alone.
 Artifact generation and proof of an actually loaded translation belong to the
 separate translation-delivery scope below.
 
@@ -158,12 +159,30 @@ loading.
 
 ## Layout
 
-Test doubled strings, long labels, RTL direction, and locale-dependent dates
-and numbers. Synthetic expanded labels and a controlled RTL test are enough
-for readiness. They do not require production translations or PO files, and
-they are not proof of translation loading. Use logical properties, allow
+Test doubled strings, long labels, and locale-dependent dates and numbers.
+Synthetic expanded labels do not require production translations or PO files
+and are not proof of translation loading. Use logical properties, allow
 controls and actions to wrap, and preserve information, function, and source
 order. Fix presentation instead of shortening or fragmenting translatable copy.
+
+### Language-scoped RTL checks
+
+Require RTL checks only when a supported or explicitly planned UI language
+uses right-to-left direction. Include the admin user's language where it
+differs from the site language. General multilingual readiness alone does not
+put an RTL language in scope.
+
+For LTR-only tasks, omit RTL from the required test matrix. If target languages
+are unspecified and no RTL requirement is established, do not add a mandatory
+RTL test or block readiness on that uncertainty. State that RTL was not tested
+without claiming RTL support. Revisit the matrix when an RTL language enters
+scope.
+
+When RTL is in scope, check the affected layouts, controls, focus/source order,
+and directional content. Controlled RTL direction is sufficient for a
+readiness layout check without catalogs. Actual translation-loading claims
+still require runtime proof. Preserve existing Core direction handling and
+logical properties even when no RTL test is required.
 
 ## Acceptance by scope
 
@@ -173,6 +192,9 @@ order. Fix presentation instead of shortening or fragmenting translatable copy.
 | Catalogs exist, but visible or assistive source strings bypass i18n APIs | Reject readiness. Catalog presence does not fix source defects. |
 | Translation delivery is requested but the claimed translations do not load | Reject the delivery claim. Extractable strings alone do not prove delivery. |
 | Project uses external catalogs or language packs | Preserve that mechanism. Do not force a local PO workflow. |
+| Supported UI languages are LTR-only, such as English and German | No RTL check required. Keep the other readiness and layout checks. |
+| A supported or explicitly planned UI language uses RTL | Require RTL layout checks for the affected UI, independently of whether catalogs are being produced. |
+| Target languages are unspecified, with no established RTL requirement | Do not force an RTL check. Report it as untested, not as verified support. |
 
 Review source extractability and registration for readiness. If uncertainty
 requires an extraction check, a disposable output may supply evidence without

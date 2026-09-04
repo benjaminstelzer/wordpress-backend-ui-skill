@@ -11,13 +11,35 @@ placing a second design system inside `wp-admin`.
 This Skill is complete on its own. It may compose with Scoville UI, but never
 requires it.
 
-## Classify before designing
+## Select the working mode and scope
 
-Read [routing.md](references/routing.md) first. Classify three independent axes:
+Infer the mode from the requested outcome. The user need not name a mode.
+
+| Mode | Requested outcome | Boundary |
+| --- | --- | --- |
+| **Implement** | Create, design, change, or fix a plugin backend UI. | Deliver only the requested design or implementation and validate affected behavior. A design-only request does not authorize code edits. |
+| **Audit** | Inspect, explain, or evaluate an existing UI or a specific concern. | Inspect and report without modifying plugin code, styles, settings, or data. Findings do not authorize fixes. |
+
+Keep mode separate from scope: name the target page or region and the requested
+concerns. A complete UI audit is Audit with a broad scope, not a third mode.
+"Check and fix spacing" inspects first and then uses Implement within that
+same spacing scope. Neither mode authorizes publication or deployment.
+
+Use one design-system contract in both modes. A focused task selects the work
+and evidence needed, not weaker styling or accessibility rules. Do not turn a
+small edit or spacing audit into a redesign, translation project, or whole-UI
+audit. Include adjacent concerns only when needed to explain a finding or
+validate an affected behavior. Report serious incidental issues separately
+without silently expanding the work.
+
+## Classify the target surface and runtime
+
+Read [routing.md](references/routing.md) first for focus selection and ownership.
+Classify three independent axes for the region in scope:
 
 1. the admin surface and whether version 1 supports it;
-2. the runtime and component owner for each DOM region;
-3. the supported WordPress versions and the available public token/provider APIs.
+2. the runtime and component owner for each affected DOM region;
+3. the supported WordPress versions and relevant public token/provider APIs.
 
 React does not imply WPDS. A page can be Classic, Core Components, bundled
 experimental WPDS, or hybrid. For hybrid pages, classify portals and overlays
@@ -52,6 +74,10 @@ only for an actual requirement the existing owner cannot express.
 
 ## Load only the relevant contract
 
+Apply these triggers within the selected scope. Reading a reference does not
+activate every example or checklist it contains. A spacing-only source review
+does not become an i18n audit merely because the markup is PHP or JavaScript.
+
 - Before choosing gaps, margins, padding, stacks, cards, fields, portals, or
   custom CSS, read [spacing.md](references/spacing.md).
 - For page shells, columns, toolbars, data views, narrow widths, zoom, RTL, or
@@ -59,8 +85,9 @@ only for an actual requirement the existing owner cannot express.
 - For navigation, hierarchy, actions, forms, Notices, loading, empty, success,
   error, disabled, permission, or recovery states, read
   [ui-guidance.md](references/ui-guidance.md).
-- Before implementing or auditing user-facing PHP or JavaScript, accessible
-  text, dates, numbers, or localized layout, read
+- When creating or changing user-facing strings, accessible text, dates,
+  numbers, or translation loading, or auditing i18n-readiness or localized
+  layout, read
   [internationalization.md](references/internationalization.md).
 - For code-shaped output, read [examples.md](references/examples.md) after the
   applicable contracts. Examples demonstrate ownership and are not templates
@@ -88,15 +115,19 @@ default when experimental policy is `allow`, `deny`, or `unknown`.
 All visible and assistive strings use WordPress i18n APIs with one literal text
 domain matching the plugin slug. Use complete phrases, positional placeholders,
 plural and context APIs, translator comments, and context-aware escaping. Bind
-registered JavaScript handles with `wp_set_script_translations()`. Treat German
-text expansion, RTL, and locale-formatted values as normal responsive inputs.
+registered JavaScript handles with `wp_set_script_translations()`. Treat text
+expansion and locale-formatted values as normal responsive inputs. Require RTL
+checks only when a supported or explicitly planned UI language uses RTL. An
+LTR-only or unspecified language scope does not require an RTL test merely
+because the plugin is i18n-ready. Do not claim untested RTL support.
 
 Require i18n-readiness, not a translation-production workflow. Source strings,
 domains, placeholders, dependencies, and loading hooks must allow translations
 to be added later. Creating or maintaining POT, PO, MO, or Jed JSON files and
 proving loaded translations are required only when translation delivery is in
 scope. Missing catalogs alone are not a readiness defect. Layout checks may use
-synthetic expanded text and RTL without creating translations.
+synthetic expanded text and, when RTL is in scope, controlled RTL direction
+without creating translations.
 
 ## Accessibility and proof
 
@@ -109,7 +140,20 @@ rendered and operated, which was only inspected, and what remains unverified.
 
 ## Result contract
 
-For a design, implementation, or audit, make the decision traceable:
+Report the selected mode, target, and focus briefly. Keep the result within
+that scope and distinguish rendered, source-only, and unverified evidence.
+
+For **Audit**, report actionable findings in impact order. Each finding names
+the location, owning rule and its source label, observed deviation, user impact,
+smallest correction, and evidence limit. Separate confirmed defects from
+suspicions and optional suggestions. If none were found, state that only for
+the inspected scope. Never claim whole-UI compliance from a targeted check.
+Do not modify the implementation unless correction was also requested. Writing
+an explicitly requested audit report is allowed and does not authorize fixes.
+
+For **Implement**, report what was designed or changed and the relevant checks
+and limits. Use the following items only where they affect the requested work,
+not as a mandatory report or full-audit checklist for every task:
 
 - surface, support status, runtime, shell, spacing owner, and experimental
   policy;
@@ -118,10 +162,11 @@ For a design, implementation, or audit, make the decision traceable:
 - WordPress APIs, components, classes, defaults, and provided tokens reused;
 - semantic relationship and its spacing expression;
 - page archetype, responsive transformations, relevant states, and recovery;
-- PHP/JavaScript i18n-readiness and expansion/RTL checks, with translation
-  artifacts and loading proof only when translation delivery is in scope;
+- PHP/JavaScript i18n-readiness, expansion checks, and language-scoped RTL
+  applicability, with translation artifacts and loading proof only when
+  translation delivery is in scope;
 - any CSS exception with checked owners, demonstrated gap, smallest scope, and
-  reflow, RTL, zoom, focus, content, and state checks;
+  reflow, zoom, focus, content, and state checks, plus RTL when in scope;
 - rendered, source-only, and unverified evidence kept separate.
 
 When the caller requests structured classification, use the canonical field
@@ -138,4 +183,6 @@ of WordPress surfaces, components, shell, defaults, tokens, spacing, responsive
 constraints, i18n, and CSS exceptions. Scoville UI may strengthen remaining
 task flow, hierarchy, state completeness, accessibility, and rendered quality
 inside those boundaries. It must not introduce a parallel component language,
-spacing scale, breakpoint, palette, or page shell.
+spacing scale, breakpoint, palette, or page shell. Preserve the selected mode
+and scope when composing. Scoville UI does not turn Audit into permission to
+edit or a focused check into a complete UI audit.

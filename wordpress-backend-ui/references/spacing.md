@@ -144,8 +144,9 @@ Stop at the first suitable owner:
 
 An exception records the DOM/runtime owner, every WordPress option checked, why
 those options fail, why `Flex` fails for a local React stack, the smallest
-plugin scope, token or Skill-Norm source, and checks for reflow, RTL, zoom,
-focus, text expansion, empty content, and affected states.
+plugin scope, token or Skill-Norm source, and checks for reflow, zoom, focus,
+text expansion, empty content, and affected states. Add RTL checks only under
+the [language-scope rule](internationalization.md#language-scoped-rtl-checks).
 
 Reject global `.wp-admin`, `.wrap`, `.form-table`, or Core-control overrides,
 copied Core CSS, custom Core-primitive rebuilds, unloaded WPDS references,

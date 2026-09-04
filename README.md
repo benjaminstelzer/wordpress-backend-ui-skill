@@ -39,10 +39,20 @@ Audit this WordPress plugin backend, especially its spacing, states and custom C
 ```
 
 ```text
+Check only the spacing and vertical flow on this settings page. Do not change files.
+```
+
+```text
 Use WordPress Backend UI to implement this React admin page with full i18n support.
 ```
 
-The Skill first checks whether the interface is really a plugin-owned admin
+The request selects one of two modes. **Implement** creates or changes the
+requested UI. **Audit** inspects and reports without changing it. You can limit
+an audit to spacing, responsiveness, accessibility or another concern. A full
+UI audit uses the same mode with a broader scope. "Check and fix" permits
+corrections within the stated scope, not an unrelated redesign.
+
+The Skill checks whether the interface is really a plugin-owned admin
 surface. Editor UI, Core screens, post metaboxes and interfaces owned by another
 plugin stay with their host design system.
 
@@ -90,13 +100,23 @@ validation.
   and permission states keep their meaning, focus behavior and available next
   step.
 - **Internationalization as part of the layout.** PHP, JavaScript, accessible
-  text, dates, numbers, text expansion and RTL belong to the UI contract.
+  text, dates, numbers and text expansion belong to the UI contract. RTL checks
+  are required only when a supported or explicitly planned UI language uses RTL.
   The requirement is readiness for later translations, not a mandatory PO
   workflow or completed translations.
 
 The complete contract is in [`SKILL.md`](wordpress-backend-ui/SKILL.md).
 
 ## How it works
+
+### Mode and scope
+
+Both modes use the same WordPress design-system rules. The difference is the
+work requested and the evidence needed. A spacing check follows spacing owners,
+Core defaults and relevant layout changes. It does not automatically become a
+translation project or a complete UI audit. Findings explain the location,
+rule, observed problem, impact and smallest correction. Source inspection and
+rendered proof remain separate.
 
 ### Surface and runtime
 
@@ -110,8 +130,8 @@ entire plugin.
 Vertical flow belongs to the nearest layout parent. The Skill maps intended
 relationships to WordPress component gaps or available design tokens before it
 allows custom CSS. A local CSS exception must solve a concrete layout problem,
-stay at the smallest useful scope and survive responsive, zoom, translation and
-RTL checks.
+stay at the smallest useful scope and survive responsive, zoom and text-expansion
+checks. RTL checks apply only when the language scope requires them.
 
 ### Responsive UI and i18n
 
@@ -130,14 +150,14 @@ spacing, tokens, responsive constraints, internationalization and CSS
 exceptions. When
 [Scoville UI](https://github.com/benjaminstelzer/scoville-ui-anti-ai-slop) is
 also active, it can strengthen task flow, hierarchy, accessibility and rendered
-validation inside those boundaries.
+validation inside those boundaries. It preserves the selected mode and scope.
 
 Optional means optional. Installing one Skill does not turn the other into a
 missing dependency.
 
 ## Status
 
-Current release: **v1.0.2**.
+Current release: **v1.1.0**.
 
 The contract, installable Skill and production fixture were validated against a
 WordPress 7.0 Single Site and a WordPress 7.0.4 Network Admin installation.

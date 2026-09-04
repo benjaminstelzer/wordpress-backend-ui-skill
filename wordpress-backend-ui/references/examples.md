@@ -219,7 +219,8 @@ with supported Core tokens. Test it on each older supported baseline.
 
 Record `16px` as the Skill-Norm relationship for related summary groups, not a
 WordPress token. Keep the selector inside the plugin root. Verify 782/783px,
-320px reflow, 400% zoom, RTL, long translations, focus, and empty content.
+320px reflow, 400% zoom, text expansion, focus, and empty content. Check RTL
+only under the [language-scope rule](internationalization.md#language-scoped-rtl-checks).
 For a 7.1 token branch, use the versioned example instead of combining both
 rules.
 

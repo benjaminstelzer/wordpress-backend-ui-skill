@@ -39,11 +39,7 @@ Audit this WordPress plugin backend, especially its spacing, states and custom C
 ```
 
 ```text
-Check only the spacing and vertical flow on this settings page. Do not change files.
-```
-
-```text
-Use WordPress Backend UI to implement this React admin page with full i18n support.
+Use WordPress Backend UI to implement this React admin page with i18n readiness. Do not generate translation catalogs unless requested.
 ```
 
 The request selects one of two modes. **Implement** creates or changes the
@@ -58,22 +54,20 @@ plugin stay with their host design system.
 
 ## Install
 
-The repository contains one installable Agent Skill directory. Usually, let
-Codex install it with this prompt:
+In a local Codex or Claude Code session, ask:
 
 ```text
-Install this Agent Skill from GitHub and make it available for all my projects:
+Install this Agent Skill for all my projects from this exact package directory:
 https://github.com/benjaminstelzer/wordpress-backend-ui-skill/tree/main/wordpress-backend-ui
+Preserve existing customizations and ask before overwriting conflicting files.
+Report the installed location and whether the host discovers the Skill.
 ```
 
-For a manual installation, copy the repository's `wordpress-backend-ui/`
-directory so the final path is:
+The agent needs source access and permission to write to its personal Skills
+location. Manual fallback: [Codex Skills guide](https://learn.chatgpt.com/docs/build-skills)
+or [Claude Code Skills guide](https://code.claude.com/docs/en/skills).
 
-```text
-<skills-dir>/wordpress-backend-ui/SKILL.md
-```
-
-The Skill works standalone.
+Install only the linked package. Scoville Skills are optional.
 
 ## What it enforces
 
@@ -107,41 +101,22 @@ The complete contract is in [`SKILL.md`](wordpress-backend-ui/SKILL.md).
 
 ## How it works
 
-### Mode and scope
+The Skill selects the requested mode, identifies who owns the admin surface,
+and chooses the supported Classic, Core Components, WPDS, or mixed runtime path.
+A scoped spacing audit stays scoped. It does not become a translation project
+or redesign.
 
-Both modes use the same WordPress design-system rules. The difference is the
-work requested and the evidence needed. A spacing check follows spacing owners,
-Core defaults and relevant layout changes. It does not automatically become a
-translation project or a complete UI audit. Findings explain the location,
-rule, observed problem, impact and smallest correction. Source inspection and
-rendered proof remain separate.
+The nearest layout parent owns vertical flow. Custom CSS must solve a concrete
+problem that native components, classes, or tokens do not already solve.
+Responsive checks preserve the task at narrow widths, zoom, and text expansion.
+RTL applies when the supported or planned language scope requires it.
 
-### Surface and runtime
+Strings must be extractable and loadable later. Catalog generation and delivered
+translations remain optional. When translation delivery is requested, actual
+loading must be tested too. Source inspection remains distinct from rendered
+proof. See [maintenance notes](docs/maintenance.md) for contributor material.
 
-The Skill classifies the admin surface first, then selects the supported
-runtime path. This keeps host-owned interfaces with their host and prevents an
-experimental component package from quietly becoming the design system for an
-entire plugin.
-
-### Spacing and CSS
-
-Vertical flow belongs to the nearest layout parent. The Skill maps intended
-relationships to WordPress component gaps or available design tokens before it
-allows custom CSS. A local CSS exception must solve a concrete layout problem,
-stay at the smallest useful scope and survive responsive, zoom and text-expansion
-checks. RTL checks apply only when the language scope requires them.
-
-### Responsive UI and i18n
-
-Responsive behavior starts with the task, not a breakpoint. Forms reflow,
-actions wrap, data views contain their overflow, and text remains usable at 320
-CSS pixels and 400 percent zoom. The Skill requires extractable strings and
-the loading structure needed for later translations. Catalog generation and
-translation delivery stay optional. When delivery is part of the task, test
-actual loading too, because an extractable string is not automatically a
-loaded translation.
-
-## Optional Scoville UI composition
+## Related projects
 
 WordPress Backend UI remains the owner of WordPress surfaces, components,
 spacing, tokens, responsive constraints, internationalization and CSS
@@ -176,4 +151,4 @@ source inspection is not a rendered 7.1 UI test.
 
 ## License
 
-MIT - see [`LICENSE`](LICENSE).
+MIT. See [`LICENSE`](LICENSE).

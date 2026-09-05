@@ -1,5 +1,11 @@
 # Changelog
 
+## v1.1.2 - 2026-09-05
+
+- Shortened the README, moved contributor layout notes to docs/maintenance.md, and made agent installation the primary path. Safety and evidence limits remain explicit.
+- Included the existing repository license in the independently copied Skill directory without changing its copyright text or UI contract.
+- Documented package, fixture and development-tool boundaries. Archived ignored browser working files without changing the recorded runtime results.
+
 ## 1.1.1 - 2026-09-04
 
 ### Changed

@@ -9,7 +9,7 @@ from pathlib import Path
 
 
 root = Path(__file__).resolve().parents[1]
-reference = root / "wordpress-backend-ui" / "references" / "version-compatibility.md"
+reference = root.parent / "wordpress-backend-ui" / "references" / "version-compatibility.md"
 markdown = reference.read_text(encoding="utf-8")
 match = re.search(r"```php\n(.*?)\n```", markdown, re.DOTALL)
 if not match:

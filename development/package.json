@@ -1,6 +1,6 @@
 {
   "name": "wordpress-backend-ui-skill",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "private": true,
   "license": "MIT",
   "description": "Development and validation fixture for the WordPress Backend UI Agent Skill.",
@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "wp-scripts build fixture/plugin/src/index.js --output-path=fixture/plugin/build && node scripts/copy-design-tokens.mjs",
-    "check:contracts": "python wordpress-backend-ui/scripts/validate_contracts.py . && python tests/test_version_compatibility.py",
+    "check:contracts": "python ../wordpress-backend-ui/scripts/validate_contracts.py .. && python tests/test_version_compatibility.py",
     "check:local-wordpress": "python tests/test_local_wordpress_compatibility.py",
     "i18n:pot": "wp i18n make-pot fixture/plugin fixture/plugin/languages/wordpress-backend-skill-fixture.pot --domain=wordpress-backend-skill-fixture --exclude=src,languages",
     "i18n:mo": "wp i18n make-mo fixture/plugin/languages/wordpress-backend-skill-fixture-de_DE.po fixture/plugin/languages/wordpress-backend-skill-fixture-de_DE.mo",

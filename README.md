@@ -114,7 +114,7 @@ RTL applies when the supported or planned language scope requires it.
 Strings must be extractable and loadable later. Catalog generation and delivered
 translations remain optional. When translation delivery is requested, actual
 loading must be tested too. Source inspection remains distinct from rendered
-proof. See [maintenance notes](docs/maintenance.md) for contributor material.
+proof. See [maintenance notes](development/docs/maintenance.md) for contributor material.
 
 ## Related projects
 
@@ -141,13 +141,15 @@ source and the local 7.1 installation were inspected for `wp-theme` style
 registration, required tokens and the public `ThemeProvider` export. That
 source inspection is not a rendered 7.1 UI test.
 
+Repository development and the current path mapping are in [development/](development/README.md).
+
 ## Sources
 
-- [`wordpress-7-backend-design-system.md`](docs/audits/wordpress-7-backend-design-system.md)
+- [`wordpress-7-backend-design-system.md`](development/docs/audits/wordpress-7-backend-design-system.md)
   contains the source-backed audit and its derivation boundaries.
-- [`source-ledger.md`](docs/research/source-ledger.md) pins the relevant
+- [`source-ledger.md`](development/docs/research/source-ledger.md) pins the relevant
   WordPress, Gutenberg, accessibility and internationalization sources.
-- [`tests/cases/`](tests/cases/) contains the frozen behavioral contracts.
+- [`tests/cases/`](development/tests/cases) contains the frozen behavioral contracts.
 
 ## License
 

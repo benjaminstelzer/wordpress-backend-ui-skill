@@ -42,6 +42,8 @@ def sha256_text(path: Path) -> str:
 
 def validate(root: Path) -> list[str]:
     errors: list[str] = []
+    repository = root
+    root = repository / "development"
     cases_dir = root / "tests" / "cases"
 
     manifest_path = cases_dir / "MANIFEST.sha256"
@@ -227,7 +229,7 @@ def validate(root: Path) -> list[str]:
     )
     require((root / ".nvmrc").read_text(encoding="utf-8").strip() == "24", "package: .nvmrc", errors)
 
-    license_text = (root / "LICENSE").read_text(encoding="utf-8")
+    license_text = (repository / "LICENSE").read_text(encoding="utf-8")
     require(
         license_text.startswith("MIT License\n")
         and "Copyright (c) 2026 Benjamin" in license_text
@@ -265,7 +267,7 @@ def validate(root: Path) -> list[str]:
         require(actual == expected, f"native fixture: {name} contract", errors)
         require(site.get("locale") == "de_DE", f"native fixture: {name} locale", errors)
 
-    skill_root = root / "wordpress-backend-ui"
+    skill_root = repository / "wordpress-backend-ui"
     skill_text = (skill_root / "SKILL.md").read_text(encoding="utf-8")
     routing_reference = (skill_root / "references" / "routing.md").read_text(encoding="utf-8")
     for field in ("surface", "support_status", "runtime_owner", "shell_owner", "spacing_owner"):
@@ -297,7 +299,7 @@ def validate(root: Path) -> list[str]:
     for link in links:
         require((skill_root / link).is_file(), f"skill: missing {link}", errors)
 
-    for markdown_path in (root / "README.md", root / "CHANGELOG.md"):
+    for markdown_path in (repository / "README.md", repository / "CHANGELOG.md"):
         markdown = markdown_path.read_text(encoding="utf-8")
         for raw_link in re.findall(r"\]\(([^)]+)\)", markdown):
             link = raw_link.split("#", 1)[0]
@@ -308,8 +310,8 @@ def validate(root: Path) -> list[str]:
                 f"markdown:{markdown_path.name}: missing {raw_link}",
                 errors,
             )
-    require("[`LICENSE`](LICENSE)" in (root / "README.md").read_text(encoding="utf-8"), "README: missing MIT license link", errors)
-    require("Added the MIT license." in (root / "CHANGELOG.md").read_text(encoding="utf-8"), "CHANGELOG: missing MIT license entry", errors)
+    require("[`LICENSE`](LICENSE)" in (repository / "README.md").read_text(encoding="utf-8"), "README: missing MIT license link", errors)
+    require("Added the MIT license." in (repository / "CHANGELOG.md").read_text(encoding="utf-8"), "CHANGELOG: missing MIT license entry", errors)
 
     source_files = list((root / "fixture" / "plugin").rglob("*.php"))
     source_files += list((root / "fixture" / "plugin" / "src").rglob("*.*"))

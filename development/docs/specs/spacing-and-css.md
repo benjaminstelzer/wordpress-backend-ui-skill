@@ -3,8 +3,8 @@
 Status: frozen for implementation
 
 This is the original 7.0 specification. The current 7.1 addendum is
-[version-compatibility.md](../../wordpress-backend-ui/references/version-compatibility.md),
-with the shipped [spacing contract](../../wordpress-backend-ui/references/spacing.md)
+[version-compatibility.md](../../../wordpress-backend-ui/references/version-compatibility.md),
+with the shipped [spacing contract](../../../wordpress-backend-ui/references/spacing.md)
 owning current guidance.
 
 This specification is normative for the Skill. It separates WordPress facts

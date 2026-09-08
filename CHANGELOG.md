@@ -1,5 +1,12 @@
 # Changelog
 
+## v1.1.4 - 2026-09-08
+
+- Put Core spacing precedence directly before the fallback scale. Existing native margins and padding must not receive an extra scale value.
+- Compare heading-to-content spacing with section transitions and trace unexplained differences to their layout owner.
+- Check heading color, size and weight through computed styles and the winning CSS declarations against an equivalent Core heading. Preserve the distinction between page titles and section headings.
+- Correct the README's current release version. These instruction refinements add no new browser or agent-behavior qualification.
+
 ## v1.1.3 - 2026-09-05
 
 - Move repository development into `development/` and keep the installable Skill in its own top-level directory.

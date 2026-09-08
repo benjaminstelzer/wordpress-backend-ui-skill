@@ -5,6 +5,11 @@ a **Skill-Norm**, not an official WordPress HIG.
 
 ## Semantic gap scale
 
+Use this scale only where the owning Core markup or component supplies no
+suitable spacing relationship. Do not add its value to existing native
+margins or padding. Treat a list, its filters and pagination as one composed
+region before classifying section boundaries.
+
 | Relationship | Gap | WPDS gap if provided | Core Components `Flex` gap |
 | --- | ---: | --- | ---: |
 | Control to help, status, or error text | 4px | `xs` | `1` |
@@ -67,6 +72,12 @@ not a mobile breakpoint.
 7. Reset heading or paragraph margins only inside the exact plugin-owned gap
    parent that replaces them.
 8. Portals and overlays declare the owner at their render destination.
+
+Compare the heading-to-content relationship with separation from adjacent
+sections. Trace unexplained differences to the actual parent, child margins,
+padding and intervening native elements before changing values. Preserve
+deliberate hierarchy instead of making every distance equal. A valid token
+alone does not prove the intended grouping in the rendered composition.
 
 ## Runtime expression
 

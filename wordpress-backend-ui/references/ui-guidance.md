@@ -13,6 +13,13 @@ meaning or interaction. Avoid decorative cards or emphasis.
 Use exactly one primary page title. Heading levels follow content hierarchy, not
 desired visual size.
 
+Preserve the owning Core heading color, font size and font weight. For a
+reported mismatch, inspect the computed values and winning CSS declarations
+against an equivalent Core heading in the same WordPress version and runtime.
+Compare page titles with page titles and section headings with section headings.
+Do not flatten their differences or replace a native style merely because a
+semantic token is available. Keep source findings separate from rendered proof.
+
 ## Navigation
 
 - Put one small settings or tool page under Settings or Tools.

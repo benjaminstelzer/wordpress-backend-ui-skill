@@ -1,6 +1,8 @@
 # Changelog
 
-## Unreleased
+## v1.1.5 - 2026-09-09
+
+- Remove the contributor test that required specific local WordPress 7.0 and 7.1 installation paths. Keep the portable version-compatibility and contract checks.
 
 - Document host and tool requirements in the README compatibility block, matching the Skill frontmatter.
 

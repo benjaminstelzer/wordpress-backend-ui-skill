@@ -134,7 +134,7 @@ missing dependency.
 
 ## Status
 
-Current release: **v1.1.4**.
+Current release: **v1.1.5**.
 
 The contract, installable Skill and production fixture were validated against a
 WordPress 7.0 Single Site and a WordPress 7.0.4 Network Admin installation.

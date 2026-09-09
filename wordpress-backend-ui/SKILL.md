@@ -1,6 +1,7 @@
 ---
 name: wordpress-backend-ui
 description: Design, implement, or audit WordPress 7 plugin-owned wp-admin pages with platform-aligned components, spacing, vertical flow, responsive behavior, accessibility, and PHP/JavaScript internationalization. Use for plugin settings, tools, workflows, dashboards, data views, and explicit Network Admin pages. Do not use for site frontends, themes, the editor canvas, SlotFills, metaboxes, Dashboard widgets, profile fields, Core-screen extensions, or UI owned by another plugin.
+compatibility: "Any Agent Skills host that can read references/. Implementation needs the plugin's PHP and JavaScript toolchain for WordPress 7; rendered proof needs a running wp-admin plus a browser or screenshot tool provided by the host. Composes with scoville-ui-anti-ai-slop but never requires it. Developed for Codex and Claude Code; other hosts untested."
 ---
 
 # WordPress Backend UI

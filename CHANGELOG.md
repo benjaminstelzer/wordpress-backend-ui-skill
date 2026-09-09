@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+
+- Added the `compatibility` frontmatter field declaring host and tool requirements. No behavior change.
+
 ## v1.1.4 - 2026-09-08
 
 - Put Core spacing precedence directly before the fallback scale. Existing native margins and padding must not receive an extra scale value.

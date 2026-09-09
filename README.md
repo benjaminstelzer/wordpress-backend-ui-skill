@@ -52,6 +52,10 @@ The Skill checks whether the interface is really a plugin-owned admin
 surface. Editor UI, Core screens, post metaboxes and interfaces owned by another
 plugin stay with their host design system.
 
+## Compatibility
+
+Any Agent Skills host that can read references/. Implementation needs the plugin's PHP and JavaScript toolchain for WordPress 7; rendered proof needs a running wp-admin plus a browser or screenshot tool provided by the host. Composes with scoville-ui-anti-ai-slop but never requires it. Developed for Codex and Claude Code; other hosts untested.
+
 ## Install
 
 In a local Codex or Claude Code session, ask:

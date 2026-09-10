@@ -118,7 +118,7 @@ RTL applies when the supported or planned language scope requires it.
 Strings must be extractable and loadable later. Catalog generation and delivered
 translations remain optional. When translation delivery is requested, actual
 loading must be tested too. Source inspection remains distinct from rendered
-proof. See [maintenance notes](development/docs/maintenance.md) for contributor material.
+proof.
 
 ## Related projects
 
@@ -134,26 +134,24 @@ missing dependency.
 
 ## Status
 
-Current release: **v1.1.5**.
+Current release: **v1.1.6**.
 
-The contract, installable Skill and production fixture were validated against a
-WordPress 7.0 Single Site and a WordPress 7.0.4 Network Admin installation.
-Responsive behavior, RTL and PHP and JavaScript translations were exercised in
-the local XAMPP fixtures. The repository also contains frozen routing, spacing,
-CSS ownership, UI state and internationalization cases. WordPress 7.1 Core
-source and the local 7.1 installation were inspected for `wp-theme` style
-registration, required tokens and the public `ThemeProvider` export. That
-source inspection is not a rendered 7.1 UI test.
-
-Repository development and the current path mapping are in [development/](development/README.md).
+The Skill distinguishes WordPress 7.0 package restrictions from the public
+theming APIs introduced in WordPress 7.1. Source and build inspection never
+count as rendered proof. Validate the requested Single Site or Network Admin
+surface in its actual WordPress version, language, viewport and interaction
+states before making those claims.
 
 ## Sources
 
-- [`wordpress-7-backend-design-system.md`](development/docs/audits/wordpress-7-backend-design-system.md)
-  contains the source-backed audit and its derivation boundaries.
-- [`source-ledger.md`](development/docs/research/source-ledger.md) pins the relevant
-  WordPress, Gutenberg, accessibility and internationalization sources.
-- [`tests/cases/`](development/tests/cases) contains the frozen behavioral contracts.
+- [WordPress Settings API](https://developer.wordpress.org/plugins/settings/settings-api/)
+  and [Administration Menus](https://developer.wordpress.org/plugins/administration-menus/)
+  define the established plugin-admin foundations.
+- [WordPress package theming](https://developer.wordpress.org/block-editor/reference-guides/packages/packages-theme/)
+  documents the current theme package and Core stylesheet boundary.
+- [WordPress internationalization](https://developer.wordpress.org/plugins/internationalization/how-to-internationalize-your-plugin/)
+  and [accessibility coding standards](https://developer.wordpress.org/coding-standards/wordpress-coding-standards/accessibility/)
+  define the language and accessibility requirements.
 
 ## License
 

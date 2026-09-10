@@ -139,11 +139,10 @@ or the only supported way to deliver translations.
 7. Assert one genuinely translated PHP string and one translated React string
    in a browser.
 
-This repository's translation-delivery acceptance fixture keeps POT and PO as authored artifacts and commits its
-generated MO and path-hashed Jed JSON so a clean checkout contains the exact
-runtime proof inputs. Regenerate its artifacts after translatable source or
-build-path changes. These fixture requirements do not apply to a readiness-only
-plugin task.
+When translation delivery is in scope, keep the target project's authored POT
+and PO files together with the generated MO and path-hashed Jed JSON required by
+its release process. Regenerate them after translatable source or build-path
+changes. These artifact requirements do not apply to a readiness-only task.
 
 POT extraction, a PO file, or hard-coded translated text does not prove runtime
 loading.

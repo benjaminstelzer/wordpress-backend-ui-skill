@@ -9,7 +9,7 @@ implementation, and Skill-Norms distinct.
 | --- | --- | --- | --- |
 | `WordPress/wordpress-develop` | `7.0` at `90a615f1834824d2583a43bfc698d9c710e5c094` | WordPress 7.0 admin source | Before release, new 7.x target, or branch drift |
 | `WordPress/gutenberg` | `wp/7.0` at `28c0dedc4eaf001a24237a1fbba4b0887698b000` | `@wordpress/ui` 0.7.1, `@wordpress/theme` 0.7.1, `@wordpress/admin-ui` 1.8.1, `@wordpress/components` 32.2.1 | Before release, package upgrade, or stability change |
-| `WordPress/WordPress` | tag `7.0` at `b16cd68ea199838d8f9daf0ff7e3f35042ba0ad0` | WordPress 7.0 runtime | Before fixture setup or target change |
+| `WordPress/WordPress` | tag `7.0` at `b16cd68ea199838d8f9daf0ff7e3f35042ba0ad0` | WordPress 7.0 runtime | Before a runtime check or target change |
 
 Retrieved and last revalidated: 2026-09-03.
 
@@ -35,10 +35,10 @@ their pins, not to all WordPress 7 releases.
   inside-WordPress and standalone applications. It is a moving reference, not
   proof that every currently documented prop exists in every 7.x release.
 
-The stable 7.1 tag and inspected local 7.1 Core agree on style registration, semantic gap and
-padding tokens, and the public JavaScript export. This is source evidence,
-not proof of enqueue or visual correctness on a customer page. The retained
-7.0 fixture and its frozen package graph are not a 7.1 rendered test.
+The stable 7.1 tag and inspected 7.1 Core source agree on style registration,
+semantic gap and padding tokens, and the public JavaScript export. This is
+source evidence, not proof of enqueue or visual correctness on a real plugin
+page.
 
 See [version-compatibility.md](version-compatibility.md) for the executable
 enqueue example and verification boundary. Recheck the actual supported Core

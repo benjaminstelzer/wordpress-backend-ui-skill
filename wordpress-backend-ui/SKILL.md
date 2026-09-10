@@ -1,7 +1,7 @@
 ---
 name: wordpress-backend-ui
 description: Design, implement, or audit WordPress 7 plugin-owned wp-admin pages with platform-aligned components, spacing, vertical flow, responsive behavior, accessibility, and PHP/JavaScript internationalization. Use for plugin settings, tools, workflows, dashboards, data views, and explicit Network Admin pages. Do not use for site frontends, themes, the editor canvas, SlotFills, metaboxes, Dashboard widgets, profile fields, Core-screen extensions, or UI owned by another plugin.
-compatibility: "Any Agent Skills host that can read references/. Implementation needs the plugin's PHP and JavaScript toolchain for WordPress 7; rendered proof needs a running wp-admin plus a browser or screenshot tool provided by the host. Composes with scoville-ui-anti-ai-slop but never requires it. Developed for Codex and Claude Code; other hosts untested."
+compatibility: "Agent Skills host with reference access. Implementation needs the plugin's PHP/JavaScript toolchain for WordPress 7. Rendered proof needs running wp-admin, DOM geometry inspection and viewed images; interactions need browser control. Source-only or screenshot-only tasks report evidence limits. Scoville UI is optional. Developed for Codex and Claude Code; other hosts untested."
 ---
 
 # WordPress Backend UI
@@ -99,13 +99,31 @@ does not become an i18n audit merely because the markup is PHP or JavaScript.
 - For `wp-theme`, public `ThemeProvider`, or older-version fallback, read
   [version-compatibility.md](references/version-compatibility.md).
 
+## Required validation order
+
+Before implementation or a rendered/consistency audit, read
+[validation.md](references/validation.md). Inspect generating code/CSS first.
+For Implement, correct known in-scope source defects before the first layout
+measurement, then measure, then view the result. Repeat affected stages after
+each layout edit. Audit reports source defects first and remains read-only.
+Justify custom styling against a concrete owner gap before writing it. Keep
+authored units/expressions, computed values and actual geometry separate.
+
+For an ordinary page-consistency request, use Audit with a consistency focus.
+Inventory the scoped regions and variants and reconcile each with source,
+measurement and visual evidence, including below-fold and relevant same-page
+states. Unverified required entries or partial samples prevent an unqualified
+whole-page pass. Reuse one evidence set when composing with Scoville UI.
+
 ## Preserve the vertical-flow invariant
 
-The direct parent owns spacing between direct children. Children do not add the
+Within new plugin-owned gap compositions, the direct parent owns spacing
+between direct children. Preserve existing native margin-based flow. Children do not add the
 same outer margin. Cards own internal padding, while their parent owns the gap
 between cards. Hidden or empty children leave no gap slot.
 
-In Core Components, specialized components own their internal rhythm. A new
+In Core Components, specialized components own their internal rhythm. The
+following generic stack recipe is Skill-Norm composition, not Core defaults. A new
 generic vertical group uses stable `Flex` with `direction="column"`,
 `align="stretch"`, `justify="flex-start"`, `wrap={ false }`,
 `expanded={ true }`, and the Skill-Norm gap divided by four. This remains the

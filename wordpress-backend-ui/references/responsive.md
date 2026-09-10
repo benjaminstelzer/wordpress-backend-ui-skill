@@ -13,7 +13,7 @@ breakpoint.
 - `600px` and `390px` are Skill-Norm intermediate test widths, not official
   universal WordPress breakpoints.
 - Preserve DOM, keyboard, and screen-reader order when layout changes.
-- Typical text inputs and selects follow Core's `40px` mobile height. WCAG 2.2
+- Matching text inputs and selects follow Core's `40px` mobile minimum height. WCAG 2.2
   AA separately requires `24 x 24 CSS px` pointer targets or an allowed
   exception.
 - Use logical properties in unavoidable plugin CSS.
@@ -35,9 +35,10 @@ container. The document must not overflow.
 ## Shells
 
 Classic and hybrid pages inherit `.wrap` and Core gutters. Do not add a second
-page gutter. A bundled WPDS `Page` starts from the observed `16px` block and
-`24px` inline padding. Reducing it is an explicit tested local rule. Density is
-not a responsive switch.
+page gutter. A bundled WPDS `Page` has its own package/version-specific
+padding. Recheck that component source before using its historical 16px block
+and 24px inline values. Never apply them to Classic gutters. Density is not a
+responsive switch.
 
 ## Focused settings or tool page
 
@@ -58,7 +59,7 @@ not a responsive switch.
   a documented CSS exception.
 - Use content-aware minimums. Avoid fixed column counts chosen only from device
   labels.
-- At `<=782px`, default to one visual column unless a smaller group proves
+- **Skill-Norm:** At `<=782px`, default to one visual column unless a smaller group proves
   readable content, target size, and focus order.
 - Cards represent real groups. The parent owns inter-card gap.
 

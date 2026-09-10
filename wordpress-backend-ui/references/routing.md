@@ -21,8 +21,14 @@ concerns and the dependencies needed to evaluate them.
 | Accessibility | Relevant semantics, keyboard/focus behavior, labels, contrast, targets, and reflow. | [ui-guidance.md](ui-guidance.md), [responsive.md](responsive.md) for layout |
 | i18n-readiness | Strings, domains, formatting, dependencies/loading hooks, expansion, and language-scoped RTL. Translation delivery only when requested. | [internationalization.md](internationalization.md) |
 
+For a consistency audit, read [validation.md](validation.md) and reconcile the
+complete scoped element inventory with source, geometry and viewed evidence.
+Include distinct variants, known exceptions, lower scroll areas and relevant
+read-only same-page states. Do not infer complete coverage from a sample.
+
 For a spacing audit, inspect the affected subtree and its actual spacing owner.
-Use computed styles and rendered geometry when available. A declared `gap`
+After source inspection, use computed styles and actual geometry for rendered
+spacing claims. Missing runtime evidence is unverified, not an optional pass. A declared `gap`
 alone does not establish the visible distance when margins, padding, or layout
 participate. Compare against Core/component defaults before applying a
 Skill-Norm. A native spacing value is not defective merely because it differs

@@ -1,66 +1,27 @@
-# Spacing, vertical flow, and CSS ownership
+# Spacing ownership
 
-Choose spacing from the relationship between adjacent children. The mapping is
-a **Skill-Norm**, not an official WordPress HIG.
+Classify the owning region before selecting or judging a spacing value.
 
-## Semantic gap scale
+- **Classic/Core markup:** Read [classic-patterns.md](classic-patterns.md).
+  Preserve its authored units and context-specific cascade. There is no
+  universal Classic 4/8px spacing scale.
+- **A region consuming WPDS tokens:** Read [wpds-tokens.md](wpds-tokens.md)
+  and the relevant [version contract](version-compatibility.md). A token's
+  existence does not map it to a Classic relationship.
+- **A demonstrated native-owner gap:** Only then read
+  [fallback-composition.md](fallback-composition.md). Those are Skill choices,
+  not official defaults or targets for normalizing existing UI.
 
-Use this scale only where the owning Core markup or component supplies no
-suitable spacing relationship. Do not add its value to existing native
-margins or padding. Treat a list, its filters and pagination as one composed
-region before classifying section boundaries.
-
-| Relationship | Gap | WPDS gap if provided | Core Components `Flex` gap |
-| --- | ---: | --- | ---: |
-| Control to help, status, or error text | 4px | `xs` | `1` |
-| Heading to its own introductory body text | 8px | `sm` | `2` |
-| Tightly related controls, or icon and label | 8px | `sm` | `2` |
-| Elements in one field group | 12px | `md` | `3` |
-| Related setting groups | 16px | `lg` | `4` |
-| Independent sections | 24px | `xl` | `6` |
-| Major page regions | 32px | `2xl` | `8` |
-| Exceptional strong separation | 40px | `3xl` | `10` |
-
-The `40px` relationship is exceptional, not a default between ordinary blocks.
-
-## WPDS token facts at Gutenberg `wp/7.0`
-
-The density matrix below describes the pinned 7.0 bundled package. The default
-gap and padding values also match the inspected 7.1 Core stylesheet. Do not
-infer availability of alternate densities or provider props from this matrix.
-
-The 7.1 Core stylesheet ships one density. `@wordpress/theme` 1.0.0 exposes no
-public density switch. Compact and comfortable values below remain historical
-7.0 bundled-package facts, not available 7.1 modes.
-
-### Gap
-
-| Token | compact | default | comfortable |
-| --- | ---: | ---: | ---: |
-| `xs` | 4px | 4px | 8px |
-| `sm` | 4px | 8px | 12px |
-| `md` | 8px | 12px | 16px |
-| `lg` | 12px | 16px | 20px |
-| `xl` | 20px | 24px | 32px |
-| `2xl` | 24px | 32px | 40px |
-| `3xl` | 32px | 40px | 48px |
-
-### Padding
-
-| Token | compact | default | comfortable |
-| --- | ---: | ---: | ---: |
-| `xs` | 4px | 4px | 8px |
-| `sm` | 4px | 8px | 12px |
-| `md` | 8px | 12px | 16px |
-| `lg` | 12px | 16px | 20px |
-| `xl` | 16px | 20px | 24px |
-| `2xl` | 20px | 24px | 32px |
-| `3xl` | 24px | 32px | 40px |
-
-Gap and padding names are not interchangeable. Density is an independent mode,
-not a mobile breakpoint.
+Inspect source first, then actual geometry, then sight as specified in
+[validation.md](validation.md). Preserve original units, unitless line-height,
+tokens and calculations. `1em` at a 13px element font resolves to 13px but must
+not become a new `13px` or `1rem` rule. Native values outside a 4/8px scale are
+not defects for that reason. Project-specific minimums do not become Core rules.
 
 ## Parent ownership
+
+These rules govern new plugin-owned gap composition. They do not replace
+working native margin-based flow.
 
 1. The direct parent owns spacing between its direct children.
 2. Children do not add the same outer margin when their parent uses `gap`.
@@ -98,7 +59,9 @@ fallback and registration, loading, and token-name checks.
 
 ### Core Components
 
-Specialized components own their internals. For a new generic vertical group:
+Specialized components own their internals. The following explicit prop
+combination is Skill-Norm composition for a new generic group, not the
+component defaults. Select its gap only after confirming an owner gap:
 
 ```jsx
 <Flex
@@ -153,7 +116,8 @@ Stop at the first suitable owner:
    properties.
 5. Narrow plugin CSS for a demonstrated gap only.
 
-An exception records the DOM/runtime owner, every WordPress option checked, why
+Before writing an exception, record the DOM/runtime owner, concrete relevant
+WordPress options checked, why
 those options fail, why `Flex` fails for a local React stack, the smallest
 plugin scope, token or Skill-Norm source, and checks for reflow, zoom, focus,
 text expansion, empty content, and affected states. Add RTL checks only under

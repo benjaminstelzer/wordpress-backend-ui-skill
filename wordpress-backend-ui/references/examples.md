@@ -118,6 +118,10 @@ export function ConnectionSettings() {
 }
 ```
 
+This explicit Flex prop combination is Skill-Norm composition, not Core
+component defaults or a Classic normalization target. Use it only where a new
+plugin-owned relationship lacks an existing owner.
+
 `gap={ 4 }` expresses the `16px` Skill-Norm relationship between related
 setting groups through the component's 4-px multiplier. The nested
 `gap={ 2 }` owns the `8px` heading-to-intro relationship. Reset only the native

@@ -52,9 +52,26 @@ The Skill checks whether the interface is really a plugin-owned admin
 surface. Editor UI, Core screens, post metaboxes and interfaces owned by another
 plugin stay with their host design system.
 
+## Source-first checks and consistency audits
+
+Implementation follows source inspection and correction, measured relationships,
+then a viewed render. Custom styling needs a concrete owner/API justification
+before it is written. Authored units and expressions remain distinct from their
+computed pixel values and visible geometry.
+
+An ordinary request to check a page for consistency uses a read-only inventory
+of its regions, variants and relevant states, including content below the fold.
+Every entry maps to source, measurement and visual evidence or a named gap.
+The visual routine compares intended edges, text position, apparent whitespace,
+control interiors, icons, wrapping and clipping. Sampling limits remain explicit.
+
+These are instruction changes. Browser and live-agent regression testing of this
+revision is deferred; source checks and an independent review do not establish
+runtime effectiveness.
+
 ## Compatibility
 
-Any Agent Skills host that can read references/. Implementation needs the plugin's PHP and JavaScript toolchain for WordPress 7; rendered proof needs a running wp-admin plus a browser or screenshot tool provided by the host. Composes with scoville-ui-anti-ai-slop but never requires it. Developed for Codex and Claude Code; other hosts untested.
+Agent Skills host with reference access. Implementation needs the plugin's PHP/JavaScript toolchain for WordPress 7. Rendered proof needs running wp-admin, DOM geometry inspection and viewed images; interactions need browser control. Source-only or screenshot-only tasks report evidence limits. Scoville UI is optional. Developed for Codex and Claude Code; other hosts untested.
 
 ## Install
 
@@ -85,8 +102,8 @@ Install only the linked package. Scoville Skills are optional.
 - **No forced Classic migration.** A working PHP page keeps its native elements
   and default CSS. WordPress 7.1 tokens are optional tools for missing plugin
   layout relationships, not a reason to rebuild the page in React.
-- **One owner for vertical flow.** The direct parent controls the space between
-  its children. Components keep responsibility for their internal padding.
+- **One owner for vertical flow.** New plugin-owned flow gives the direct parent the relationship. Existing
+  native margins keep their source ownership; components retain internal padding.
 - **A consistent spacing contract.** Semantic relationships map to a documented
   4, 8, 12, 16, 24, 32 and 40 pixel sequence where WordPress leaves the choice
   open.
@@ -110,7 +127,8 @@ and chooses the supported Classic, Core Components, WPDS, or mixed runtime path.
 A scoped spacing audit stays scoped. It does not become a translation project
 or redesign.
 
-The nearest layout parent owns vertical flow. Custom CSS must solve a concrete
+New plugin-owned flow has one parent owner; existing native spacing keeps its
+source expressions and units. Custom CSS must solve a concrete
 problem that native components, classes, or tokens do not already solve.
 Responsive checks preserve the task at narrow widths, zoom, and text expansion.
 RTL applies when the supported or planned language scope requires it.
@@ -134,7 +152,7 @@ missing dependency.
 
 ## Status
 
-Current release: **v1.1.6**.
+Current release: **v1.2.0**.
 
 The Skill distinguishes WordPress 7.0 package restrictions from the public
 theming APIs introduced in WordPress 7.1. Source and build inspection never

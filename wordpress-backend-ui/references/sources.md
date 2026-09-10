@@ -44,6 +44,17 @@ See [version-compatibility.md](version-compatibility.md) for the executable
 enqueue example and verification boundary. Recheck the actual supported Core
 release, built exports, token names, and document whenever the target changes.
 
+## Classic source and token separation
+
+The 7.1 patterns in [classic-patterns.md](classic-patterns.md) were checked on
+2026-09-10 against the immutable Core ref above. Direct byte comparisons matched
+common/forms/buttons CSS and minified counterparts, common JS and its minified
+counterpart, design-tokens.css and script-loader.php in the inspected local
+7.1 checkout. This is source provenance, not loaded-page or geometry evidence.
+Preserve declarations with their original units. The WPDS matrices live in
+[wpds-tokens.md](wpds-tokens.md). Fallback composition is independently labeled
+and must never become a Classic compliance scale.
+
 ## Primary owners by fact
 
 | Fact | Primary source |

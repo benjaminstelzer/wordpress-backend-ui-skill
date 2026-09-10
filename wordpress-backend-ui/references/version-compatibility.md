@@ -4,6 +4,12 @@ Read this after routing. WordPress version, CSS token availability, and React
 component ownership are independent facts. Do not migrate an existing Classic
 page merely because a newer WordPress version offers tokens.
 
+The missing relationship must be established from actual native markup and
+component options before using the examples. Preserve source units and token
+expressions. Resolved pixels in verification are evidence for a named state,
+not replacement source declarations. See [classic-patterns.md](classic-patterns.md)
+for native relationships and [wpds-tokens.md](wpds-tokens.md) for token facts.
+
 ## Compatibility rules
 
 1. Keep native markup, default spacing, buttons, inputs, tables, and Notices.

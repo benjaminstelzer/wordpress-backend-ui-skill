@@ -4,7 +4,7 @@ id: PLAN-0001
 status: active
 created: 2026-09-10
 updated: 2026-09-10
-current_item: W-004
+current_item: W-002
 ---
 
 # Fix WordPress source-first UI validation
@@ -77,7 +77,7 @@ Next action: Resume the specified regression tasks when the user requests testin
 
 ### W-004 Install and publish the reviewed Skills
 
-Status: in_progress
+Status: done
 Depends on: [W-001, W-003]
 Blocked by: []
 Decisions: []
@@ -87,5 +87,4 @@ Steps:
 1. Obtain the requested final Astra high review of both completed Skills and resolve findings without weakening acceptance.
 2. Update the existing local Skill installations and verify exact package hashes while preserving unrelated customization.
 3. Prepare coherent English README, changelog and release notes, publish new versions and verify assets before retiring older release records/tags.
-Evidence: [2026-09-10 final Astra implementation review UI-SKILL-IMPLEMENTATION-ASTRA-20260910-01 approved with no actionable findings, Requested gpt-6-astra high; actual metadata unknown; context continued; reviewer archived; summary development/implementation-review.md, Codex and Claude Code local package manifests match canonical sources; behavior testing deferred]
-Next action: Publish v1.2.0 and verify the exact remote commit plus release assets before retiring old versions; W-002 remains deferred.
+Evidence: [2026-09-10 v1.2.0 published and final remote audit passed; one stable release and one annotated version tag; ZIP and checksum downloaded and byte-verified, Published commit 66b0b243f25d19a70d8514afd913714e69815be8, ZIP SHA-256 0a32864f1e81536d3b17decf84ac61fe7c940e77eac2d9135f0ce0771d8eb846, 2026-09-10 final Astra implementation review UI-SKILL-IMPLEMENTATION-ASTRA-20260910-01 approved with no actionable findings, Requested gpt-6-astra high; actual metadata unknown; context continued; reviewer archived; summary development/implementation-review.md, Codex and Claude Code local package manifests match canonical sources; behavior testing deferred]

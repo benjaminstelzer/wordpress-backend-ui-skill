@@ -152,7 +152,7 @@ missing dependency.
 
 ## Status
 
-Current release: **v1.2.0**.
+Current release: **v1.2.1**.
 
 The Skill distinguishes WordPress 7.0 package restrictions from the public
 theming APIs introduced in WordPress 7.1. Source and build inspection never

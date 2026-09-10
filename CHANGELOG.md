@@ -1,19 +1,24 @@
 # Changelog
 
+## v1.2.1 - 2026-09-10
+
+- Restored the missing list markers in the two preceding changelog entries.
+  The installable Skill is unchanged.
+
 ## v1.2.0 - 2026-09-10
 
-Require source correction before measurement and viewed-render checks. Add a
-consistency inventory and explicit visual comparisons, with authored units,
-independent expectations and before-write custom styling justification.
-Separate Classic Core patterns, WPDS tokens and fallback composition; preserve contextual native differences.
-
-Behavior regression testing is deferred. This release makes no new browser,
-live-agent or cross-host qualification claim.
+- Require source correction before measurement and viewed-render checks. Add a
+  consistency inventory and explicit visual comparisons, with authored units,
+  independent expectations and before-write custom styling justification.
+- Separate Classic Core patterns, WPDS tokens and fallback composition while
+  preserving contextual native differences.
+- Defer behavior regression testing. This release makes no new browser,
+  live-agent or cross-host qualification claim.
 
 ## v1.1.6 - 2026-09-10
 
-Removed development-only WordPress fixture material and narrowed changelog scope.
-No Skill behavior changed in that release.
+- Removed development-only WordPress fixture material and narrowed changelog
+  scope. No Skill behavior changed in that release.
 
 ## v1.1.4 - 2026-09-08
 

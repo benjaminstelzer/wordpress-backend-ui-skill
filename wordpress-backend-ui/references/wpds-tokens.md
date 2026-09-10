@@ -41,4 +41,3 @@ public density switch. Compact and comfortable values below remain historical
 
 Gap and padding names are not interchangeable. Density is an independent mode,
 not a mobile breakpoint.
-

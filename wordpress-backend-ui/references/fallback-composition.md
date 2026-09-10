@@ -24,4 +24,3 @@ region before classifying section boundaries.
 | Exceptional strong separation | 40px | `3xl` | `10` |
 
 The `40px` relationship is exceptional, not a default between ordinary blocks.
-

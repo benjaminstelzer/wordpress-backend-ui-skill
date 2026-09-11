@@ -1,5 +1,10 @@
 # Changelog
 
+## v1.2.2 - 2026-09-11
+
+- Resolve surface and runtime ownership from supplied context and accessible evidence before asking for material unknowns. Continue independent checks while a required answer is pending.
+- Behavioral acceptance remains deferred. This release adds no live-model or cross-host qualification.
+
 ## v1.2.1 - 2026-09-10
 
 - Restored the missing list markers in the two preceding changelog entries.

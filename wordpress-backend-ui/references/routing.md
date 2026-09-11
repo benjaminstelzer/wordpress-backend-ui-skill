@@ -276,7 +276,9 @@ token stylesheet owner, required token names, and loading/fallback evidence.
 These facts supplement the six stable fields, they do not change a PHP route
 to `bundled-wpds` just because Core tokens are available.
 
-If decision-relevant surface, runtime, token-style, or ownership evidence is missing, return
+First seek needed surface, runtime, token-style, or ownership evidence in the
+supplied context and accessible source or runtime within the authorized scope.
+If a decision-relevant fact remains unresolved after that inspection, return
 `needs-clarification`, name the missing fact, and emit no downstream spacing or
 component recommendation that depends on it. A token-style fact is not needed
 for a native Core region that consumes no tokens. Continue independent checks

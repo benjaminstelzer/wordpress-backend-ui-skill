@@ -47,8 +47,11 @@ experimental WPDS, or hybrid. For hybrid pages, classify portals and overlays
 at their actual render destination.
 
 If the surface is excluded, name its host owner and do not apply this Skill's
-plugin-page shell or spacing rules. If a required owner is unknown, ask for the
-missing fact before recommending components, tokens, spacing, or CSS.
+plugin-page shell or spacing rules. Resolve an unknown owner first from supplied
+context and accessible source or runtime evidence within the authorized scope.
+Ask only for a remaining decision-relevant fact that those sources cannot
+establish, before recommending dependent components, tokens, spacing, or CSS.
+Continue independent checks without inventing the missing owner.
 
 ## Follow the owning WordPress layer
 

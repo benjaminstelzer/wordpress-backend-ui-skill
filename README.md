@@ -138,6 +138,21 @@ translations remain optional. When translation delivery is requested, actual
 loading must be tested too. Source inspection remains distinct from rendered
 proof.
 
+## How it was developed
+
+I developed this Skill through WordPress plugin work and inspection of the
+Core components, CSS and version boundaries that actually own an admin page.
+The [changelog](CHANGELOG.md) follows corrections to spacing precedence,
+translation scope and the order of source, geometry and visual checks.
+
+I analyze complete task histories alongside the interface to find where the
+Skill helps, where it misses a layout problem, and where repeated checks waste
+tokens. Those observations feed further revisions and focused tests.
+[Recent paired fixtures](development/validation-v1.2.3.md) exercised batching
+and verification scheduling. Their measurements and visual responses were
+simulated, so they support the scheduling change rather than actual WordPress
+rendering or accessibility. Real use continues to supply the next cases to fix.
+
 ## Related projects
 
 WordPress Backend UI remains the owner of WordPress surfaces, components,
@@ -152,7 +167,7 @@ missing dependency.
 
 ## Status
 
-Current release: **v1.2.3**.
+Current release: **v1.2.4**.
 
 The Skill distinguishes WordPress 7.0 package restrictions from the public
 theming APIs introduced in WordPress 7.1. Source and build inspection never

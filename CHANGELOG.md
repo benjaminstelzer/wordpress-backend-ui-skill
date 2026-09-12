@@ -10,11 +10,6 @@
 - Resolve surface and runtime ownership from supplied context and accessible evidence before asking for material unknowns. Continue independent checks while a required answer is pending.
 - Behavioral acceptance remains deferred. This release adds no live-model or cross-host qualification.
 
-## v1.2.1 - 2026-09-10
-
-- Restored the missing list markers in the two preceding changelog entries.
-  The installable Skill is unchanged.
-
 ## v1.2.0 - 2026-09-10
 
 - Require source correction before measurement and viewed-render checks. Add a
@@ -24,11 +19,6 @@
   preserving contextual native differences.
 - Defer behavior regression testing. This release makes no new browser,
   live-agent or cross-host qualification claim.
-
-## v1.1.6 - 2026-09-10
-
-- Removed development-only WordPress fixture material and narrowed changelog
-  scope. No Skill behavior changed in that release.
 
 ## v1.1.4 - 2026-09-08
 

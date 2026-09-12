@@ -29,9 +29,11 @@ it fails and the smallest scope. An official token alone does not justify the
 exception. Prefer supported composition and variants. Inspect the final diff
 for unnecessary custom styling and remove compensation made obsolete by the fix.
 
-Every subsequent layout edit repeats the affected source checks, measurements
-and sight checks. Associate final measurements and viewed images with the same
-revision, content and state. Available usable tools cannot be skipped for
+Complete related edits before source, measurement and sight checks. Batch any
+corrections, then repeat affected checks once; do not check after each small
+edit. Reuse compatible evidence when composing with Scoville UI. Associate final
+measurements and viewed images with the same revision, content and state.
+Available usable tools cannot be skipped for
 convenience. Missing tools or source limit the conclusion, never create a pass.
 Source-only and screenshot-only requests retain those limits without requiring
 unrequested work. Preserve every known required gap in the result.

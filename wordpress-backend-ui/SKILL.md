@@ -106,9 +106,9 @@ does not become an i18n audit merely because the markup is PHP or JavaScript.
 
 Before implementation or a rendered/consistency audit, read
 [validation.md](references/validation.md). Inspect generating code/CSS first.
-For Implement, correct known in-scope source defects before the first layout
-measurement, then measure, then view the result. Repeat affected stages after
-each layout edit. Audit reports source defects first and remains read-only.
+For Implement, finish the related edit batch and correct known source defects,
+then measure and view the result. After a correction batch, repeat only affected
+checks once. Audit reports source defects first and remains read-only.
 Justify custom styling against a concrete owner gap before writing it. Keep
 authored units/expressions, computed values and actual geometry separate.
 

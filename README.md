@@ -65,9 +65,9 @@ Every entry maps to source, measurement and visual evidence or a named gap.
 The visual routine compares intended edges, text position, apparent whitespace,
 control interiors, icons, wrapping and clipping. Sampling limits remain explicit.
 
-These are instruction changes. Browser and live-agent regression testing of this
-revision is deferred; source checks and an independent review do not establish
-runtime effectiveness.
+Related implementation edits are completed before verification. Corrections
+form another batch followed by affected checks. Instrumented Astra Low fixtures
+exercised this scheduling, but actual WordPress rendering remains unqualified.
 
 ## Compatibility
 
@@ -152,13 +152,15 @@ missing dependency.
 
 ## Status
 
-Current release: **v1.2.2**.
+Current release: **v1.2.3**.
 
 The Skill distinguishes WordPress 7.0 package restrictions from the public
 theming APIs introduced in WordPress 7.1. Source and build inspection never
 count as rendered proof. Validate the requested Single Site or Network Admin
 surface in its actual WordPress version, language, viewport and interaction
 states before making those claims.
+
+Focused release checks are recorded in [the v1.2.3 validation summary](development/validation-v1.2.3.md). Native discovery and real compaction remain unqualified.
 
 ## Sources
 

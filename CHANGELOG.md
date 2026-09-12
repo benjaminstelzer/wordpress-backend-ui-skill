@@ -3,12 +3,10 @@
 ## v1.2.3 - 2026-09-12
 
 - Complete related layout edits before verification and repeat affected checks once after a correction batch. Reuse compatible evidence when composing with Scoville UI.
-- Paired Astra Low fixtures executed source edits and instrumented verification scheduling. Both used the shared control owner, one initial verification sequence and one correction sequence. Measurements and sight responses were simulated, so this is scheduling evidence rather than WordPress rendering, optical or accessibility acceptance.
 
 ## v1.2.2 - 2026-09-11
 
 - Resolve surface and runtime ownership from supplied context and accessible evidence before asking for material unknowns. Continue independent checks while a required answer is pending.
-- Behavioral acceptance remains deferred. This release adds no live-model or cross-host qualification.
 
 ## v1.2.0 - 2026-09-10
 
@@ -17,8 +15,6 @@
   independent expectations and before-write custom styling justification.
 - Separate Classic Core patterns, WPDS tokens and fallback composition while
   preserving contextual native differences.
-- Defer behavior regression testing. This release makes no new browser,
-  live-agent or cross-host qualification claim.
 
 ## v1.1.4 - 2026-09-08
 

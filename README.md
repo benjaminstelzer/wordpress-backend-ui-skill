@@ -66,8 +66,7 @@ The visual routine compares intended edges, text position, apparent whitespace,
 control interiors, icons, wrapping and clipping. Sampling limits remain explicit.
 
 Related implementation edits are completed before verification. Corrections
-form another batch followed by affected checks. Instrumented Astra Low fixtures
-exercised this scheduling, but actual WordPress rendering remains unqualified.
+form another batch followed by affected checks.
 
 ## Compatibility
 
@@ -141,17 +140,15 @@ proof.
 ## How it was developed
 
 I developed this Skill through WordPress plugin work and inspection of the
-Core components, CSS and version boundaries that actually own an admin page.
-The [changelog](CHANGELOG.md) follows corrections to spacing precedence,
-translation scope and the order of source, geometry and visual checks.
+components and CSS that actually own an admin page. A spacing correction needs
+to account for existing Core margins, component padding and the plugin's own
+layout. Treating them as one interchangeable scale creates the next problem.
 
-I analyze complete task histories alongside the interface to find where the
-Skill helps, where it misses a layout problem, and where repeated checks waste
-tokens. Those observations feed further revisions and focused tests.
-[Recent paired fixtures](development/validation-v1.2.3.md) exercised batching
-and verification scheduling. Their measurements and visual responses were
-simulated, so they support the scheduling change rather than actual WordPress
-rendering or accessibility. Real use continues to supply the next cases to fix.
+The [changelog](CHANGELOG.md) follows corrections to spacing precedence,
+translation scope and the order of source inspection, measurement and visual
+checks. I compare complete task histories with the interface to find missed
+layout problems and repeated checks. Those observations become the next
+instruction changes.
 
 ## Related projects
 
@@ -162,20 +159,12 @@ exceptions. When
 also active, it can strengthen task flow, hierarchy, accessibility and rendered
 validation inside those boundaries. It preserves the selected mode and scope.
 
-Optional means optional. Installing one Skill does not turn the other into a
-missing dependency.
+Both Skills work independently.
 
 ## Status
 
-Current release: **v1.2.5**.
-
-The Skill distinguishes WordPress 7.0 package restrictions from the public
-theming APIs introduced in WordPress 7.1. Source and build inspection never
-count as rendered proof. Validate the requested Single Site or Network Admin
-surface in its actual WordPress version, language, viewport and interaction
-states before making those claims.
-
-Focused release checks are recorded in [the v1.2.3 validation summary](development/validation-v1.2.3.md). Native discovery and real compaction remain unqualified.
+The latest changes to verification scheduling have not yet been tested against
+a running WordPress interface.
 
 ## Sources
 

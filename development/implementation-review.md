@@ -1,12 +1,17 @@
-# Source-first implementation review
+# Why native spacing needs an owner
 
-The source review on 2026-09-10 covered source-before-measurement-before-sight
-ordering, independent expectations, authored units, visual comparisons,
-consistency across repeated components and read-only scope. It examined the
-separation between WordPress Classic patterns, WPDS tokens and fallback
-composition, including independent use and composition with Scoville UI.
+The change followed reported spacing errors and unnecessary custom CSS in
+WordPress admin work. Existing Core margins, component padding and plugin layout
+rules cannot be treated as one interchangeable spacing scale. A new rule may
+compensate for the screenshot while duplicating spacing already supplied by
+WordPress.
 
-Selected local Classic button, mobile Notice and Notice relocation source was
-inspected. No browser, agent or fixture tests were run. PLAN-0001/W-002 retains
-the deferred behavior regressions at the user's request. Source review does
-not demonstrate runtime effectiveness.
+The revised instructions require the agent to locate that owner before making
+a correction, then measure and inspect the result. They also preserve valid
+native differences. A consistency audit should not make every control equal
+merely because the values differ.
+
+The [decision](docs/decisions/0001-check-source-before-rendered-validation.md)
+explains the choice. The reported failures were not reproduced during this
+source review. Tests against a running WordPress interface remain deferred in
+[the plan](docs/plans/0001-source-first-ui-validation.md).
